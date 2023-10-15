@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Authentication.Login">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/image_logo"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Đăng Nhập"
+        android:textAlignment="center"
+        android:textAppearance="@style/Title_regular_font"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input_box"
+            android:paddingStart="15dp"
+            android:hint="example@gmail.com"
+            android:textSize="18dp"
+            android:textAppearance="@style/text_regular_font"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mật Khẩu"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input_box"
+            android:inputType="textPassword"
+            android:paddingStart="15dp"
+            android:hint="example@gmail.com"
+            android:textSize="18dp"
+            android:textAppearance="@style/text_regular_font"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quên Mật Khẩu?"
+        android:textSize="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="end"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:textAppearance="@style/text_regular_font"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:background="@drawable/custom_button_1"
+            android:text="Đăng Nhập"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textAppearance="@style/text_regular_font"/>
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/ic_fingerprint_authen"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Hoặc đăng nhập với"
+            android:textAlignment="center"
+            android:textAppearance="@style/text_regular_font"
+            android:textSize="18dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:elevation="35dp"
+            android:src="@drawable/ic_login_google"
+            android:backgroundTint="@color/white"/>
+    </LinearLayout>
+</LinearLayout>
+
+</ScrollView>

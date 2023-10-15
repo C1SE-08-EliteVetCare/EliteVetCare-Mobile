@@ -13,10 +13,10 @@
         android:theme="@style/Theme.EliteVetCare"
         tools:targetApi="31">
         <activity
-            android:name=".ReSetPassWord_2"
+            android:name=".Authentication.Login"
             android:exported="false" />
         <activity
-            android:name=".ResetPassWord"
+            android:name=".Authentication.PreLogin"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
