@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Authentication.fragment_signup">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_username_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input_box2"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:hint="Tên Hiển Thị"
+            android:textSize="18dp"
+            android:textAppearance="@style/text_regular_font"
+            android:drawableStart="@drawable/ic_username"
+            android:drawablePadding="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_email_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_input_box2"
+            android:drawableStart="@drawable/ic_email"
+            android:drawablePadding="10dp"
+            android:hint="Email"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:textAppearance="@style/text_regular_font"
+            android:textSize="18dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_password_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input_box2"
+            android:inputType="textPassword"
+            android:layout_marginTop="20dp"
+            android:paddingStart="10dp"
+            android:hint="Mật Khẩu"
+            android:textSize="18dp"
+            android:textAppearance="@style/text_regular_font"
+            android:drawableStart="@drawable/ic_password"
+            android:drawablePadding="10dp"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_phone_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input_box2"
+            android:inputType="phone"
+            android:layout_marginTop="20dp"
+            android:paddingStart="10dp"
+            android:hint="Số Điện Thoại"
+            android:textSize="18dp"
+            android:textAppearance="@style/text_regular_font"
+            android:drawableStart="@drawable/ic_phonenumber"
+            android:drawablePadding="10dp"/>
+        <LinearLayout
+            android:id="@+id/group_btn_next_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="100dp"
+            android:layout_gravity="end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="5dp"
+                android:text="Khởi Tạo"
+                android:textSize="25dp"
+                android:textAppearance="@style/Title_regular_font" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next_register"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_button_next"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

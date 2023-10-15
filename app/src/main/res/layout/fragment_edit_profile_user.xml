@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile.fragment_edit_profile_user">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="text"
+            android:background="@drawable/custom_input_box_grey"
+            android:paddingStart="20dp"
+            android:text="User Name"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:inputType="text"
+            android:background="@drawable/custom_input_box_grey"
+            android:drawableEnd="@drawable/ic_edit_birth"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Birth year"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:inputType="text"
+            android:background="@drawable/custom_input_box_grey"
+            android:drawableEnd="@drawable/ic_edit_email"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Email"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_sex_editprofile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/custom_input_box_grey"
+                android:entries="@array/User_Sex"
+                android:fontFamily="@style/edit_text_font"
+                android:maxLines="1"
+                android:paddingStart="20dp"
+                android:textSize="15dp" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/spinner_sex_editprofile"
+                android:layout_alignRight="@id/spinner_sex_editprofile"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/ic_edit_dropdown" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_city_editprofile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/custom_input_box_grey"
+                android:entries="@array/City"
+                android:fontFamily="@style/edit_text_font"
+                android:maxLines="1"
+                android:paddingStart="20dp"
+                android:textSize="15dp" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/spinner_city_editprofile"
+                android:layout_alignRight="@id/spinner_city_editprofile"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/ic_edit_dropdown" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_district_editprofile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/custom_input_box_grey"
+                android:entries="@array/district_danang"
+                android:fontFamily="@style/edit_text_font"
+                android:maxLines="1"
+                android:paddingStart="20dp"
+                android:textSize="15dp" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/spinner_district_editprofile"
+                android:layout_alignRight="@id/spinner_district_editprofile"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/ic_edit_dropdown" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_ward_editprofile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/custom_input_box_grey"
+                android:entries="@array/ward_sontra"
+                android:fontFamily="@style/edit_text_font"
+                android:maxLines="1"
+                android:paddingStart="20dp"
+                android:textSize="15dp" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/spinner_ward_editprofile"
+                android:layout_alignRight="@id/spinner_ward_editprofile"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/ic_edit_dropdown" />
+        </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:inputType="text"
+            android:background="@drawable/custom_input_box_grey"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Address"
+            android:textSize="15dp"
+            android:textAppearance="@style/edit_text_font"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_1"/>
+    </LinearLayout>
+</FrameLayout>

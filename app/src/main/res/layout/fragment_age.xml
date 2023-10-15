@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Profile.fragment_age">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="25dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Bạn Sinh Năm Bao Nhiêu?"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Vì trải nghiệm của bạn"
+            android:textSize="15dp"
+            android:textAppearance="@style/text_regular_font"/>
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/number_picker_age"
+            android:layout_width="wrap_content"
+            android:layout_height="350dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            app:np_dividerColor="@color/blue"
+            app:np_dividerDistance="75dp"
+            app:np_selectedTextColor="@color/blue"
+            app:np_textColor="@color/black"
+            app:np_textSize="45dp"
+            app:np_wheelItemCount="7"
+            app:np_selectedTextSize="60dp"
+            app:np_wrapSelectorWheel="true"
+            app:np_selectedTextAlign="selectedTextAlignCenter"/>
+    </LinearLayout>
+</FrameLayout>

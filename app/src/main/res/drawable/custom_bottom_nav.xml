@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bottom 2dp Shadow -->
+    <item>
+        <shape android:shape="rectangle" >
+            <size android:height="50dp" android:width="250dp"/>
+            <solid android:color="#CACACA"/>
+            <corners android:bottomRightRadius="22dp" android:bottomLeftRadius="22dp" android:topLeftRadius="25dp" android:topRightRadius="25dp"/>
+        </shape>
+    </item>
+
+    <!-- White Top color -->
+    <item android:drawable="@drawable/custom_button_2" android:bottom="0.5dp">
+    </item>
+
+
+</layer-list>
