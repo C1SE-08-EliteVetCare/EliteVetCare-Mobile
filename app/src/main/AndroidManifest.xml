@@ -13,6 +13,12 @@
         android:theme="@style/Theme.EliteVetCare"
         tools:targetApi="31">
         <activity
+            android:name=".ReSetPassWord_2"
+            android:exported="false" />
+        <activity
+            android:name=".ResetPassWord"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
