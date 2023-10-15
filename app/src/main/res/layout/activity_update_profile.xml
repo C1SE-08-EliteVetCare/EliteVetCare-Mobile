@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.UpdateProfile">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="25dp"
+            android:orientation="horizontal">
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_bar_top"/>
+            <View android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ic_notice"/>
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:id="@+id/btn_avatar_updateprofile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/ic_non_avatar"/>
+        </LinearLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/frm_view_update_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:name="com.example.elitevetcare.Profile.fragment_gender"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="140dp"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="@drawable/custom_button_goback"/>
+            <View android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="150dp"
+                android:layout_height="54dp"
+                android:layout_gravity="right"
+                android:background="@drawable/custome_button_continue"
+                android:drawableEnd="@drawable/ic_continue"
+                android:paddingEnd="15dp"
+                android:paddingStart="10dp"
+                android:text="Tiếp Tục"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+        <View android:layout_width="0dp"
+            android:layout_height="15dp"/>
+    </LinearLayout>
+
+
+</ScrollView>

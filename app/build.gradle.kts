@@ -40,7 +40,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("me.relex:circleindicator:2.1.6")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
-    //noinspection GradleCompatible
-    implementation ("com.android.support:design:28.0.0")
-
+    implementation ("io.github.ShawnLin013:number-picker:2.4.13")
 }

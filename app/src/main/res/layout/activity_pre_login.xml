@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Authentication.PreLogin"
+    tools:context=".Activity.PreLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -50,6 +50,6 @@
             android:layout_marginTop="100dp"
             android:background="@drawable/custom_button_1"
             android:text="Đăng Nhập"
-            android:textAppearance="@style/button_text_sytle"/>
+            android:textAppearance="@style/button_text_style"/>
     </LinearLayout>
 </ScrollView>

@@ -5,12 +5,12 @@
         <shape android:shape="rectangle" >
             <size android:height="50dp" android:width="250dp"/>
             <solid android:color="#CACACA"/>
-            <corners android:bottomRightRadius="19.5dp" android:bottomLeftRadius="19.5dp" android:topLeftRadius="20dp" android:topRightRadius="20dp"/>
+            <corners android:bottomRightRadius="22dp" android:bottomLeftRadius="22dp" android:topLeftRadius="25dp" android:topRightRadius="25dp"/>
         </shape>
     </item>
 
     <!-- White Top color -->
-    <item android:drawable="@drawable/custom_input_box2" android:bottom="0.5dp">
+    <item android:drawable="@drawable/custom_button_2" android:bottom="0.5dp">
     </item>
 
 

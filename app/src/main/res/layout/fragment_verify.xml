@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Authentication.fragment_verify">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/image_authentication" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Hãy Chắc Chắn Đó Là Bạn"
+            android:textAlignment="center"
+            android:textAppearance="@style/Title_regular_font"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_verify_code_1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textSize="24dp"
+                android:background="@drawable/custom_input_box_verify"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_verify_code_2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textSize="24dp"
+                android:background="@drawable/custom_input_box_verify"
+                android:padding="0dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_verify_code_3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textSize="24dp"
+                android:background="@drawable/custom_input_box_verify"
+                android:padding="0dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_verify_code_4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textSize="24dp"
+                android:background="@drawable/custom_input_box_verify"
+                android:padding="0dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_verify_code_5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textSize="24dp"
+                android:background="@drawable/custom_input_box_verify"
+                android:padding="0dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_verify_code_6"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textSize="24dp"
+                android:background="@drawable/custom_input_box_verify"
+                android:padding="0dp" />
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_gravity="center"
+            android:text="Hết Hạn Sau 00:56s"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_gravity="center"
+            android:text="Chưa Nhận Được Email? Thử Kiểm tra Thư Rác Hoặc Gửi Lại Code"
+            android:textAlignment="center"
+            android:textColor="#7C7B7B"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+
+    </LinearLayout>
+
+</FrameLayout>
