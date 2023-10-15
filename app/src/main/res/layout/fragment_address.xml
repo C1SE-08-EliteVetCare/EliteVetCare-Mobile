@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Profile.fragment_address">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Bạn Sống Ở Đâu?"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/text_regular_font"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Vì trải nghiệm của bạn"
+            android:textSize="15dp"
+            android:textAppearance="@style/text_regular_font"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thành Phố"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_combobox"
+                android:textSize="16dp"
+                android:textAppearance="@style/text_regular_font"
+                android:paddingStart="10dp"
+                android:maxLines="1"
+                android:entries="@array/planets_array"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quận/Huyện"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_combobox"
+                android:textSize="16dp"
+                android:textAppearance="@style/text_regular_font"
+                android:paddingStart="10dp"
+                android:maxLines="1"
+                android:entries="@array/planets_array"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phường"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_combobox"
+                android:textSize="16dp"
+                android:textAppearance="@style/text_regular_font"
+                android:paddingStart="10dp"
+                android:maxLines="1"
+                android:entries="@array/planets_array"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa Chỉ"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edt_street_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Địa Chỉ Cụ Thể"
+                    android:textSize="16dp"
+                    android:background="@drawable/custom_input_box"
+                    android:paddingStart="10dp"
+                    android:inputType="text"
+                    android:maxLines="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Profile.fragment_user_profile">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_avatar_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="12dp"
+                app:cardCornerRadius="1000dp"
+                android:layout_centerInParent="true"
+                android:shape="ring"
+                android:thicknessRatio="1.9" >
+                <ImageView
+                    android:id="@+id/img_avatar_user_profile"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/image_logo"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/custom_img_view_avatar"/>
+            </androidx.cardview.widget.CardView>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_edit"
+                android:layout_marginRight="20dp"
+                android:translationZ="3dp"
+                android:layout_alignBottom="@id/cardview_avatar_profile"
+                android:layout_alignRight="@id/cardview_avatar_profile"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="User Name"
+            android:textAlignment="center"
+            android:textAppearance="@style/Title_regular_font"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="+99999999999999"
+            android:textSize="18dp"
+            android:textAppearance="@style/text_regular_font"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:orientation="horizontal">
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_editprofile_user"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Chỉnh sửa thông tin cá nhân"
+                android:textSize="18dp"
+                android:textAppearance="@style/text_regular_font"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/white" />
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_arrow_open"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_black_back_ground"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Trung Tâm Hỗ Trợ"
+                android:textSize="18dp"
+                android:textAppearance="@style/text_regular_font"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/white" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swOnOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:thumb="@drawable/custom_thumb"
+                app:track="@drawable/custom_track" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_help"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Chỉnh sửa thông tin cá nhân"
+                android:textSize="18dp"
+                android:textAppearance="@style/text_regular_font"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/white" />
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_arrow_open"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_logout"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="Đăng Xuất"
+                android:textColor="@color/red"
+                android:textSize="18dp"
+                android:textAppearance="@style/text_regular_font"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/white" />
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_arrow_open"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>
