@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle" >
+            <size android:height="50dp" android:width="250dp"/>
+            <solid android:color="#D3D3D3"/>
+            <corners android:bottomRightRadius="19dp" android:bottomLeftRadius="19dp" android:topLeftRadius="19dp" android:topRightRadius="19dp"/>
+        </shape>
+    </item>
+    <!-- Bottom 2dp Shadow -->
+    <item>
+        <shape android:shape="rectangle" >
+            <size android:height="50dp" android:width="250dp"/>
+            <solid android:color="#CACACA"/>
+            <corners android:bottomRightRadius="19.5dp" android:bottomLeftRadius="19.5dp" android:topLeftRadius="19.5dp" android:topRightRadius="19.5dp"/>
+        </shape>
+    </item>
+    <!-- White Top color -->
+    <item android:drawable="@drawable/custom_input_box_white" android:bottom="0.5dp"
+        android:top="0.5dp" android:right="0.5dp" android:left="0.5dp" >
+    </item>
+
+
+</layer-list>

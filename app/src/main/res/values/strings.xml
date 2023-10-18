@@ -4,6 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_tip">Chưa có tài khoản? <b><font color='#007AFE'>Đăng ký</font></b></string>
     <string name="signup_tip">Đã có Tài Khoản? <b><font color='#007AFE'>Đăng nhập</font></b></string>
+    <string name="Update">Cập Nhập</string>
+    <string name="Next">Tiếp Tục</string>
     <string-array name="planets_array">
         <item>Mercury</item>
         <item>Venus</item>
@@ -18,6 +20,11 @@
         <item><b>Nam</b></item>
         <item>Nữ</item>
         <item>Khác</item>
+    </string-array>
+    <string-array name="pet_species">
+        <item><b>Chó</b></item>
+        <item><b>Mèo</b></item>
+        <item><b>Khácw</b></item>
     </string-array>
     <string-array name="City">
         <item><b>Đà Nẵng</b></item>

@@ -9,18 +9,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.elitevetcare.Authentication.fragment_login;
-import com.example.elitevetcare.Authentication.fragment_signup;
 import com.example.elitevetcare.Authentication.fragment_success;
-import com.example.elitevetcare.Authentication.fragment_verify;
-import com.example.elitevetcare.Profile.fragment_address;
-import com.example.elitevetcare.Profile.fragment_age;
-import com.example.elitevetcare.Profile.fragment_gender;
 import com.example.elitevetcare.Profile.fragment_user_profile;
 import com.example.elitevetcare.R;
+import com.example.elitevetcare.Appointment.fragment_appointment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
 
@@ -50,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 if(item_id == R.id.btn_bottomnav_QA)
                     selectedFragment = new fragment_success();
                 if(item_id == R.id.btn_bottomnav_appointment)
-                    selectedFragment = new fragment_success();
+                    selectedFragment = new fragment_appointment();
                 if(item_id == R.id.btn_bottomnav_pets)
                     selectedFragment = new fragment_success();
                 if(item_id == R.id.btn_bottomnav_profile)
