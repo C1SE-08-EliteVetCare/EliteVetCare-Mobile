@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Appointment.fragment_appointment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/appointment_tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabTextColor="@color/light_gray"
+                app:tabSelectedTextColor="@color/blue"
+                app:tabIndicatorColor="@color/blue"
+                android:background="@color/white"
+                app:tabTextAppearance="@style/tab_title"/>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/appointment_viewpager2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"/>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/appointment_FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="@color/blue"
+            android:src="@drawable/ic_add"
+            android:layout_margin="16dp"
+            app:fabSize="normal"
+            app:layout_behavior=".FloatingActionButtonBehavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>
