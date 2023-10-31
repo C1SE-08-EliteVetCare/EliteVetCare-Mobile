@@ -4,17 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Activity.fragment_chatbot_list">
+    tools:context=".Appointment.fragment_chatbot_list">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatbot"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="2"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Q/A"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"/>
 
-        tools:listitem="@layout/item_chatbot" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Recycler_list_item_clinic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="4"
+            android:layout_marginTop="70dp"
+            tools:listitem="@layout/item_chatbot_list"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/QA_FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="@color/blue"
+            android:src="@drawable/ic_add"
+            android:layout_margin="16dp"
+            app:fabSize="normal"
+            app:layout_behavior=".FloatingActionButtonBehavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>
