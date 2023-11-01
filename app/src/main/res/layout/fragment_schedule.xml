@@ -23,6 +23,9 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="3"
+<<<<<<< HEAD
 
+=======
+>>>>>>> quochuy
         tools:listitem="@layout/item_schedule" />
 </FrameLayout>

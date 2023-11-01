@@ -1,15 +1,36 @@
 package com.example.elitevetcare.Authentication;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.elitevetcare.Activity.Login;
+import com.example.elitevetcare.Activity.MainActivity;
+import com.example.elitevetcare.DataLocalManager;
+import com.example.elitevetcare.HelperCallingAPI;
 import com.example.elitevetcare.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,18 +76,80 @@ public class fragment_login extends Fragment {
         }
     }
 
+
+    AppCompatButton btn_login;
+    ImageFilterButton btn_fingerPrint_login;
+    AppCompatEditText edt_email, edt_password;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_login, container, false);
-
-        group_login = root.findViewById(R.id.group_login);
-        group_login.setTranslationX(800);
-
-
-        //animation
-        group_login.animate().translationX(0).alpha(1).setDuration(1200).setStartDelay(1000).start();
+        SetID(root);
+        SetAnimator();
+        SetEvent();
         // Inflate the layout for this fragment
         return root;
+    }
+
+    private void SetEvent() {
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = String.valueOf(edt_email.getText());
+                String password = String.valueOf(edt_password.getText());
+                RequestBody LoginBody = new FormBody.Builder()
+                        .add("email", email)
+                        .add("password",password)
+                        .build();
+
+                HelperCallingAPI.CallingAPI_noHeader("auth/login", LoginBody, new HelperCallingAPI.MyCallback() {
+                    @Override
+                    public void onResponse(Response response){
+                        int statusCode = response.code();
+                        JSONObject data = null;
+                        if(statusCode == 200) {
+                            try {
+                                data = new JSONObject(response.body().string());
+                                String AccessToken = data.getString("accessToken");
+                                String RefreshToken = data.getString("refreshToken");
+                                DataLocalManager.setAccessTokens(AccessToken);
+                                DataLocalManager.setRefreshToken(RefreshToken);
+                            } catch (JSONException | IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+
+                    @Override
+                    public void onFailure(IOException e) {
+                        Activity activity = getActivity();
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(),"false",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    private void SetAnimator() {
+        group_login.setTranslationX(800);
+        //animation
+        group_login.animate().translationX(0).alpha(1).setDuration(1200).setStartDelay(1000).start();
+    }
+
+    private void SetID(View root) {
+
+        group_login = root.findViewById(R.id.group_login);
+        btn_login = root.findViewById(R.id.btn_login);
+        btn_fingerPrint_login = root.findViewById(R.id.btn_fingerPrint_login);
+        edt_email = root.findViewById(R.id.edt_email_login);
+        edt_password = root.findViewById(R.id.edt_password_login);
     }
 }
