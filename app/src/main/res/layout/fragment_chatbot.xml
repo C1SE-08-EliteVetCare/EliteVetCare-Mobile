@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Appointment.fragment_chatbot">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+        <!-- TODO: Update blank fragment layout -->
+
+        <ImageView
+            android:id="@+id/theme_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="115dp"
+            android:src="@drawable/imge_chat_question" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/theme_chat"
+            android:layout_alignTop="@+id/theme_chat"
+            android:layout_alignBottom="@+id/theme_chat"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="120dp"
+            android:padding="2dp"
+            android:text="Không ăn uống, sốt trong nhiều ngày, ói ra máu, phân sậm màu có máu"
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:id="@+id/logo_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_avt_man"
+            android:layout_below="@+id/theme_chat"
+            android:layout_alignStart="@+id/theme_chat"
+            />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:20 AM"
+            android:layout_toEndOf="@+id/logo_man"
+            android:layout_below="@+id/theme_chat"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="13dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/theme_chat"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="250dp"
+            android:layout_toEndOf="@+id/time"
+            android:src="@drawable/imge_tick" />
+
+
+
+        <ImageView
+            android:id="@+id/theme_chat2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginEnd="50dp"
+            android:src="@drawable/img_chat_anser" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/theme_chat2"
+            android:layout_alignTop="@+id/theme_chat2"
+            android:layout_alignEnd="@+id/theme_chat2"
+            android:layout_alignBottom="@+id/theme_chat2"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
+            android:padding="2dp"
+            android:text="Thú cưng của bạn có thể đang gặp nguy hiểm. Vì các triệu chứng cho thấy thú cưng của bạn đang mắc bệnh xoắn khuẩn Lept"
+            android:textColor="@android:color/black"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/logo_woman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_alignEnd="@+id/theme_chat2"
+            android:layout_below="@+id/theme_chat2"
+            android:src="@drawable/img_avt_woman" />
+
+        <TextView
+            android:id="@+id/time2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:20 AM"
+            android:layout_below="@+id/theme_chat2"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_alignEnd="@+id/logo_woman"
+            android:layout_toLeftOf="@+id/logo_woman"
+            android:textSize="13dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/theme_chat2"
+            android:layout_alignEnd="@+id/time2"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="245dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="60dp"
+            android:src="@drawable/imge_tick" />
+    </RelativeLayout>
+</FrameLayout>

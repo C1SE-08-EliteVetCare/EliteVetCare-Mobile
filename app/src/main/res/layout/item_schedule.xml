@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+
+    android:layout_marginTop="30dp"
+    >
+
+    <ImageView
+        android:id="@+id/imgv_khachhang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="1dp"
+        android:src="@drawable/schedule_appoinment" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imgv_khachhang"
+        android:layout_alignTop="@id/imgv_khachhang"
+        android:layout_alignEnd="@+id/imgv_khachhang"
+        android:layout_alignBottom="@+id/imgv_khachhang"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="Khách hàng"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+</RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imagev_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/schedule_appoinment_theme" />
+
+        <TextView
+            android:id="@+id/txt_hoten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignStart="@+id/imagev_theme"
+            android:layout_marginLeft="80dp"
+            android:textSize="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Họ và tên: " />
+
+        <TextView
+            android:id="@+id/txt_ten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignEnd="@+id/imagev_theme"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="100dp"
+            android:layout_toEndOf="@+id/txt_sodienthoai"
+            android:text="Cao Quoc Huy"
+            android:textSize="15dp" />
+
+
+        <TextView
+            android:id="@+id/txt_sodienthoai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignStart="@+id/imagev_theme"
+            android:layout_marginLeft="80dp"
+            android:textSize="15dp"
+            android:layout_marginTop="50dp"
+            android:text="Số điện thoại: " />
+
+        <TextView
+            android:id="@+id/txt_sdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignEnd="@+id/imagev_theme"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="100dp"
+            android:layout_toEndOf="@+id/txt_sodienthoai"
+            android:text="0971010073"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/txt_diachi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignStart="@+id/imagev_theme"
+            android:layout_marginLeft="80dp"
+            android:textSize="15dp"
+            android:layout_marginTop="80dp"
+            android:text="Địa chỉ: " />
+
+        <TextView
+            android:id="@+id/txt_dc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignEnd="@+id/imagev_theme"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="100dp"
+            android:layout_toEndOf="@+id/txt_sodienthoai"
+            android:text="254 Nguyễn văn Linh"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/txt_ngay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignStart="@+id/imagev_theme"
+            android:layout_marginLeft="80dp"
+            android:textSize="15dp"
+            android:layout_marginTop="110dp"
+            android:text="Ngày: " />
+
+        <TextView
+            android:id="@+id/txt_ngaydat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignEnd="@+id/imagev_theme"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="110dp"
+            android:layout_marginRight="100dp"
+            android:layout_toEndOf="@+id/txt_sodienthoai"
+            android:text="28/09/2023"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/txt_thoigian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignStart="@+id/imagev_theme"
+            android:layout_marginLeft="80dp"
+            android:textSize="15dp"
+            android:layout_marginTop="140dp"
+            android:text="Thời gian: " />
+
+        <TextView
+            android:id="@+id/txt_tg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignEnd="@+id/imagev_theme"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginRight="100dp"
+            android:layout_toEndOf="@+id/txt_sodienthoai"
+            android:text="8:30 AM"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/txt_tongquat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignStart="@+id/imagev_theme"
+            android:layout_marginLeft="80dp"
+            android:textSize="15dp"
+            android:layout_marginTop="170dp"
+            android:text="Tổng quát: " />
+
+        <TextView
+            android:id="@+id/txt_tq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imagev_theme"
+            android:layout_alignEnd="@+id/imagev_theme"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="170dp"
+            android:layout_marginRight="100dp"
+            android:layout_toEndOf="@+id/txt_sodienthoai"
+            android:text="Chi tiết"
+            android:textSize="15dp" />
+    </RelativeLayout>
+</LinearLayout>
