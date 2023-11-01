@@ -3,26 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Appointment.fragment_schedule"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Appointment.fragment_list_pet">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="30dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:text="Danh sách cuộc hẹn"
-        android:layout_height="wrap_content"/>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_schedule"
+        android:id="@+id/Recycler_list_item_clinic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="3"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_reject" />
 
-        tools:listitem="@layout/item_schedule" />
 </FrameLayout>

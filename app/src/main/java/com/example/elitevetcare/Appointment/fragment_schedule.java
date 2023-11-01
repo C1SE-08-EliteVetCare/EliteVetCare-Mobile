@@ -1,4 +1,4 @@
-package com.example.elitevetcare.Activity;
+package com.example.elitevetcare.Appointment;
 
 import android.os.Bundle;
 

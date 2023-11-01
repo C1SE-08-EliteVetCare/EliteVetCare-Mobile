@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.elitevetcare.Appointment.fragment_chatbot_list;
 import com.example.elitevetcare.Authentication.fragment_success;
 import com.example.elitevetcare.Profile.fragment_user_profile;
 import com.example.elitevetcare.R;
@@ -39,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 int item_id = item.getItemId();
                 if(item_id == R.id.btn_bottomnav_home)
-                    selectedFragment = new fragment_success();
+                    selectedFragment = new fragment_homepage();
                 if(item_id == R.id.btn_bottomnav_QA)
-                    selectedFragment = new fragment_success();
+                    selectedFragment = new fragment_chatbot_list();
                 if(item_id == R.id.btn_bottomnav_appointment)
                     selectedFragment = new fragment_appointment();
                 if(item_id == R.id.btn_bottomnav_pets)
