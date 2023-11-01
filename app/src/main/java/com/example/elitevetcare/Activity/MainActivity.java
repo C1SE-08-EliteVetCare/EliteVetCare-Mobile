@@ -9,8 +9,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.elitevetcare.Authentication.fragment_success;
+import com.example.elitevetcare.DataLocalManager;
 import com.example.elitevetcare.Profile.fragment_user_profile;
 import com.example.elitevetcare.R;
 import com.example.elitevetcare.Appointment.fragment_appointment;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Toast.makeText(this, DataLocalManager.GetAccessToken(), Toast.LENGTH_SHORT).show();
         // Sử dụng BottomNavigationView để chuyển đổi giữa các Fragment
         bottomNavigationView = findViewById(R.id.bottom_Nav);
 
@@ -39,13 +41,13 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 int item_id = item.getItemId();
                 if(item_id == R.id.btn_bottomnav_home)
-                    selectedFragment = new fragment_success();
+                    selectedFragment = new fragment_home();
                 if(item_id == R.id.btn_bottomnav_QA)
                     selectedFragment = new fragment_success();
                 if(item_id == R.id.btn_bottomnav_appointment)
                     selectedFragment = new fragment_appointment();
                 if(item_id == R.id.btn_bottomnav_pets)
-                    selectedFragment = new fragment_success();
+                    selectedFragment = new fragment_list_pet();
                 if(item_id == R.id.btn_bottomnav_profile)
                     selectedFragment = new fragment_user_profile();
                 if (selectedFragment != null){
