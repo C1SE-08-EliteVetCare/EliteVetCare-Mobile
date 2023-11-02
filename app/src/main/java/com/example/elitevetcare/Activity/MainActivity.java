@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.elitevetcare.Authentication.fragment_success;
 import com.example.elitevetcare.DataLocalManager;
+import com.example.elitevetcare.Home.fragment_home;
+import com.example.elitevetcare.Pets.fragment_list_pet;
 import com.example.elitevetcare.Profile.fragment_user_profile;
 import com.example.elitevetcare.R;
 import com.example.elitevetcare.Appointment.fragment_appointment;
