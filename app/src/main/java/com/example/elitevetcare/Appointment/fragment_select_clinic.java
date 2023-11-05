@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.RecyclerViewClinicAdapter;
+import com.example.elitevetcare.RecyclerView.RecyclerViewClinicAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

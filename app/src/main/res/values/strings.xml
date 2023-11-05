@@ -5,7 +5,14 @@
     <string name="login_tip">Chưa có tài khoản? <b><font color='#007AFE'>Đăng ký</font></b></string>
     <string name="signup_tip">Đã có Tài Khoản? <b><font color='#007AFE'>Đăng nhập</font></b></string>
     <string name="Update">Cập Nhập</string>
+    <string name="Done">Hoàn Tất</string>
     <string name="Next">Tiếp Tục</string>
+    <string name="Accept">Chấp Nhận</string>
+    <string name="Reject">Từ Chối</string>
+    <string name="Rejected">Đã Từ Chối</string>
+    <string name="User_age_title">Bạn Sinh Năm Bao Nhiêu?</string>
+    <string name="Pet_age_title">Thú Cưng Của Bạn Bao Nhiêu Tháng Tuổi?</string>
+
     <string-array name="planets_array">
         <item>Mercury</item>
         <item>Venus</item>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.fragment_accept_load">
+    tools:context=".Appointment.fragment_accept_load">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,11 +11,12 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_marginTop="100dp"
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/img_doc" />
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/noappointment" />
 
         <TextView
             android:id="@+id/textView5"

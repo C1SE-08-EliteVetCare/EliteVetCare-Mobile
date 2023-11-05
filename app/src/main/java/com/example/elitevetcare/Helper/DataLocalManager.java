@@ -1,11 +1,11 @@
-package com.example.elitevetcare;
+package com.example.elitevetcare.Helper;
 
 import android.content.Context;
 
 public class DataLocalManager {
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
     public static final String REFRESH_TOKEN_TIMEUP = "REFRESH_TOKEN_TIME";
-    public static final String ACCESS_TOKEN_TIMEUP = "REFRESH_TOKEN_TIME";
+    public static final String ACCESS_TOKEN_TIMEUP = "ACCESS_TOKEN_TIME";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static DataLocalManager instance = null;
     public static MySharedPreferences mySharedPreferences;
