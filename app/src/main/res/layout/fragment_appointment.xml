@@ -10,34 +10,35 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/appointment_tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabTextColor="@color/light_gray"
-                app:tabSelectedTextColor="@color/blue"
-                app:tabIndicatorColor="@color/blue"
                 android:background="@color/white"
-                app:tabTextAppearance="@style/tab_title"/>
+                app:tabIndicatorColor="@color/blue"
+                app:tabSelectedTextColor="@color/blue"
+                app:tabTextAppearance="@style/tab_title"
+                app:tabTextColor="@color/light_gray" />
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/appointment_viewpager2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"/>
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_below="@id/appointment_tabLayout"/>
+        </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/appointment_FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            app:backgroundTint="@color/blue"
-            android:src="@drawable/ic_add"
             android:layout_margin="16dp"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/blue"
             app:fabSize="normal"
             app:layout_behavior=".FloatingActionButtonBehavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

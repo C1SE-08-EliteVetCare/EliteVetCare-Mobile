@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-<<<<<<< HEAD
-    tools:context=".Appointment.fragment_chatbot_list">
+    tools:context=".QuestionAndAnswer.fragment_chatbot_list">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -13,7 +12,7 @@
         android:layout_height="match_parent">
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Q/A"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -27,7 +26,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="4"
             android:layout_marginTop="70dp"
-            tools:listitem="@layout/item_chatbot_list"/>
+            tools:listitem="@layout/item_chatbot"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/QA_FloatingActionButton"
             android:layout_width="wrap_content"
@@ -39,19 +38,4 @@
             app:fabSize="normal"
             app:layout_behavior=".FloatingActionButtonBehavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-=======
-    tools:context=".QuestionAndAnswer.fragment_chatbot_list">
-
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatbot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="2"
-
-        tools:listitem="@layout/item_chatbot" />
->>>>>>> quochuy
-
 </FrameLayout>

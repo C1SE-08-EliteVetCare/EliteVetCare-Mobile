@@ -7,22 +7,16 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Authentication.fragment_login;
 import com.example.elitevetcare.Authentication.fragment_signup;
-import com.example.elitevetcare.DataLocalManager;
-import com.example.elitevetcare.HelperCallingAPI;
+import com.example.elitevetcare.Helper.DataLocalManager;
+import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,38 +40,22 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         DataLocalManager.init(getApplicationContext());
-
         if(DataLocalManager.GetRefreshToken() != null && DataLocalManager.GetRefreshTokenTimeUp() > System.currentTimeMillis()){
-            RequestBody body = new FormBody.Builder()
-                        .add("refreshToken",DataLocalManager.GetRefreshToken())
-                        .build();
-            HelperCallingAPI.CallingAPI_withHeader("auth/refresh-token", body, DataLocalManager.GetRefreshToken(), new HelperCallingAPI.MyCallback() {
-                @Override
-                public void onResponse(Response response) {
-                    int statusCode = response.code();
-                    JSONObject data = null;
-                    if(statusCode == 201) {
-                        try {
-                            data = new JSONObject(response.body().string());
-                            DataLocalManager.setAccessTokens(data.getString("accessToken"));
-                        } catch (JSONException | IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }
-                @Override
-                public void onFailure(IOException e) {
-                }
-            });
-            Intent intent = new Intent(Login.this,MainActivity.class);
-            startActivity(intent);
-            finish();
+            AutoLogin();
             return;
         }
         SettingID();
         setContentForm();
         CallingAnimate();
         setEvent();
+    }
+
+    private void AutoLogin() {
+        if(!HelperCallingAPI.RefreshTokenCalling())
+            return;
+        Intent intent = new Intent(Login.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void setEvent() {

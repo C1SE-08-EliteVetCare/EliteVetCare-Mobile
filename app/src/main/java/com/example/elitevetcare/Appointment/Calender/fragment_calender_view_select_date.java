@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.RecyclerViewCalenderAdapter;
+import com.example.elitevetcare.RecyclerView.RecyclerViewCalenderAdapter;
 
 import java.time.LocalDate;
 import java.time.YearMonth;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.compose.ui.text.font.Typeface;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.elitevetcare.Helper.PetInforViewModel;
 import com.example.elitevetcare.R;
 import com.kevalpatel2106.rulerpicker.RulerValuePicker;
 import com.kevalpatel2106.rulerpicker.RulerValuePickerListener;
@@ -55,6 +57,10 @@ public class fragment_weight_pet extends Fragment {
         return fragment;
     }
 
+    /**
+     * Doan Can Them Code*/
+    PetInforViewModel petInforViewModel;
+    Bundle args;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +68,12 @@ public class fragment_weight_pet extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        args = getArguments();
+        petInforViewModel = new ViewModelProvider(requireActivity()).get(PetInforViewModel .class);
     }
     RulerValuePicker rulerValuePicker;
     TextView selectedValueText;
+    double Pets_weight = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,18 +85,26 @@ public class fragment_weight_pet extends Fragment {
         rulerValuePicker.setValuePickerListener(new RulerValuePickerListener() {
             @Override
             public void onValueChange(final int selectedValue) {
-                 int true_value = 100 - selectedValue;
-                 double true_weight = (true_value * 100.0) /1000;
-                selectedValueText.setText(String.valueOf(true_weight).replace('.',','));
+                int true_value = 100 - selectedValue;
+                double true_weight = (true_value * 100.0) /1000;
+                Pets_weight = true_weight;
             }
 
             @Override
             public void onIntermediateValueChange(final int selectedValue) {
                 //Value changed but the user is still scrolling the ruler.
                 //This value is not final value. Application can utilize this value to display the current selected value.
+                int true_value = 100 - selectedValue;
+                double true_weight = (true_value * 100.0) /1000;
+                selectedValueText.setText(String.valueOf(true_weight).replace('.',','));
             }
         });
         // Inflate the layout for this fragment
         return root;
+    }
+
+    public boolean SendData() {
+        petInforViewModel.setWeight(Pets_weight);
+        return true;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.elitevetcare;
+package com.example.elitevetcare.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.elitevetcare.R;
 
 public class RecyclerViewClinicAdapter extends RecyclerView.Adapter<RecyclerViewClinicAdapter.ClinicViewHolder> {
     @NonNull

@@ -2,12 +2,17 @@ package com.example.elitevetcare.Profile;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.elitevetcare.Activity.UpdateProfile;
+import com.example.elitevetcare.Helper.PetInforViewModel;
 import com.example.elitevetcare.R;
 
 /**
@@ -48,6 +53,10 @@ public class fragment_gender_pets extends Fragment {
         return fragment;
     }
 
+    /**
+     * Doan Can Them Code*/
+    PetInforViewModel petInforViewModel;
+    Bundle args;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +64,48 @@ public class fragment_gender_pets extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        args = getArguments();
+        petInforViewModel = new ViewModelProvider(requireActivity()).get(PetInforViewModel .class);
     }
 
+    AppCompatButton btn_male, btn_female;
+    int GenderSelected = 1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_gender_pets, container, false);
+        btn_male = root.findViewById(R.id.btn_male_petGender);
+        btn_female = root.findViewById(R.id.btn_female_petGender);
+        btn_male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenderSelected = 1;
+                ChangeContent();
+            }
+        });
+        btn_female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenderSelected = 2;
+                ChangeContent();
+            }
+        });
+        ChangeContent();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gender_pets, container, false);
+        return root;
+    }
+
+    private void ChangeContent() {
+        if(GenderSelected == 1){
+            btn_male.setBackgroundResource(R.drawable.custom_button_male_pets_selected);
+            btn_female.setBackgroundResource(R.drawable.custom_button_female_pets);
+        }else if(GenderSelected == 2) {
+            btn_female.setBackgroundResource(R.drawable.custom_button_female_pets_selected);
+            btn_male.setBackgroundResource(R.drawable.custom_button_male_pets);
+        }
+    }
+    public boolean SendData() {
+        petInforViewModel.setGender(GenderSelected);
+        return true;
     }
 }
