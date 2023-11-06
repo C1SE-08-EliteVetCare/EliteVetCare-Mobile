@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -199,3 +200,173 @@
             android:textSize="15dp" />
     </RelativeLayout>
 </LinearLayout>
+=======
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="350dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/schedule_appoinment_theme"
+            android:layout_marginLeft="30dp"
+            android:layout_height="280dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+
+            <TextView
+
+                android:id="@+id/textView15"
+                android:layout_width="350dp"
+                android:layout_height="70dp"
+                android:background="@drawable/schedule_appoinment"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="30dp"
+                tools:layout_editor_absoluteY="57dp" />
+
+            <TextView
+                android:id="@+id/txt_khachhang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Khách hàng"
+                android:textColor="@android:color/white"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="78dp" />
+
+            <TextView
+                android:id="@+id/txt_hovaten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Họ và tên:"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="134dp" />
+
+            <TextView
+                android:id="@+id/txt_ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cao Quoc Huy"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="190dp"
+                tools:layout_editor_absoluteY="134dp" />
+
+            <TextView
+                android:id="@+id/txt_sodienthoai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại:"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="41dp"
+                tools:layout_editor_absoluteY="168dp" />
+
+            <TextView
+                android:id="@+id/txt_sdt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0971010073"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="190dp"
+                tools:layout_editor_absoluteY="168dp" />
+
+            <TextView
+                android:id="@+id/txt_diachi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ:"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="91dp"
+                tools:layout_editor_absoluteY="198dp" />
+
+            <TextView
+                android:id="@+id/txt_dc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="245 Nguyen Van Linh "
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="190dp"
+                tools:layout_editor_absoluteY="198dp" />
+
+            <TextView
+                android:id="@+id/txt_ngay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày:"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="105dp"
+                tools:layout_editor_absoluteY="230dp" />
+
+            <TextView
+                android:id="@+id/txt_Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="28/09/2023"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="190dp"
+                tools:layout_editor_absoluteY="230dp" />
+
+            <TextView
+                android:id="@+id/txt_thoigian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thời gian:"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="263dp" />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8:30 AM - 10AM"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="190dp"
+                tools:layout_editor_absoluteY="263dp" />
+
+            <TextView
+                android:id="@+id/txt_tongquat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng quát:"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="65dp"
+                tools:layout_editor_absoluteY="296dp" />
+
+            <TextView
+                android:id="@+id/txt_tq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chi tiết"
+                android:textSize="18dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="190dp"
+                tools:layout_editor_absoluteY="296dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+>>>>>>> quochuy
