@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.elitevetcare"
-        minSdk = 29
+        minSdk = 28
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -44,5 +44,7 @@ dependencies {
     implementation ("me.relex:circleindicator:2.1.6")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("io.github.ShawnLin013:number-picker:2.4.13")
-
+    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
 }

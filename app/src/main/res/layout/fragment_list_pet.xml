@@ -3,25 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Appointment.fragment_list_pet">
-
-=======
     xmlns:app="http://schemas.android.com/apk/res-auto">
->>>>>>> quochuy
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Recycler_list_item_clinic"
+        android:id="@+id/Recycler_list_item_pet_profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="4"
-<<<<<<< HEAD
-
-=======
->>>>>>> quochuy
         tools:listitem="@layout/item_processing" />
 
 </FrameLayout>

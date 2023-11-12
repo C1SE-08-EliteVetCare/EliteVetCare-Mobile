@@ -40,13 +40,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:name="com.example.elitevetcare.Profile.fragment_weight_pet"/>
+            android:layout_marginBottom="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="140dp"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="bottom"
             android:orientation="horizontal">
+
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="54dp"
                 android:layout_height="54dp"
@@ -56,6 +68,7 @@
                 android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_nextDoing_UpdateProfile"
                 android:layout_width="150dp"
                 android:layout_height="54dp"
                 android:layout_gravity="right"
@@ -69,8 +82,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
         </LinearLayout>
-        <View android:layout_width="0dp"
-            android:layout_height="15dp"/>
     </LinearLayout>
 
 

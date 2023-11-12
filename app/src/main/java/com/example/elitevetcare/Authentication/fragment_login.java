@@ -1,8 +1,6 @@
 package com.example.elitevetcare.Authentication;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -14,13 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.Login;
-import com.example.elitevetcare.Activity.MainActivity;
-import com.example.elitevetcare.DataLocalManager;
-import com.example.elitevetcare.HelperCallingAPI;
+import com.example.elitevetcare.Model.CurrentUser;
+import com.example.elitevetcare.Helper.DataLocalManager;
+import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.R;
 
 import org.json.JSONException;
@@ -102,12 +99,18 @@ public class fragment_login extends Fragment {
                         .add("password",password)
                         .build();
 
-                HelperCallingAPI.CallingAPI_noHeader("auth/login", LoginBody, new HelperCallingAPI.MyCallback() {
+                HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.LOGIN_PATH, LoginBody, new HelperCallingAPI.MyCallback() {
                     @Override
                     public void onResponse(Response response){
                         int statusCode = response.code();
                         JSONObject data = null;
                         if(statusCode == 200) {
+                            CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
+                                @Override
+                                public void onUserGeted(CurrentUser currentUser) {
+                                    ((Login)getActivity()).RedictToMainAction();
+                                }
+                            });
                             try {
                                 data = new JSONObject(response.body().string());
                                 String AccessToken = data.getString("accessToken");
@@ -118,9 +121,6 @@ public class fragment_login extends Fragment {
                                 throw new RuntimeException(e);
                             }
                         }
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
                     }
 
                     @Override

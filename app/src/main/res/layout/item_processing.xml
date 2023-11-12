@@ -6,22 +6,19 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="120dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginVertical="5dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-<<<<<<< HEAD
-        android:background="@drawable/clinic_homeui"
-=======
         android:background="@drawable/custom_input_box_white"
         android:elevation="10dp"
->>>>>>> quochuy
         android:orientation="horizontal">
         <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/avatar_pet_pet_list"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
-            android:background="@drawable/avt_cat"/>
+            android:src="@drawable/avt_cat"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,7 +30,7 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/name_of_clinic"
+                    android:id="@+id/txt_name_of_pet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đen"
@@ -42,21 +39,16 @@
                     android:layout_marginTop="10dp"
                     android:textColor="@color/black"
                     android:textAppearance="@style/tab_title"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
             </LinearLayout>
-            <TextView
-                android:id="@+id/address_of_clinic"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="15dp"
-                android:textStyle="normal"
-                android:textColor="@color/black"
-                android:textAppearance="@style/tab_title"/>
+                android:layout_height="1dp"
+                android:layout_marginVertical="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@color/low_gray"
+                android:layout_gravity="center"/>
             <TextView
+                android:id="@+id/txt_Species_and_Breed_pet"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"

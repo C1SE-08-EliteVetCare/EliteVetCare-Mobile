@@ -1,20 +1,29 @@
 <resources>
     <string name="app_name">EliteVetCare</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <!--UI String-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_tip">Chưa có tài khoản? <b><font color='#007AFE'>Đăng ký</font></b></string>
     <string name="signup_tip">Đã có Tài Khoản? <b><font color='#007AFE'>Đăng nhập</font></b></string>
+    <string name="UploadAdvance">Thêm Lời Khuyên</string>
+    <string name="UploadCondition">Cập Nhập Hôm Nay</string>
     <string name="Update">Cập Nhập</string>
+    <string name="Done">Hoàn Tất</string>
     <string name="Next">Tiếp Tục</string>
+    <string name="Accept">Chấp Nhận</string>
+    <string name="Reject">Từ Chối</string>
+    <string name="Rejected">Đã Từ Chối</string>
+    <string name="User_age_title">Bạn Sinh Năm Bao Nhiêu?</string>
+    <string name="Pet_age_title">Thú Cưng Của Bạn Bao Nhiêu Tháng Tuổi?</string>
+    <string name="google_web_server">142282058537-7l7frn7ht4dfjsoenqsitge31or22epv.apps.googleusercontent.com</string>
+
+    <!--Function String-->
+    <string name="portion_pet">portion</string>
+    <string name="weight_pet">weight</string>
+
+    <!--Array String-->
     <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Chọn</item>
     </string-array>
     <string-array name="User_Sex">
         <item><b>Nam</b></item>

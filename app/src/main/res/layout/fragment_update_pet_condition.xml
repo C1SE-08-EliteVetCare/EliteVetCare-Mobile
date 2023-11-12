@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_capnhat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_marginTop="20dp"
+                android:textAppearance="@style/text_regular_font"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:text="Cập Nhập tình Trạng Thú Cưng" />
+
+            <TextView
+                android:id="@+id/txt_khauphanan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Khẩu Phần Ăn"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="16dp"
+                android:layout_below="@+id/txt_capnhat"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                />
+
+            <TextView
+                android:id="@+id/txt_cannang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cân nặng"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="16dp"
+                android:layout_toEndOf="@+id/txt_khauphanan"
+                android:layout_below="@+id/txt_capnhat"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="70dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_khauphanan"
+                android:layout_width="140dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/txt_khauphanan"
+                android:background="@drawable/custom_input_box_white"
+                android:layout_marginTop="5dp"
+                android:elevation="10dp"
+                android:inputType="text"
+                android:layout_marginLeft="20dp"
+                android:layout_alignParentStart="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:translationZ="10dp"
+                android:paddingTop="15dp"
+                android:layout_marginRight="20dp"
+                android:text="G"
+                android:layout_alignRight="@+id/edt_khauphanan"
+                android:layout_alignTop="@id/edt_khauphanan"
+                android:layout_alignBottom="@id/edt_khauphanan"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_cannang"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/txt_cannang"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="19dp"
+                android:layout_toEndOf="@+id/edt_khauphanan"
+                android:elevation="10dp"
+                android:inputType="textMultiLine"
+                android:background="@drawable/custom_input_box_white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:translationZ="10dp"
+                android:paddingTop="15dp"
+                android:layout_marginRight="20dp"
+                android:text="KG"
+                android:layout_alignRight="@+id/edt_cannang"
+                android:layout_alignTop="@id/edt_cannang"
+                android:layout_alignBottom="@id/edt_cannang"/>
+            <TextView
+                android:id="@+id/txt_thucan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thức ăn"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="16dp"
+                android:layout_below="@+id/edt_khauphanan"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_thucan"
+                android:layout_width="372dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/txt_thucan"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:hint="Hạt, cơm, cá"
+                android:inputType="textMultiLine"
+                android:elevation="10dp"
+                android:paddingStart="20dp"
+                android:layout_marginEnd="19dp"
+                android:background="@drawable/custom_input_box_white" />
+
+            <TextView
+                android:id="@+id/txt_trangthaihoatdong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trạng thái hoạt động"
+                android:textSize="16dp"
+                android:layout_below="@+id/edt_thucan"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:textAppearance="@style/text_regular_font"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_trangthai"
+                android:layout_width="372dp"
+                android:layout_height="140dp"
+                android:layout_below="@+id/txt_trangthaihoatdong"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:elevation="10dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Có thể có hoặc không"
+                android:inputType="textMultiLine"
+                android:paddingStart="20dp"
+                android:paddingBottom="60dp"
+                android:background="@drawable/custom_input_box_white" />
+
+            <TextView
+                android:id="@+id/txt_tinhtrangdingoai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tình trạng đi ngoài"
+                android:textSize="16dp"
+                android:layout_below="@+id/edt_trangthai"
+                android:layout_alignParentStart="true"
+                android:textAppearance="@style/text_regular_font"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_tinhtrang"
+                android:layout_width="372dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/txt_tinhtrangdingoai"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="19dp"
+                android:elevation="10dp"
+                android:hint="Có thể có hoặc không"
+                android:paddingStart="20dp"
+                android:inputType="textMultiLine"
+                android:background="@drawable/custom_input_box_white" />
+
+            <TextView
+                android:id="@+id/txt_hinhanh"
+                android:layout_width="wrap_content"
+                android:textAppearance="@style/text_regular_font"
+                android:layout_height="wrap_content"
+                android:text="Hình ảnh"
+                android:textSize="16dp"
+                android:layout_below="@+id/edt_tinhtrang"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                />
+            <RelativeLayout
+                android:id="@+id/relativelayout_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_hinhanh"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/txt_hinhanh"
+                android:layout_marginTop="20dp"
+                >
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardview_avatar_pet_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="40dp"
+                    android:layout_centerInParent="true" >
+                    <androidx.constraintlayout.utils.widget.ImageFilterView
+                        android:id="@+id/img_pet_condition"
+                        android:layout_width="300dp"
+                        android:layout_height="200dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"/>
+                </androidx.cardview.widget.CardView>
+                <ImageButton
+                    android:id="@+id/btn_img_condition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/custom_floatbutton"
+                    android:layout_marginRight="20dp"
+                    android:translationZ="3dp"/>
+            </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_done_Update_condition"
+                android:layout_width="150dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="right"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight= "true"
+                android:layout_below="@id/relativelayout_img"
+                android:background="@drawable/custome_button_continue"
+                android:drawableEnd="@drawable/ic_continue"
+                android:paddingEnd="15dp"
+                android:paddingStart="10dp"
+                android:text="@string/Done"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+    </LinearLayout>
+</FrameLayout>

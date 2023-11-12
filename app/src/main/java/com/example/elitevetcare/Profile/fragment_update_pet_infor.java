@@ -1,14 +1,37 @@
 package com.example.elitevetcare.Profile;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+
+import com.example.elitevetcare.Helper.Libs;
+import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.R;
+
+import java.io.File;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +71,12 @@ public class fragment_update_pet_infor extends Fragment {
         return fragment;
     }
 
+    /**
+     * Doan Can Them Code*/
+    ActivityResultLauncher<String> ImageGallaryResultLauncher;
+    ActivityResultLauncher<Intent> takePictureLauncher;
+    PetInforViewModel petInforViewModel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +84,102 @@ public class fragment_update_pet_infor extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        petInforViewModel = new ViewModelProvider(requireActivity()).get(PetInforViewModel.class);
+
+        SetActivityResult();
     }
 
+    private void SetActivityResult() {
+        ImageGallaryResultLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                imageAvatar.setImageURI(result);
+                File file = Libs.uriToFile(getActivity(),result);
+                petInforViewModel.setAvatar(file);
+            }
+        });
+
+        takePictureLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            Toast.makeText(getContext(), "true", Toast.LENGTH_SHORT).show();
+                            // Xử lý ảnh đã chụp
+                            Bundle extras = result.getData().getExtras();
+                            Bitmap bitmap = (Bitmap) extras.get("data");
+                            imageAvatar.setImageBitmap(bitmap);
+                            petInforViewModel.setAvatarByBitmap(getActivity().getCacheDir(),bitmap);
+                        }else{
+                            Toast.makeText(getContext(),result.getResultCode()+  " : " + RESULT_OK, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+    }
+
+
+    ImageFilterButton btn_add_avatar;
+    AppCompatSpinner Sprinner_Species;
+    AppCompatEditText edt_breed, edt_nickName, edt_color;
+    ImageView imageAvatar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_update_pet_infor, container, false);
+        SetID(root);
+        SetEvent();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_pet_infor, container, false);
+        return root;
     }
+
+    private void SetEvent() {
+        btn_add_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImageSourcePopup();
+            }
+        });
+    }
+
+    private void SetID(View root) {
+        btn_add_avatar = root.findViewById(R.id.btn_add_avatar_pet);
+        Sprinner_Species = root.findViewById(R.id.spinner_species_pet_profile);
+        edt_breed = root.findViewById(R.id.edt_breed_pet_profile);
+        edt_nickName = root.findViewById(R.id.edt_nickName_pet_profile);
+        edt_color = root.findViewById(R.id.edt_color_pet_profile);
+        imageAvatar = root.findViewById(R.id.img_avatar_pet_profile);
+    }
+
+    private void showImageSourcePopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Chọn nguồn ảnh");
+        builder.setItems(new CharSequence[]{"Máy ảnh", "Thư viện ảnh"}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) { // Chọn máy ảnh
+                    PickImageFromCamera();
+                } else { // Chọn từ thư viện
+                    PickImageFromGallary();
+                }
+            }
+        });
+        builder.show();
+    }
+    public boolean SendData() {
+        petInforViewModel.setSpecies(Sprinner_Species.getSelectedItem().toString());
+        petInforViewModel.setBreed(edt_breed.getText().toString());
+        petInforViewModel.setNickName(edt_nickName.getText().toString());
+        petInforViewModel.setColor(edt_color.getText().toString());
+        return true;
+    }
+    public void PickImageFromGallary() {
+        ImageGallaryResultLauncher.launch("image/*");
+    }
+    private void PickImageFromCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePictureLauncher.launch(takePictureIntent);
+    }
+
 }

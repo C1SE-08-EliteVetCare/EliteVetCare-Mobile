@@ -1,15 +1,22 @@
 package com.example.elitevetcare.Profile;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.elitevetcare.Activity.UpdateProfile;
+import com.example.elitevetcare.Model.CurrentUser;
+import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.R;
 import com.shawnlin.numberpicker.NumberPicker;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +57,10 @@ public class fragment_age extends Fragment {
         return fragment;
     }
 
+    /**
+     * Doan Can Them Code*/
+    PetInforViewModel petInforViewModel;
+    Bundle args;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +68,8 @@ public class fragment_age extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        args = getArguments();
+        petInforViewModel = new ViewModelProvider(requireActivity()).get(PetInforViewModel .class);
     }
 
     @Override
@@ -64,9 +77,20 @@ public class fragment_age extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_age, container, false);
         npicker_age = ((NumberPicker)root.findViewById(R.id.number_picker_age));
-        npicker_age.setMinValue(18);
+        npicker_age.setMinValue(1);
         npicker_age.setMaxValue(99);
+        npicker_age.setValue(15);
+
         // Inflate the layout for this fragment
         return root ;
+    }
+
+    public boolean SendData() {
+        if( ((UpdateProfile)getActivity()).GetPreviousFragment() instanceof fragment_gender )
+                CurrentUser.getCurrentUser().setBirthYear(String.valueOf( Calendar.getInstance().get(Calendar.YEAR) - npicker_age.getValue() ));
+        else if (((UpdateProfile)getActivity()).GetPreviousFragment() instanceof fragment_gender_pets )
+            petInforViewModel.setAge(npicker_age.getValue());
+        Log.d("userage", String.valueOf(Calendar.getInstance().get(Calendar.YEAR) - npicker_age.getValue()));
+        return true;
     }
 }
