@@ -47,12 +47,11 @@ public class UpdateProfile extends AppCompatActivity {
         selected_fragment = intent.getIntExtra("FragmentCalling", -1);
         Init();
         CallingFragment();
-
-
     }
     private void Init() {
         btn_nextDoing = findViewById(R.id.btn_nextDoing_UpdateProfile);
         petInforViewModel = new ViewModelProvider(UpdateProfile.this).get(PetInforViewModel.class);
+
     }
     private void ResetData() {
         selected_fragment = -1;

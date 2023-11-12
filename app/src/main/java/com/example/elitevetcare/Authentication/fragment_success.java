@@ -2,12 +2,14 @@ package com.example.elitevetcare.Authentication;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.elitevetcare.Activity.Login;
 import com.example.elitevetcare.R;
 
 /**
@@ -26,6 +28,7 @@ public class fragment_success extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    AppCompatButton btn_login;
     public fragment_success() {
         // Required empty public constructor
     }
@@ -54,6 +57,7 @@ public class fragment_success extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -61,6 +65,22 @@ public class fragment_success extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_success, container, false);
+        View root = inflater.inflate(R.layout.fragment_success, container, false);
+        SetID(root);
+        SetEvents();
+        return root;
+    }
+
+    private void SetID(View root) {
+        btn_login = root.findViewById(R.id.dentrangchu);
+    }
+
+    private void SetEvents(){
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Login) getActivity()).changeFragment(new fragment_login());
+            }
+        });
     }
 }

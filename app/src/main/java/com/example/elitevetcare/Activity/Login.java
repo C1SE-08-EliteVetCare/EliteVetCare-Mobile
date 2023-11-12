@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity {
         btn_google_login.setTranslationY(300);
     }
 
-    void changeFragment(Fragment newFragment){
+    public void changeFragment(Fragment newFragment){
         fragmentManager.beginTransaction()
                 .replace(frm_container_view.getId(), newFragment, newFragment.getClass().getSimpleName()).addToBackStack(null).commit();
     }

@@ -30,6 +30,8 @@ public class HelperCallingAPI {
     final public static String LOGIN_PATH = "auth/login";
     final public static String REFRESH_TOKEN_PATH = "auth/refresh-token";
     final public static String GET_PET_LIST_PATH = "pet/pets";
+    final public static String REGISTER_PATH = "auth/register";
+    final public static String VERIFY_PATH = "auth/verify-email";
     final public static String CURRENT_USER_PATH = "user/me";
     static boolean refresh_status = false;
     public static void CallingAPI_noHeader(String API_PATH, RequestBody body, MyCallback callback){

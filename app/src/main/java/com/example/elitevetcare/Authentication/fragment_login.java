@@ -73,7 +73,6 @@ public class fragment_login extends Fragment {
         }
     }
 
-
     AppCompatButton btn_login;
     ImageFilterButton btn_fingerPrint_login;
     AppCompatEditText edt_email, edt_password;
@@ -102,7 +101,7 @@ public class fragment_login extends Fragment {
                 HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.LOGIN_PATH, LoginBody, new HelperCallingAPI.MyCallback() {
                     @Override
                     public void onResponse(Response response){
-                        int statusCode = response.code();
+                            int statusCode = response.code();
                         JSONObject data = null;
                         if(statusCode == 200) {
                             Intent intent = new Intent(getContext(), MainActivity.class);
