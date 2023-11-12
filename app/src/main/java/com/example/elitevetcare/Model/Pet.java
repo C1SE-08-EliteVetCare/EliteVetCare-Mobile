@@ -1,13 +1,15 @@
 package com.example.elitevetcare.Model;
 
-public class Pet {
+import java.io.Serializable;
+
+public class Pet implements Serializable {
     private int id;
     private String name;
     private String species;
     private String breed;
     private String gender;
     private int age;
-    private float weight;
+    private double weight;
     private String furColor;
     private String avatar;
     private int ownerId;
@@ -80,7 +82,7 @@ public class Pet {
         return age;
     }
 
-    public float getWeight() {
+    public double getWeight() {
         return weight;
     }
 

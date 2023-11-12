@@ -19,7 +19,6 @@ import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,16 +27,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-import com.example.elitevetcare.Helper.PetInforViewModel;
+import com.example.elitevetcare.Helper.Libs;
+import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.R;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,7 +94,7 @@ public class fragment_update_pet_infor extends Fragment {
             @Override
             public void onActivityResult(Uri result) {
                 imageAvatar.setImageURI(result);
-                File file = uriToFile(result);
+                File file = Libs.uriToFile(getActivity(),result);
                 petInforViewModel.setAvatar(file);
             }
         });
@@ -124,37 +118,7 @@ public class fragment_update_pet_infor extends Fragment {
                 }
         );
     }
-    public File uriToFile(Uri uri) {
-        File outputFile = null;
-        try {
-            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
-            outputFile = createImageFile(); // Hàm tạo một tệp PNG trên thiết bị
 
-            if (outputFile != null) {
-                OutputStream outputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-
-                inputStream.close();
-                outputStream.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return outputFile;
-    }
-    private File createImageFile() throws IOException {
-        // Tạo một tên tệp duy nhất dựa trên thời gian
-
-        String imageFileName = "JPEG_" + 1 + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        return image;
-    }
 
     ImageFilterButton btn_add_avatar;
     AppCompatSpinner Sprinner_Species;

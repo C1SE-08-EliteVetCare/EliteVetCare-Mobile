@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
@@ -17,20 +22,12 @@ import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.bumptech.glide.Glide;
+import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Activity.UpdateProfile;
+import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Model.Pet;
 import com.example.elitevetcare.R;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecyclerViewPetListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
@@ -93,14 +90,21 @@ public class RecyclerViewPetListAdapter extends RecyclerView.Adapter<RecyclerVie
             PetListViewHolder currentHolder = (PetListViewHolder) holder;
             currentHolder.txt_Species_And_Breed.setText(currentPetPosition.getSpecies() + " | " + currentPetPosition.getBreed());
             currentHolder.txt_Name_of_Pet.setText(currentPetPosition.getName());
-            Picasso.get()
-                    .load(currentPetPosition.getAvatar())
-                    .into(((PetListViewHolder) holder).image_avatar);
-//            Glide.with(mContext)
-//                    .load(currentPetPosition.getAvatar() )
-//                    .into(currentHolder.image_avatar);
+            Libs.SetImageFromURL(currentPetPosition,currentHolder);
+
+            currentHolder.image_avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, ContentView.class);
+                    intent.putExtra("FragmentCalling",R.layout.fragment_pet_infor_detail);
+                    intent.putExtra("Pets", currentPetPosition);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -124,4 +128,5 @@ public class RecyclerViewPetListAdapter extends RecyclerView.Adapter<RecyclerVie
             btn_add = itemView.findViewById(R.id.btn_click_new_profile);
         }
     }
+
 }

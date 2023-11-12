@@ -2,19 +2,15 @@ package com.example.elitevetcare.Profile;
 
 import android.os.Bundle;
 
-import androidx.compose.ui.text.font.Typeface;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.elitevetcare.Helper.PetInforViewModel;
+import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.R;
 import com.kevalpatel2106.rulerpicker.RulerValuePicker;
 import com.kevalpatel2106.rulerpicker.RulerValuePickerListener;

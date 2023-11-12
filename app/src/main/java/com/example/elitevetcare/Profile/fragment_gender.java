@@ -2,12 +2,14 @@ package com.example.elitevetcare.Profile;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.elitevetcare.Model.CurrentUser;
 import com.example.elitevetcare.R;
 
 /**
@@ -56,11 +58,71 @@ public class fragment_gender extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    AppCompatButton btn_male, btn_female, btn_other;
+    String GenderString = "";
+    int GenderSelected = 3;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_gender, container, false);
+        SetID(root);
+        SetEvent();
+        ChangeContent();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gender, container, false);
+        return root;
+    }
+
+    private void SetID(View root) {
+        btn_male = root.findViewById(R.id.btn_male_gender);
+        btn_female = root.findViewById(R.id.btn_female_gender);
+        btn_other = root.findViewById(R.id.btn_other_gender);
+    }
+
+    private void SetEvent() {
+        btn_male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenderSelected = 1;
+                ChangeContent();
+            }
+        });
+        btn_female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenderSelected = 2;
+                ChangeContent();
+            }
+        });
+        btn_other.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenderSelected = 3;
+                ChangeContent();
+            }
+        });
+    }
+
+    private void ChangeContent() {
+        if(GenderSelected == 1){
+            btn_male.setBackgroundResource(R.drawable.custom_button_male_selected);
+            btn_female.setBackgroundResource(R.drawable.custom_button_female_pets);
+            btn_other.setBackgroundResource(R.drawable.custom_button_othergender);
+            GenderString = "Nam";
+        }else if(GenderSelected == 2) {
+            btn_female.setBackgroundResource(R.drawable.custom_button_female_selected);
+            btn_male.setBackgroundResource(R.drawable.custom_button_male);
+            btn_other.setBackgroundResource(R.drawable.custom_button_othergender);
+            GenderString = "Nữ";
+        }else if(GenderSelected == 3) {
+            btn_female.setBackgroundResource(R.drawable.custom_button_female);
+            btn_male.setBackgroundResource(R.drawable.custom_button_male);
+            btn_other.setBackgroundResource(R.drawable.custom_button_othergender_selected);
+            GenderString = "Khác";
+        }
+    }
+
+    public boolean SendData() {
+        CurrentUser.getCurrentUser().setGender(GenderString);
+        return true;
     }
 }

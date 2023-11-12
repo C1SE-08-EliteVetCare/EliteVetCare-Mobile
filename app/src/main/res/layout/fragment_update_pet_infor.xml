@@ -202,7 +202,6 @@
                     android:layout_marginRight="20dp"
                     android:translationZ="3dp"/>
             </RelativeLayout>
-
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

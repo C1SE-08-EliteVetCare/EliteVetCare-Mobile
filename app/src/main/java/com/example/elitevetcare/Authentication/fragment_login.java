@@ -1,7 +1,6 @@
 package com.example.elitevetcare.Authentication;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -15,7 +14,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.elitevetcare.Activity.MainActivity;
+import com.example.elitevetcare.Activity.Login;
+import com.example.elitevetcare.Model.CurrentUser;
 import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.R;
@@ -104,9 +104,12 @@ public class fragment_login extends Fragment {
                             int statusCode = response.code();
                         JSONObject data = null;
                         if(statusCode == 200) {
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            startActivity(intent);
-                            getActivity().finish();
+                            CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
+                                @Override
+                                public void onUserGeted(CurrentUser currentUser) {
+                                    ((Login)getActivity()).RedictToMainAction();
+                                }
+                            });
                             try {
                                 data = new JSONObject(response.body().string());
                                 String AccessToken = data.getString("accessToken");

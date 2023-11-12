@@ -38,6 +38,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_male_gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_button_male" />
@@ -46,12 +47,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_female_gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_button_female"/>
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_other_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

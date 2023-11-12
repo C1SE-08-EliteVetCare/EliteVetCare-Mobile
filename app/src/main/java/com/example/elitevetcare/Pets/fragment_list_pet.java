@@ -1,33 +1,21 @@
 package com.example.elitevetcare.Pets;
 
+import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.core.app.CoreComponentFactory;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.example.elitevetcare.Helper.HelperCallingAPI;
+import com.example.elitevetcare.Model.CurrentPetList;
 import com.example.elitevetcare.Model.Pet;
 import com.example.elitevetcare.R;
 import com.example.elitevetcare.RecyclerView.RecyclerViewPetListAdapter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Response;
+import java.util.Objects;
 
 
 /**
@@ -45,9 +33,12 @@ public class fragment_list_pet extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    Activity MainActivity;
     public fragment_list_pet() {
-        // Required empty public constructor
+        this.MainActivity = null;
+    }
+    public fragment_list_pet(Activity MainActivity) {
+        this.MainActivity = MainActivity;
     }
 
     /**
@@ -75,6 +66,7 @@ public class fragment_list_pet extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
     RecyclerView recycler_clinicView;
     RecyclerViewPetListAdapter PetListAdapter;
@@ -90,48 +82,28 @@ public class fragment_list_pet extends Fragment {
     }
 
     private void GetDataByAPI() {
-        Thread API_thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HelperCallingAPI.CallingAPI_Get(HelperCallingAPI.GET_PET_LIST_PATH, new HelperCallingAPI.MyCallback() {
-                    @Override
-                    public void onResponse(Response response) {
-                        int statusCode = response.code();
-                        JSONObject data = null;
-                        if(statusCode == 200) {
-                            try {
-                                data = new JSONObject(response.body().string());
-                                JSONArray ListPetData = data.getJSONArray("data");
-                                Gson gson = new Gson();
-                                Type listType = new TypeToken<ArrayList<Pet>>(){}.getType();
-                                PetList = gson.fromJson(ListPetData.toString(), listType);
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        PetListAdapter = new RecyclerViewPetListAdapter(PetList, getActivity());
-//                                        PetListAdapter = new RecyclerViewPetListAdapter(PetList );
-                                        recycler_clinicView.setAdapter(PetListAdapter);
-                                    }
-                                });
-                            } catch (IOException | JSONException e) {
-                                throw new RuntimeException(e);
-                            }
+        if (CurrentPetList.getPetList() == null)
+            CurrentPetList.CreateInstanceByAPI(new CurrentPetList.PetListCallback() {
+                @Override
+                public void OnSuccess(CurrentPetList currentPetList) {
+                    Log.d("ListPetError",CurrentPetList.getPetList().get(0).getName());
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            PetList = CurrentPetList.getPetList();
+                            PetListAdapter = new RecyclerViewPetListAdapter(PetList, getContext());
+                            recycler_clinicView.setAdapter(PetListAdapter);
                         }
-
-                    }
-                    @Override
-                    public void onFailure(IOException e) {
-
-                    }
-                });
-            }
-        });
-        API_thread.start();
-        try {
-            API_thread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+                    });
+                }
+            });
+        else {
+            PetList = CurrentPetList.getPetList();
+            PetListAdapter = new RecyclerViewPetListAdapter(PetList, getContext());
+            recycler_clinicView.setAdapter(PetListAdapter);
         }
+    }
+    public void RefreshData(){
 
     }
 }
