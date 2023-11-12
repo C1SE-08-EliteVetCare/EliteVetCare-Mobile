@@ -9,10 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.elitevetcare.Activity.UpdateProfile;
-import com.example.elitevetcare.Helper.PetInforViewModel;
+import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.R;
 
 /**
@@ -74,8 +72,19 @@ public class fragment_gender_pets extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_gender_pets, container, false);
+        SetID(root);
+        SetEvent();
+        ChangeContent();
+        // Inflate the layout for this fragment
+        return root;
+    }
+
+    private void SetID(View root) {
         btn_male = root.findViewById(R.id.btn_male_petGender);
         btn_female = root.findViewById(R.id.btn_female_petGender);
+    }
+
+    private void SetEvent() {
         btn_male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,9 +99,6 @@ public class fragment_gender_pets extends Fragment {
                 ChangeContent();
             }
         });
-        ChangeContent();
-        // Inflate the layout for this fragment
-        return root;
     }
 
     private void ChangeContent() {

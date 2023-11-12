@@ -36,10 +36,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thành Phố"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:textAppearance="@style/text_regular_font"/>
             <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_city_Useraddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_combobox"
@@ -58,11 +59,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quận/Huyện"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:textAppearance="@style/text_regular_font"/>
 
             <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_district_Useraddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_combobox"
@@ -81,10 +83,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Phường"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:textAppearance="@style/text_regular_font"/>
             <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_ward_Useraddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_combobox"
@@ -103,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Địa Chỉ"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:textAppearance="@style/text_regular_font"/>
 
