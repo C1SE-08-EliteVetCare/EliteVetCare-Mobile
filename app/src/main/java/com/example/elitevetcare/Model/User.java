@@ -27,7 +27,7 @@ public class User {
 
     private String phone;
 
-    private String clinic;
+    private Clinic clinic;
 
     private Role role;
 
@@ -73,7 +73,7 @@ public class User {
         return phone;
     }
 
-    public String getClinic() {
+    public Clinic getClinic() {
         return clinic;
     }
 
@@ -123,7 +123,7 @@ public class User {
         this.phone = phone;
     }
 
-    public void setClinic(String clinic) {
+    public void setClinic(Clinic clinic) {
         this.clinic = clinic;
     }
 

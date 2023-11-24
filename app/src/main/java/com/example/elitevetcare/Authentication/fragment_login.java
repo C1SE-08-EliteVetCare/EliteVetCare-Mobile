@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.Login;
+import com.example.elitevetcare.Helper.Libs;
+import com.example.elitevetcare.Helper.ProgressHelper;
 import com.example.elitevetcare.Model.CurrentUser;
 import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
@@ -91,31 +93,43 @@ public class fragment_login extends Fragment {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String email = String.valueOf(edt_email.getText());
                 String password = String.valueOf(edt_password.getText());
+                if(email.isEmpty()){
+                    Libs.Sendmessage(getActivity(),"Vui lòng nhập email !");
+                    return;
+                }
+                if(password.isEmpty()){
+                    Libs.Sendmessage(getActivity(),"Vui lòng nhập mật khẩu !");
+                    return;
+                }
+                ProgressHelper.showDialog(requireActivity(),"Đang đăng nhập");
                 RequestBody LoginBody = new FormBody.Builder()
                         .add("email", email)
                         .add("password",password)
                         .build();
-
                 HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.LOGIN_PATH, LoginBody, new HelperCallingAPI.MyCallback() {
                     @Override
                     public void onResponse(Response response){
                             int statusCode = response.code();
                         JSONObject data = null;
                         if(statusCode == 200) {
-                            CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
-                                @Override
-                                public void onUserGeted(CurrentUser currentUser) {
-                                    ((Login)getActivity()).RedictToMainAction();
-                                }
-                            });
+
                             try {
                                 data = new JSONObject(response.body().string());
                                 String AccessToken = data.getString("accessToken");
                                 String RefreshToken = data.getString("refreshToken");
                                 DataLocalManager.setAccessTokens(AccessToken);
                                 DataLocalManager.setRefreshToken(RefreshToken);
+                                CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
+                                    @Override
+                                    public void onUserGeted(CurrentUser currentUser) {
+                                        if(ProgressHelper.isDialogVisible())
+                                            ProgressHelper.dismissDialog();
+                                        ((Login)getActivity()).RedictToMainAction();
+                                    }
+                                });
                             } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
                             }

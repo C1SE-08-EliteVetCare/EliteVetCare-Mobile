@@ -1,7 +1,6 @@
 package com.example.elitevetcare.Model;
 
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-import com.example.elitevetcare.RecyclerView.RecyclerViewPetListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Response;
 
@@ -28,6 +26,8 @@ public class CurrentPetList {
         return CurrentPetList.getInstance().PetList;
     }
     public void setPetList(ArrayList<Pet> list) {
+        if (list == null)
+            list = new ArrayList<>();
         PetList = list;
     }
     public static CurrentPetList CreateInstanceByAPI(PetListCallback callback){

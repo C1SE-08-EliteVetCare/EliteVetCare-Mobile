@@ -12,13 +12,14 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.elitevetcare.Model.CurrentUser;
 import com.example.elitevetcare.Model.Pet;
-import com.example.elitevetcare.RecyclerView.RecyclerViewPetListAdapter;
+import com.example.elitevetcare.R;
+import com.example.elitevetcare.Adapter.RecyclerViewPetListAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,12 +29,18 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
+import java.util.Calendar;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Libs {
+    public static String AgeToBirthYear(String age){
+        String result = "";
+        result = String.valueOf(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(age));
+        return result;
+    }
     public static String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
             return input;
@@ -87,6 +94,56 @@ public class Libs {
                     public void run() {
                         //UI Thread work here
                         currentHolder.image_avatar.setImageBitmap(bitmap);
+                    }
+                });
+            }
+        });
+    }
+    public static void SetImageFromURL(String URL, ImageFilterButton imageFilterButton){
+        if(URL == null || URL == ""){
+            if (CurrentUser.getCurrentUser().getRole().getId() == 3)
+                imageFilterButton.setImageResource(R.drawable.ic_non_avatar);
+            if(CurrentUser.getCurrentUser().getRole().getId() == 2)
+                imageFilterButton.setImageResource(R.drawable.image_nonavatar_clinic);
+            return;
+        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                //Background work here
+                Bitmap bitmap = Libs.DownloadImageFromPath(URL);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //UI Thread work here
+                        imageFilterButton.setImageBitmap(bitmap);
+                    }
+                });
+            }
+        });
+    }
+    public static void SetImageFromURL(String URL, ImageFilterView imageFilterButton){
+        if(URL == null || URL == ""){
+            if (CurrentUser.getCurrentUser().getRole().getId() == 3)
+                imageFilterButton.setImageResource(R.drawable.ic_non_avatar);
+            if(CurrentUser.getCurrentUser().getRole().getId() == 2)
+                imageFilterButton.setImageResource(R.drawable.image_nonavatar_clinic);
+            return;
+        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                //Background work here
+                Bitmap bitmap = Libs.DownloadImageFromPath(URL);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //UI Thread work here
+                        imageFilterButton.setImageBitmap(bitmap);
                     }
                 });
             }

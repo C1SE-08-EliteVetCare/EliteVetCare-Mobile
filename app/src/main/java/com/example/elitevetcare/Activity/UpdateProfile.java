@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.elitevetcare.Model.CurrentUser;
 import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
+import com.example.elitevetcare.Model.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.Profile.fragment_address;
 import com.example.elitevetcare.Profile.fragment_age;
 import com.example.elitevetcare.Profile.fragment_gender;
@@ -181,7 +181,7 @@ public class UpdateProfile extends AppCompatActivity {
 //                            if(HelperCallingAPI.RefreshTokenCalling()!= true)
 //                                return;
 //                        }
-                    HelperCallingAPI.CallingAPI_withHeader(HelperCallingAPI.CREATE_PET_PROFILE_PATH, body, DataLocalManager.GetAccessToken(), new HelperCallingAPI.MyCallback() {
+                    HelperCallingAPI.CallingAPI_Post_withHeader(HelperCallingAPI.CREATE_PET_PROFILE_PATH, body, DataLocalManager.GetAccessToken(), new HelperCallingAPI.MyCallback() {
                         @Override
                         public void onResponse(Response response) {
                             int statusCode = response.code();
@@ -212,6 +212,7 @@ public class UpdateProfile extends AppCompatActivity {
 
                         }
                     });
+                    finish();
                 }
             }
         });

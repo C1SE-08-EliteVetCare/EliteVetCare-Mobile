@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Appointment.fragment_pet_owner_infor">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Họ Tên"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_input_box_grey"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:text="User Name"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Giới Tính"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_user_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/custom_input_box_grey"
+                    android:entries="@array/User_Sex"
+                    android:fontFamily="@style/user_font"
+                    android:maxLines="1"
+                    android:paddingStart="20dp"
+                    android:textSize="15dp" />
+                <androidx.constraintlayout.utils.widget.ImageFilterButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBottom="@id/spinner_user_gender"
+                    android:layout_alignRight="@id/spinner_user_gender"
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/ic_edit_dropdown" />
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Tuổi"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_user_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/custom_input_box_grey"
+                    android:entries="@array/City"
+                    android:fontFamily="@style/edit_text_font"
+                    android:maxLines="1"
+                    android:paddingStart="20dp"
+                    android:textSize="15dp" />
+                <androidx.constraintlayout.utils.widget.ImageFilterButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBottom="@id/spinner_user_age"
+                    android:layout_alignRight="@id/spinner_user_age"
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/ic_edit_dropdown" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Số Điện Thoại"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_user_phonenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_input_box_grey"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:text="PhoneNumber"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next_Doing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="bottom|center"
+            android:background="@drawable/custom_button_1"
+            android:text="@string/Next"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:textAppearance="@style/edit_text_font"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

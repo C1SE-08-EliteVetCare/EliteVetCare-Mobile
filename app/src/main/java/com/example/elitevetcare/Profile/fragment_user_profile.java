@@ -1,5 +1,6 @@
 package com.example.elitevetcare.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.elitevetcare.Activity.Login;
+import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.R;
 
 /**
@@ -56,11 +60,26 @@ public class fragment_user_profile extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    LinearLayout logout_layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        logout_layout = root.findViewById(R.id.logout_layout);
+        logout_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataLocalManager.ResetRefreshToken();
+                DataLocalManager.ResetAccessTokens();
+                Intent intent = new Intent(getContext(), Login.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false);
+        return root;
     }
 }

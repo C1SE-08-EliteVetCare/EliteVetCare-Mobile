@@ -105,7 +105,7 @@ public class fragment_gender extends Fragment {
     private void ChangeContent() {
         if(GenderSelected == 1){
             btn_male.setBackgroundResource(R.drawable.custom_button_male_selected);
-            btn_female.setBackgroundResource(R.drawable.custom_button_female_pets);
+            btn_female.setBackgroundResource(R.drawable.custom_button_female);
             btn_other.setBackgroundResource(R.drawable.custom_button_othergender);
             GenderString = "Nam";
         }else if(GenderSelected == 2) {

@@ -6,16 +6,16 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.elitevetcare.Helper.ProgressHelper;
 import com.example.elitevetcare.Model.CurrentPetList;
 import com.example.elitevetcare.Model.Pet;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.RecyclerView.RecyclerViewPetListAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewPetListAdapter;
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 /**
@@ -82,11 +82,13 @@ public class fragment_list_pet extends Fragment {
     }
 
     private void GetDataByAPI() {
-        if (CurrentPetList.getPetList() == null)
+        if (CurrentPetList.getPetList() == null){
+            ProgressHelper.showDialog(getActivity(),"Đang lấy dữ liệu");
             CurrentPetList.CreateInstanceByAPI(new CurrentPetList.PetListCallback() {
                 @Override
                 public void OnSuccess(CurrentPetList currentPetList) {
-                    Log.d("ListPetError",CurrentPetList.getPetList().get(0).getName());
+                    if(ProgressHelper.isDialogVisible())
+                        ProgressHelper.dismissDialog();
                     requireActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -97,7 +99,7 @@ public class fragment_list_pet extends Fragment {
                     });
                 }
             });
-        else {
+        } else {
             PetList = CurrentPetList.getPetList();
             PetListAdapter = new RecyclerViewPetListAdapter(PetList, getContext());
             recycler_clinicView.setAdapter(PetListAdapter);

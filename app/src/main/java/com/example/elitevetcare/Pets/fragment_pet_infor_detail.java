@@ -1,18 +1,13 @@
 package com.example.elitevetcare.Pets;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +15,9 @@ import android.widget.TextView;
 
 import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Helper.Libs;
-import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
-import com.example.elitevetcare.Helper.ViewModel.PetViewModel;
+import com.example.elitevetcare.Model.ViewModel.PetViewModel;
 import com.example.elitevetcare.Model.Pet;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.fragment_tracking_pet_health;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,15 +78,7 @@ public class fragment_pet_infor_detail extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_pet_infor_detail, container, false);
-        txt_PetName = root.findViewById(R.id.txt_pet_name_pet_detail);
-        edt_Age = root.findViewById(R.id.edt_age_pet_detail);
-        edt_Gender = root.findViewById(R.id.edt_gender_pet_detail);
-        edt_species = root.findViewById(R.id.edt_species_pet_detail);
-        edt_breed = root.findViewById(R.id.edt_breed_pet_detail);
-        edt_weight = root.findViewById(R.id.edt_weight_pet_detail);
-        edt_furColor = root.findViewById(R.id.edt_furColor_pet_detail);
-        img_avatar = root.findViewById(R.id.img_detail_avatar_pet_profile);
-        btn_next = root.findViewById(R.id.btn_nextAction);
+        SetID(root);
 
         txt_PetName.setText(CurrentPet.getName());
         edt_Age.setText(CurrentPet.getAge()+"");
@@ -107,10 +92,26 @@ public class fragment_pet_infor_detail extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(CurrentPet.getClinic() == null || CurrentPet.getClinic().getName() == null){
+                    ((ContentView)getActivity()).setfragment(R.layout.fragment_select_clinic_treatment);
+                    return;
+                }
                 ((ContentView)getActivity()).setfragment(R.layout.fragment_tracking_pet_health);
             }
         });
         // Inflate the layout for this fragment
         return root;
+    }
+
+    private void SetID(View root) {
+        txt_PetName = root.findViewById(R.id.txt_pet_name_pet_detail);
+        edt_Age = root.findViewById(R.id.edt_age_pet_detail);
+        edt_Gender = root.findViewById(R.id.edt_gender_pet_detail);
+        edt_species = root.findViewById(R.id.edt_species_pet_detail);
+        edt_breed = root.findViewById(R.id.edt_breed_pet_detail);
+        edt_weight = root.findViewById(R.id.edt_weight_pet_detail);
+        edt_furColor = root.findViewById(R.id.edt_furColor_pet_detail);
+        img_avatar = root.findViewById(R.id.img_detail_avatar_pet_profile);
+        btn_next = root.findViewById(R.id.btn_nextAction);
     }
 }

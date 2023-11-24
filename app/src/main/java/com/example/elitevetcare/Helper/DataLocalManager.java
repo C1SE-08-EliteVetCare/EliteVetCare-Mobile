@@ -31,6 +31,15 @@ public class DataLocalManager {
     public static Long GetRefreshTokenTimeUp(){
         return DataLocalManager.getInstance().mySharedPreferences.getLongValue(REFRESH_TOKEN_TIMEUP);
     }
+    public static void ResetRefreshToken(){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(REFRESH_TOKEN,"");
+        DataLocalManager.getInstance().mySharedPreferences.putLongValue(REFRESH_TOKEN_TIMEUP, Long.valueOf(0));
+    }
+    public static void ResetAccessTokens(){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(ACCESS_TOKEN,"");
+        DataLocalManager.getInstance().mySharedPreferences.putLongValue(ACCESS_TOKEN_TIMEUP,Long.valueOf(0));
+    }
+
     public static void setAccessTokens(String Token){
         Long TimeUP = System.currentTimeMillis()+ 29 * 60 * 1000L;
         DataLocalManager.getInstance().mySharedPreferences.putStringValue(ACCESS_TOKEN,Token);

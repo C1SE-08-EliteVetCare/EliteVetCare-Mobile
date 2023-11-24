@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,19 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/txt_capnhat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:layout_marginTop="20dp"
-                android:textAppearance="@style/text_regular_font"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:gravity="center"
-                android:text="Cập Nhập tình Trạng Thú Cưng" />
 
             <TextView
                 android:id="@+id/txt_khauphanan"
@@ -35,7 +22,6 @@
                 android:text="Khẩu Phần Ăn"
                 android:textAppearance="@style/text_regular_font"
                 android:textSize="16dp"
-                android:layout_below="@+id/txt_capnhat"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
@@ -50,7 +36,6 @@
                 android:textAppearance="@style/text_regular_font"
                 android:textSize="16dp"
                 android:layout_toEndOf="@+id/txt_khauphanan"
-                android:layout_below="@+id/txt_capnhat"
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
                 android:layout_alignParentEnd="true"
@@ -64,8 +49,9 @@
                 android:layout_below="@+id/txt_khauphanan"
                 android:background="@drawable/custom_input_box_white"
                 android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
                 android:elevation="10dp"
-                android:inputType="text"
+                android:inputType="number"
                 android:layout_marginLeft="20dp"
                 android:layout_alignParentStart="true"
                 />
@@ -89,9 +75,10 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="19dp"
+                android:paddingLeft="10dp"
                 android:layout_toEndOf="@+id/edt_khauphanan"
                 android:elevation="10dp"
-                android:inputType="textMultiLine"
+                android:inputType="text"
                 android:background="@drawable/custom_input_box_white" />
             <TextView
                 android:layout_width="wrap_content"
@@ -191,7 +178,7 @@
                 android:elevation="10dp"
                 android:hint="Có thể có hoặc không"
                 android:paddingStart="20dp"
-                android:inputType="textMultiLine"
+                android:inputType="text"
                 android:background="@drawable/custom_input_box_white" />
 
             <TextView
@@ -267,4 +254,4 @@
             android:layout_width="match_parent"
             android:layout_height="20dp" />
     </LinearLayout>
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>

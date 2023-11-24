@@ -14,6 +14,19 @@ public class Pet implements Serializable {
     private String avatar;
     private int ownerId;
     private String createdAt;
+    private Clinic clinic;
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public Clinic getClinic() {
+        return clinic;
+    }
+
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
+    }
     public void setId(int id) {
         this.id = id;
     }
