@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.elitevetcare.Activity.UpdateProfile;
-import com.example.elitevetcare.Model.CurrentUser;
-import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
+import com.example.elitevetcare.Model.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.R;
 import com.shawnlin.numberpicker.NumberPicker;
 

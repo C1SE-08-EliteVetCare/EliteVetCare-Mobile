@@ -27,17 +27,19 @@
                 android:layout_centerInParent="true"
                 android:shape="ring"
                 android:thicknessRatio="1.9" >
+
                 <ImageView
                     android:id="@+id/img_avatar_user_profile"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/image_logo"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/custom_img_view_avatar"/>
+                    android:background="@drawable/custom_img_view_avatar"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image_logo" />
             </androidx.cardview.widget.CardView>
             <ImageButton
+                android:id="@+id/btn_change_avatar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_edit"
@@ -45,8 +47,19 @@
                 android:translationZ="3dp"
                 android:layout_alignBottom="@id/cardview_avatar_profile"
                 android:layout_alignRight="@id/cardview_avatar_profile"/>
+            <ImageButton
+                android:id="@+id/btn_accept_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_accept_change"
+                android:layout_marginRight="20dp"
+                android:translationZ="3dp"
+                android:visibility="invisible"
+                android:layout_alignBottom="@id/cardview_avatar_profile"
+                android:layout_alignRight="@id/cardview_avatar_profile"/>
         </RelativeLayout>
         <TextView
+            android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -54,6 +67,7 @@
             android:textAlignment="center"
             android:textAppearance="@style/Title_regular_font"/>
         <TextView
+            android:id="@+id/txt_phonenumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -64,6 +78,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="35dp"
             android:orientation="horizontal">
             <androidx.constraintlayout.utils.widget.ImageFilterButton
@@ -93,41 +108,43 @@
                 android:background="@drawable/ic_arrow_open" />
 
         </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:orientation="horizontal">-->
+<!--            <androidx.constraintlayout.utils.widget.ImageFilterButton-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/ic_black_back_ground"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="Trung Tâm Hỗ Trợ"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textAppearance="@style/text_regular_font"/>-->
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@color/white" />-->
+<!--            <androidx.appcompat.widget.SwitchCompat-->
+<!--                android:id="@+id/swOnOff"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:thumb="@drawable/custom_thumb"-->
+<!--                app:track="@drawable/custom_track" />-->
+
+<!--        </LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-            <androidx.constraintlayout.utils.widget.ImageFilterButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_black_back_ground"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center"
-                android:text="Trung Tâm Hỗ Trợ"
-                android:textSize="18dp"
-                android:textAppearance="@style/text_regular_font"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/white" />
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/swOnOff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:thumb="@drawable/custom_thumb"
-                app:track="@drawable/custom_track" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <androidx.constraintlayout.utils.widget.ImageFilterButton
@@ -140,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="Chỉnh sửa thông tin cá nhân"
+                android:text="Trung Tâm Hỗ Trợ"
                 android:textSize="18dp"
                 android:textAppearance="@style/text_regular_font"/>
             <View
@@ -156,8 +173,10 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/logout_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <androidx.constraintlayout.utils.widget.ImageFilterButton

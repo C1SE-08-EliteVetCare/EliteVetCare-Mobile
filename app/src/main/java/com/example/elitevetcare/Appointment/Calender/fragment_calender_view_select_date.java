@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.elitevetcare.Model.ViewModel.BookAppointmentViewModel;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.RecyclerView.RecyclerViewCalenderAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewCalenderAdapter;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -59,7 +61,7 @@ public class fragment_calender_view_select_date extends Fragment implements Recy
         fragment.setArguments(args);
         return fragment;
     }
-
+    BookAppointmentViewModel bookAppointmentViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,12 +69,14 @@ public class fragment_calender_view_select_date extends Fragment implements Recy
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        bookAppointmentViewModel = new ViewModelProvider(requireActivity()).get(BookAppointmentViewModel.class);
     }
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
     ImageFilterButton btn_next_Month,btn_previous_Month;
     View Root;
+    RecyclerViewCalenderAdapter calendarAdapter = null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,11 +112,15 @@ public class fragment_calender_view_select_date extends Fragment implements Recy
     {
         monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
-
-        RecyclerViewCalenderAdapter calendarAdapter = new RecyclerViewCalenderAdapter(daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
+        if ( calendarAdapter == null){
+            calendarAdapter = new RecyclerViewCalenderAdapter(daysInMonth, this);
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
+            calendarRecyclerView.setLayoutManager(layoutManager);
+            calendarRecyclerView.setAdapter(calendarAdapter);
+            return;
+        }
+        calendarAdapter.setDataList(daysInMonth);
+        calendarAdapter.notifyDataSetChanged();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -165,7 +173,10 @@ public class fragment_calender_view_select_date extends Fragment implements Recy
     public void onItemClick(int position, TextView dayText, View parent) {
         if(dayText.getText() == "")
             return;
-        dayText.setTextColor(getResources().getColor(R.color.white));
-        parent.setBackgroundResource(R.drawable.custom_selected_bar);
+        int month = selectedDate.getMonthValue();
+        int year = selectedDate.getYear();
+        int day = Integer.parseInt(dayText.getText().toString());
+        bookAppointmentViewModel.setDate(year + "-" + month + "-" + day);
+        calendarAdapter.setSelectedPosition(position);
     }
 }

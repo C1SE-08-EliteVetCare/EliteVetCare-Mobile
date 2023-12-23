@@ -11,9 +11,11 @@
         android:background="@drawable/item_background_gray"
         android:orientation="horizontal">
         <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/clinic_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="20dp"
+            android:scaleType="fitXY"
             android:layout_gravity="center"
             android:src="@drawable/image_nonavatar_clinic"/>
         <LinearLayout
@@ -31,6 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name of Clinic"
+                    android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="@color/black"
                     android:textAppearance="@style/tab_title"/>
@@ -39,6 +42,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <androidx.constraintlayout.utils.widget.ImageFilterButton
+                    android:id="@+id/btn_like_clinic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -58,7 +62,7 @@
                 android:textSize="15dp"
                 android:textStyle="normal"
                 android:textColor="@color/black"
-                android:textAppearance="@style/tab_title"/>
+                android:fontFamily="@font/urbanist_italic_variablefont_wght" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -75,11 +79,11 @@
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_select_clinic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/custom_small_button"
                         android:text="Đặt"
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:textAppearance="@style/button_text_style"/>
                     <View
                         android:layout_width="match_parent"

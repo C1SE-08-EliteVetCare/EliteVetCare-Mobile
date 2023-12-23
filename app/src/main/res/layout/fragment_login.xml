@@ -65,7 +65,7 @@
                 android:elevation="3dp"
                 android:inputType="textPassword"
                 android:paddingStart="15dp"
-                android:hint="example@gmail.com"
+                android:hint="********************"
                 android:textSize="18dp"
                 android:textAppearance="@style/text_regular_font"
                 />

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bottom 2dp Shadow -->
+    <item>
+        <shape android:shape="rectangle" >
+            <size android:height="30dp" android:width="250dp"/>
+            <solid android:color="#CACACA"/>
+            <corners android:bottomRightRadius="19.5dp" android:bottomLeftRadius="19.5dp" android:topLeftRadius="20dp" android:topRightRadius="20dp"/>
+        </shape>
+    </item>
+
+    <!-- White Top color -->
+    <item android:drawable="@drawable/custom_input_box2" android:bottom="0.5dp">
+    </item>
+
+
+</layer-list>

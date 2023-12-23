@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
+import com.example.elitevetcare.Model.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.R;
 
 /**

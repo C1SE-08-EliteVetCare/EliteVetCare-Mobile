@@ -12,10 +12,13 @@
     <string name="Next">Tiếp Tục</string>
     <string name="Accept">Chấp Nhận</string>
     <string name="Reject">Từ Chối</string>
+    <string name="Cancel">Hủy Cuộc Hẹn</string>
     <string name="Rejected">Đã Từ Chối</string>
     <string name="User_age_title">Bạn Sinh Năm Bao Nhiêu?</string>
     <string name="Pet_age_title">Thú Cưng Của Bạn Bao Nhiêu Tháng Tuổi?</string>
     <string name="google_web_server">142282058537-7l7frn7ht4dfjsoenqsitge31or22epv.apps.googleusercontent.com</string>
+    <string name="clinic_treatment_help"><b>Gợi ý:</b> Hãy chọn phòng khám để gửi hồ sơ!</string>
+
 
     <!--Function String-->
     <string name="portion_pet">portion</string>
@@ -26,14 +29,14 @@
         <item>Chọn</item>
     </string-array>
     <string-array name="User_Sex">
-        <item><b>Nam</b></item>
+        <item>Nam</item>
         <item>Nữ</item>
         <item>Khác</item>
     </string-array>
     <string-array name="pet_species">
         <item><b>Chó</b></item>
         <item><b>Mèo</b></item>
-        <item><b>Khácw</b></item>
+        <item><b>Khác</b></item>
     </string-array>
     <string-array name="City">
         <item><b>Đà Nẵng</b></item>

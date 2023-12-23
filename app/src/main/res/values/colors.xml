@@ -9,11 +9,15 @@
     <color name="teal_200">#22CCEE</color>
     <color name="teal_700">#FF018786</color>
     <color name="light_gray">#9E9E9E</color>
-    <color name="low_gray">#D9D9D9</color>
+    <color name="low_gray">#E8E8E8</color>
     <color name="gray_unselect">#BFBFBF</color>
     <color name="orange">#F38744</color>
     <color name="red">#F75555</color>
     <color name="green">#38C976</color>
+    <color name="transparent">#00555555</color>
+    <color name="homebutton">#FBEBE2</color>
+    <color name="medium_dark_gray">#D1D1D1</color>
+    <color name="medium_gray">#BDBDBD</color>
     <!-- Màu cho nút tròn (thumb) khi trạng thái bật (on) -->
     <color name="switch_thumb_color">@color/green</color>
 

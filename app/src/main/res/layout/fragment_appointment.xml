@@ -20,9 +20,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                app:tabSelectedTextAppearance="@style/tab_title"
+                app:tabTextAppearance="@style/tab_title_unselected"
                 app:tabIndicatorColor="@color/blue"
                 app:tabSelectedTextColor="@color/blue"
-                app:tabTextAppearance="@style/tab_title"
                 app:tabTextColor="@color/light_gray" />
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/appointment_viewpager2"

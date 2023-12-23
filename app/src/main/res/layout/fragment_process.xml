@@ -7,12 +7,18 @@
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Recycler_list_item_clinic"
+        android:id="@+id/Recycler_list_item_appointment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="4"
-        tools:listitem="@layout/item_process" />
+        tools:listitem="@layout/item_appointment_waitting_process" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_no_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.elitevetcare.Appointment.fragment_accept_load"
+        android:visibility="gone"/>
 
 </FrameLayout>

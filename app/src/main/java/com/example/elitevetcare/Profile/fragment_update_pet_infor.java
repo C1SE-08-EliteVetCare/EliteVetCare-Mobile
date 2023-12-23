@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import android.widget.Toast;
 
 
 import com.example.elitevetcare.Helper.Libs;
-import com.example.elitevetcare.Helper.ViewModel.PetInforViewModel;
+import com.example.elitevetcare.Model.ViewModel.PetInforViewModel;
 import com.example.elitevetcare.R;
 
 import java.io.File;
@@ -96,6 +97,7 @@ public class fragment_update_pet_infor extends Fragment {
                 imageAvatar.setImageURI(result);
                 File file = Libs.uriToFile(getActivity(),result);
                 petInforViewModel.setAvatar(file);
+                Log.d("petavatarGallary", petInforViewModel.getFileImage().getValue().toString());
             }
         });
 
@@ -110,7 +112,8 @@ public class fragment_update_pet_infor extends Fragment {
                             Bundle extras = result.getData().getExtras();
                             Bitmap bitmap = (Bitmap) extras.get("data");
                             imageAvatar.setImageBitmap(bitmap);
-                            petInforViewModel.setAvatarByBitmap(getActivity().getCacheDir(),bitmap);
+                            petInforViewModel.setAvatarByBitmap(getActivity().getFilesDir(),bitmap);
+                            Log.d("petavatar", petInforViewModel.getFileImage().getValue().toString());
                         }else{
                             Toast.makeText(getContext(),result.getResultCode()+  " : " + RESULT_OK, Toast.LENGTH_SHORT).show();
                         }

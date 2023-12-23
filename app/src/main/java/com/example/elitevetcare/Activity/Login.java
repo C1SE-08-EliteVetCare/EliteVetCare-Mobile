@@ -16,11 +16,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.elitevetcare.Authentication.fragment_login;
 import com.example.elitevetcare.Authentication.fragment_signup;
-import com.example.elitevetcare.Model.CurrentUser;
+import com.example.elitevetcare.Helper.ProgressHelper;
+import com.example.elitevetcare.Helper.SocketGate;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
@@ -36,12 +39,21 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.tashila.pleasewait.PleaseWaitDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.engineio.client.transports.WebSocket;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -60,34 +72,60 @@ public class Login extends AppCompatActivity {
     private BeginSignInRequest signUpRequest;
     ActivityResultLauncher<IntentSenderRequest> activityResultLauncher;
     float v = 0;
+    boolean isAutoLogin = false;
+    PleaseWaitDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         DataLocalManager.init(getApplicationContext());
-        if(DataLocalManager.GetRefreshToken() != null && DataLocalManager.GetRefreshTokenTimeUp() > System.currentTimeMillis()){
-            if(AutoLogin())
-                return;
-        }
+        LinearLayout layout = findViewById(R.id.ll_Login);
         SettingID();
         setContentForm();
         CallingAnimate();
         setEvent();
+
+        if(DataLocalManager.GetRefreshToken() != null && DataLocalManager.GetRefreshTokenTimeUp() > System.currentTimeMillis() && DataLocalManager.GetRefreshToken() != "") {
+            isAutoLogin = true;
+            ProgressHelper.showDialog(Login.this,"Đang tự đăng nhập vui lòng đợi !");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        isAutoLogin = AutoLogin();
+                        if(isAutoLogin == false)
+                        {
+                            if (ProgressHelper.isDialogVisible())
+                                ProgressHelper.dismissDialog();
+                            Libs.Sendmessage(Login.this,"Hết Phiên Đăng Nhập!");
+                        }
+                    } catch (ExecutionException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
+        }
     }
 
-    private boolean AutoLogin() {
-        if(!HelperCallingAPI.RefreshTokenCalling() )
+    private boolean AutoLogin() throws ExecutionException, InterruptedException {
+        boolean status = HelperCallingAPI.RefreshTokenCalling().get();
+        if(!status)
             return false;
         CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
             @Override
             public void onUserGeted(CurrentUser currentUser) {
+                if(ProgressHelper.isDialogVisible())
+                    ProgressHelper.dismissDialog();
                 RedictToMainAction();
             }
         });
         return true;
     }
 
+
     public void RedictToMainAction() {
+        if(ProgressHelper.isDialogVisible())
+            ProgressHelper.dismissDialog();
         Intent intent = new Intent(Login.this,MainActivity.class);
         startActivity(intent);
         finish();
@@ -253,5 +291,9 @@ public class Login extends AppCompatActivity {
     public void changeFragment(Fragment newFragment){
         fragmentManager.beginTransaction()
                 .replace(frm_container_view.getId(), newFragment, newFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+    }
+
+    public boolean IsLogin(){
+        return isAutoLogin;
     }
 }
