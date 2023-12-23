@@ -24,8 +24,8 @@ import com.example.elitevetcare.Activity.UpdateProfile;
 import com.example.elitevetcare.Authentication.fragment_success;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
-import com.example.elitevetcare.Model.CurrentUser;
-import com.example.elitevetcare.Model.Province;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
+import com.example.elitevetcare.Model.ObjectModel.Province;
 import com.example.elitevetcare.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -60,10 +60,10 @@ public class fragment_edit_profile_user extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ArrayList<String> list_city,list_distrist,list_ward;
-    private String address;
-    ArrayAdapter<String> adapterItems;
-    AppCompatAutoCompleteTextView autoCompleteText_city,autoCompleteText_distrist,autoCompleteText_ward;
+//    private ArrayList<String> list_city,list_distrist,list_ward;
+//    private String address;
+//    ArrayAdapter<String> adapterItems;
+//    AppCompatAutoCompleteTextView autoCompleteText_city,autoCompleteText_distrist,autoCompleteText_ward;
 
     AppCompatButton btn_update;
 
@@ -101,23 +101,24 @@ public class fragment_edit_profile_user extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        getUserInfomation();
+        updateUserProfile();
         showYearPickerDialog();
         GetDataProvince();
 
     }
-    private void getUserInfomation(){
-
-        CurrentUser.getCurrentUser().getFullName();
-        CurrentUser.getCurrentUser().getBirthYear();
-        CurrentUser.getCurrentUser().getEmail();
-        CurrentUser.getCurrentUser().getGender();
-        CurrentUser.getCurrentUser().getCity();
-        CurrentUser.getCurrentUser().getDistrict();
-        CurrentUser.getCurrentUser().getWard();
-        CurrentUser.getCurrentUser().getStreetAddress();
-
-    }
+//    private void getUserInfomation(){
+//
+//        CurrentUser.getCurrentUser().getFullName();
+//        CurrentUser.getCurrentUser().getBirthYear();
+//        CurrentUser.getCurrentUser().getEmail();
+//        CurrentUser.getCurrentUser().getGender();
+//        CurrentUser.getCurrentUser().getCity();
+//        CurrentUser.getCurrentUser().getDistrict();
+//        CurrentUser.getCurrentUser().getWard();
+//        CurrentUser.getCurrentUser().getStreetAddress();
+//
+//
+//    }
 
     private void showYearPickerDialog() {
         // Create a custom dialog
@@ -172,6 +173,7 @@ public class fragment_edit_profile_user extends Fragment {
             public void onClick(View view) {
                 updateUserProfile();
             }
+
         });
 
         // Inflate the layout for this fragment
@@ -190,8 +192,28 @@ public class fragment_edit_profile_user extends Fragment {
         String updatedAddress = edt_address.getText().toString();
 
 
+
         // Bắt lỗi
         // Libs.capitalizeFirstLetter()
+//        String name = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
+//        String sex = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
+//        String birthyear = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
+        String city = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
+        String district = Libs.capitalizeFirstLetter(SelectedProvince.getDistricts().get(spinner_district.getSelectedItemPosition()).getName());
+        String ward = Libs.capitalizeFirstLetter(SelectedProvince.getDistricts().get(spinner_district.getSelectedItemPosition())
+                .getWards().get(spinner_ward.getSelectedItemPosition()).getName());
+        String streetAddress = Libs.capitalizeFirstLetter(edt_address.getText().toString());
+        if(streetAddress.isEmpty()){
+            Toast.makeText(getContext(), "Hãy Nhập Địa Chỉ Vào", Toast.LENGTH_SHORT).show();
+        }
+
+//        CurrentUser.getCurrentUser().setGender(sex);
+//        CurrentUser.getCurrentUser().setFullName(name);
+//        CurrentUser.getCurrentUser().setBirthYear(birthyear);
+        CurrentUser.getCurrentUser().setCity(city);
+        CurrentUser.getCurrentUser().setDistrict(district);
+        CurrentUser.getCurrentUser().setWard(ward);
+        CurrentUser.getCurrentUser().setStreetAddress(streetAddress);
 
         // Libs.HandleString()
 

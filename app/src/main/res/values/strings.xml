@@ -19,6 +19,8 @@
     <string name="google_web_server">142282058537-7l7frn7ht4dfjsoenqsitge31or22epv.apps.googleusercontent.com</string>
     <string name="clinic_treatment_help"><b>Gợi ý:</b> Hãy chọn phòng khám để gửi hồ sơ!</string>
 
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
 
     <!--Function String-->
     <string name="portion_pet">portion</string>

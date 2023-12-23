@@ -19,7 +19,7 @@ public class AppointmentViewPager2Adapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 1:
-                FragmentCall = new fragment_schedule();
+//                FragmentCall = new fragment_schedule();
                 break;
             case 2:
                 FragmentCall = new fragment_reject();

@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.elitevetcare.Helper.SocketGate;
+//import com.example.elitevetcare.Helper.SocketGate;
 import com.example.elitevetcare.Home.fragment_home;
 import com.example.elitevetcare.Interface.SocketOnMessageListener;
 import com.example.elitevetcare.Model.CurrentData.CurrentConversationHistory;
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SocketGate.OpenGate(this);
-        SocketGate.addSocketEventListener(this);
+//        SocketGate.OpenGate(this);
+//        SocketGate.addSocketEventListener(this);
         // Sử dụng BottomNavigationView để chuyển đổi giữa các Fragment
         bottomNavigationView = findViewById(R.id.bottom_Nav);
         top_bar_select = findViewById(R.id.top_tab_bar);
