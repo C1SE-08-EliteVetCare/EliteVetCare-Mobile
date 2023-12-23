@@ -1,13 +1,21 @@
 package com.example.elitevetcare.Authentication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.elitevetcare.Activity.Login;
+import com.example.elitevetcare.Helper.SignUpViewModel;
+import com.example.elitevetcare.Helper.ViewModel.EmailViewModel;
 import com.example.elitevetcare.R;
 
 /**
@@ -26,6 +34,10 @@ public class fragment_email_reset_password extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    Button btn_Continue;
+    EditText edt_Emailconfirm;
+
+    EmailViewModel viewModel;
     public fragment_email_reset_password() {
         // Required empty public constructor
     }
@@ -55,12 +67,42 @@ public class fragment_email_reset_password extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        viewModel = new ViewModelProvider(requireActivity()).get( EmailViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_email_reset_password, container, false);
+        View root = inflater.inflate(R.layout.fragment_email_reset_password, container, false);
+
+        btn_Continue = root.findViewById(R.id.btn_continue);
+        edt_Emailconfirm = root.findViewById(R.id.edt_emailconfirm);
+
+        btn_Continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String email =  edt_Emailconfirm.getText().toString();
+                viewModel.setEmail(email);
+
+
+                if( !edt_Emailconfirm.getText().toString().equals("") ){
+                    ((Login) getActivity()).changeFragment(new fragment_confirmEmail());
+                }else {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), " Không được để trống ", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+        });
+
+        return root;
+
+
     }
 }

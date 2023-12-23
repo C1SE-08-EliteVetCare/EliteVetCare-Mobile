@@ -2,12 +2,15 @@ package com.example.elitevetcare.Profile;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.elitevetcare.Activity.Login;
+import com.example.elitevetcare.Authentication.fragment_login;
 import com.example.elitevetcare.R;
 
 /**
@@ -26,6 +29,7 @@ public class fragment_user_profile extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    ImageFilterButton  imgbtn_updateprofile;
     public fragment_user_profile() {
         // Required empty public constructor
     }
@@ -61,6 +65,18 @@ public class fragment_user_profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false);
+        View root = inflater.inflate(R.layout.fragment_user_profile, container, false);
+
+        imgbtn_updateprofile = root.findViewById(R.id.btn_edit_profile);
+
+        imgbtn_updateprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Login) getActivity()).changeFragment(new fragment_edit_profile_user());
+            }
+        });
+
+
+        return root;
     }
 }

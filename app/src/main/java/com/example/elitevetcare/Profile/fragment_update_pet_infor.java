@@ -144,6 +144,8 @@ public class fragment_update_pet_infor extends Fragment {
     }
 
     private void SetID(View root) {
+
+
         btn_add_avatar = root.findViewById(R.id.btn_add_avatar_pet);
         Sprinner_Species = root.findViewById(R.id.spinner_species_pet_profile);
         edt_breed = root.findViewById(R.id.edt_breed_pet_profile);

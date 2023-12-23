@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.Login;
@@ -76,6 +77,8 @@ public class fragment_login extends Fragment {
     AppCompatButton btn_login;
     ImageFilterButton btn_fingerPrint_login;
     AppCompatEditText edt_email, edt_password;
+
+    TextView txt_Quenmatkhau;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,6 +91,13 @@ public class fragment_login extends Fragment {
     }
 
     private void SetEvent() {
+
+        txt_Quenmatkhau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Login) getActivity()).changeFragment(new fragment_email_reset_password());
+            }
+        });
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,5 +160,6 @@ public class fragment_login extends Fragment {
         btn_fingerPrint_login = root.findViewById(R.id.btn_fingerPrint_login);
         edt_email = root.findViewById(R.id.edt_email_login);
         edt_password = root.findViewById(R.id.edt_password_login);
+        txt_Quenmatkhau = root.findViewById(R.id.txt_quenmatkhau);
     }
 }

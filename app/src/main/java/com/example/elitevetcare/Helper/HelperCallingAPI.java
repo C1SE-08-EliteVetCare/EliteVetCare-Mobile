@@ -45,6 +45,8 @@ public class HelperCallingAPI {
     final public static String WARD_API_PATH = "w/";
     final public static String QUERRY_PARAM_PROVINCE_API = "?depth=2";
     final public static String UPDATE_PROFILE_API_PATH = "user/update-profile";
+
+
     static boolean refresh_status = false;
 
     public static void CallingAPI_Province(String API_PATH, String params , MyCallback callback){

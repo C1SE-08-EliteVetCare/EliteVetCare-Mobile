@@ -89,8 +89,6 @@ public class fragment_address extends Fragment {
         GetDataProvince();
     }
 
-
-
     AppCompatSpinner spinner_city, spinner_district, spinner_ward;
     AppCompatEditText edt_address;
 
@@ -100,6 +98,7 @@ public class fragment_address extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_address, container, false);
+
         spinner_city = root.findViewById(R.id.spinner_city_Useraddress);
         spinner_district = root.findViewById(R.id.spinner_district_Useraddress);
         spinner_ward = root.findViewById(R.id.spinner_ward_Useraddress);
@@ -240,6 +239,7 @@ public class fragment_address extends Fragment {
     }
 
     public boolean SendData(){
+
         String city = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
         String district = Libs.capitalizeFirstLetter(SelectedProvince.getDistricts().get(spinner_district.getSelectedItemPosition()).getName());
         String ward = Libs.capitalizeFirstLetter(SelectedProvince.getDistricts().get(spinner_district.getSelectedItemPosition())
