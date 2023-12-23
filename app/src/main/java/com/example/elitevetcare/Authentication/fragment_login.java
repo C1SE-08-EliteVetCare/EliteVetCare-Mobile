@@ -17,11 +17,12 @@ import android.widget.Toast;
 import com.example.elitevetcare.Activity.Login;
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Helper.ProgressHelper;
-import com.example.elitevetcare.Model.CurrentUser;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -112,10 +113,9 @@ public class fragment_login extends Fragment {
                 HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.LOGIN_PATH, LoginBody, new HelperCallingAPI.MyCallback() {
                     @Override
                     public void onResponse(Response response){
-                            int statusCode = response.code();
+                        int statusCode = response.code();
                         JSONObject data = null;
                         if(statusCode == 200) {
-
                             try {
                                 data = new JSONObject(response.body().string());
                                 String AccessToken = data.getString("accessToken");
@@ -132,6 +132,31 @@ public class fragment_login extends Fragment {
                                 });
                             } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
+                            }
+                        }else if(statusCode == 401){
+                            try {
+                                data = new JSONObject(response.body().string());
+                                if(ProgressHelper.isDialogVisible())
+                                    ProgressHelper.dismissDialog();
+                                Libs.Sendmessage(getActivity(), data.getString("message"));
+
+                            }catch (JSONException | IOException e){
+
+                            }
+                        }else if (statusCode == 400){
+                            try {
+                                data = new JSONObject(response.body().string());
+                                if(ProgressHelper.isDialogVisible())
+                                    ProgressHelper.dismissDialog();
+                                JSONArray jsonArray = data.getJSONArray("message");
+                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                if(jsonObject.has("password"))
+                                    Libs.Sendmessage(getActivity(), jsonObject.getString("password"));
+                                else if (jsonObject.has("email"))
+                                    Libs.Sendmessage(getActivity(), jsonObject.getString("email"));
+
+                            }catch (JSONException | IOException e){
+
                             }
                         }
                     }

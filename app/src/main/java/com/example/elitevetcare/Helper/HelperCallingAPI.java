@@ -47,7 +47,12 @@ public class HelperCallingAPI {
     final public static String CREATE_APPOINTMENT_API_PATH = "appointment/create/";
     final public static String ACCEPT_REJECT_APPOINTMENT_API_PATH = "appointment/update-status/";
     final public static String SEND_TREATMENT_API_PATH = "pet/send-treatment/";
-
+    final public static String GET_LIST_TREATMENT_API_PATH = "pet/pet-treatments/";
+    final public static String ACCEPT_TREATMENT_API_PATH = "pet/accept-treatment/";
+    final public static String UPLOAD_AVATAR_API_PATH = "user/upload-avatar/";
+    final public static String GET_ALL_CONVERSATION = "conversation/conversations/";
+    final public static String GET_ALL_MESSAGE_OF_CONVERSATION = "message/";
+    final public static String SEND_MESSAGE_CONVERSATION = "message/";
     static boolean refresh_status = false;
 
     public static void CallingAPI_Province(String API_PATH, String params , MyCallback callback){

@@ -15,10 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.example.elitevetcare.Model.CurrentUser;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
-import com.example.elitevetcare.Model.Province;
+import com.example.elitevetcare.Model.ObjectModel.Province;
 import com.example.elitevetcare.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

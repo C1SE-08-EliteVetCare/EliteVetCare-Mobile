@@ -17,12 +17,12 @@ import android.view.ViewGroup;
 
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
-import com.example.elitevetcare.Model.Appointment;
-import com.example.elitevetcare.Model.CurrentAppointment;
-import com.example.elitevetcare.Model.CurrentUser;
+import com.example.elitevetcare.Model.ObjectModel.Appointment;
+import com.example.elitevetcare.Model.CurrentData.CurrentAppointment;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.ViewModel.AppointmentViewModel;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.Adapter.RecyclerViewRejectAppointmentAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewRejectAppointmentAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

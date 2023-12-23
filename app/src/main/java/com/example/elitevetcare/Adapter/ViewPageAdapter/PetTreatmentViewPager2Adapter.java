@@ -32,10 +32,10 @@ public class PetTreatmentViewPager2Adapter  extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 1:
-                FragmentCall = new fragment_process_pet_treatment();
+                FragmentCall = new fragment_accepted_pet_treatment();
                 break;
             default:
-                FragmentCall = new fragment_accepted_pet_treatment();
+                FragmentCall = new fragment_process_pet_treatment();
         }
         return FragmentCall;
     }

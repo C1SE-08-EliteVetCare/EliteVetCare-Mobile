@@ -3,11 +3,10 @@ package com.example.elitevetcare.Model.ViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.elitevetcare.Model.Pet;
-import com.example.elitevetcare.Model.PetCondition;
+import com.example.elitevetcare.Model.ObjectModel.Pet;
+import com.example.elitevetcare.Model.ObjectModel.PetCondition;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PetViewModel extends ViewModel {
     private final MutableLiveData<Pet> CurrentPet = new MutableLiveData<Pet>();

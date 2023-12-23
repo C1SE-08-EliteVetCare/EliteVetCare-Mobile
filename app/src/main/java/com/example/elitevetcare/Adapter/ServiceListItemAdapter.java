@@ -2,12 +2,9 @@ package com.example.elitevetcare.Adapter;
 
 import android.content.Context;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -15,11 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.elitevetcare.Model.ServicePackage;
+import com.example.elitevetcare.Model.ObjectModel.ServicePackage;
 import com.example.elitevetcare.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ServiceListItemAdapter extends  RecyclerView.Adapter<ServiceListItemAdapter.ServiceItemViewHolder> {
     private Context mContext;

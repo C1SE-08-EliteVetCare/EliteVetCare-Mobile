@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,18 +17,27 @@ import com.example.elitevetcare.Appointment.fragment_pet_owner_infor;
 import com.example.elitevetcare.Appointment.fragment_select_clinic;
 import com.example.elitevetcare.Appointment.fragment_select_datetime;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
+import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Helper.ProgressHelper;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
+import com.example.elitevetcare.Model.ObjectModel.Appointment;
+import com.example.elitevetcare.Model.ObjectModel.Conversation;
+import com.example.elitevetcare.Model.ObjectModel.Message;
+import com.example.elitevetcare.Model.ObjectModel.User;
+import com.example.elitevetcare.Model.ViewModel.MessageViewModel;
 import com.example.elitevetcare.Model.ViewModel.PetViewModel;
-import com.example.elitevetcare.Model.Pet;
-import com.example.elitevetcare.Model.PetCondition;
+import com.example.elitevetcare.Model.ObjectModel.Pet;
+import com.example.elitevetcare.Model.ObjectModel.PetCondition;
 import com.example.elitevetcare.Pets.fragment_pet_infor_detail;
 import com.example.elitevetcare.Pets.fragment_select_clinic_treatment;
+import com.example.elitevetcare.QuestionAndAnswer.fragment_conversation;
 import com.example.elitevetcare.R;
 import com.example.elitevetcare.Appointment.fragment_select_service;
 import com.example.elitevetcare.Pets.fragment_tracking_pet_health;
 import com.example.elitevetcare.Pets.fragment_update_pet_condition;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,10 +53,12 @@ public class ContentView extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     PetViewModel CurrentPetViewModel;
+    MessageViewModel MessageViewModel;
     TextView txt_content;
     int selected_fragment;
     Fragment CurrentFragment, PreviouseFragment;
     Pet currentPet;
+    RoundedImageView img_avatar_conversation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +74,15 @@ public class ContentView extends AppCompatActivity {
 
     private void SetID() {
         txt_content = findViewById(R.id.txt_content_title);
+        img_avatar_conversation = findViewById(R.id.img_avatar_conversation);
     }
 
 
     private void Init() {
         CurrentPetViewModel = new ViewModelProvider(ContentView.this).get(PetViewModel.class);
+        MessageViewModel = new ViewModelProvider(ContentView.this).get(MessageViewModel.class);
     }
+
     private void ResetData() {
         selected_fragment = -1;
         CurrentFragment = null;
@@ -110,6 +125,54 @@ public class ContentView extends AppCompatActivity {
         }
         if(selected_fragment == R.layout.fragment_select_clinic_treatment){
             CallingSelectClinicTreatment();
+            return;
+        }
+        if(selected_fragment == R.layout.fragment_conversation){
+            PreviouseFragment = CurrentFragment;
+            ResetData();
+            Conversation conversation = (Conversation) getIntent().getSerializableExtra("conversation");
+            User Recipient = null;
+            if(conversation.getRecipient().getId() != CurrentUser.getCurrentUser().getId())
+                Recipient = conversation.getRecipient();
+            else
+                Recipient = conversation.getCreator();
+            Libs.SetImageFromURL(Recipient.getAvatar(), img_avatar_conversation);
+            img_avatar_conversation.setVisibility(View.VISIBLE);
+            txt_content.setText(Recipient.getFullName());
+            CurrentFragment = new fragment_conversation();
+            MessageViewModel.SetLoading(true);
+            MessageViewModel.SetConversationID(conversation.getId());
+            HelperCallingAPI.CallingAPI_PathParams_Get(HelperCallingAPI.GET_ALL_MESSAGE_OF_CONVERSATION, conversation.getId()+"", new HelperCallingAPI.MyCallback() {
+                @Override
+                public void onResponse(Response response) {
+                    if(response.isSuccessful()) {
+                        try {
+                            JSONObject data = new JSONObject(response.body().string());
+                            Gson gson = new Gson();
+                            Type listType = new TypeToken<ArrayList<Message>>(){}.getType();
+                            ArrayList<Message> listMessage = gson.fromJson(data.get("data").toString(), listType);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    MessageViewModel.SetLoading(false);
+                                    MessageViewModel.AddMessageArray(listMessage);
+                                }
+                            });
+                        } catch (JSONException | IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    else {
+                        Toast.makeText(ContentView.this, "Đang có lỗi khi lấy tin nhắn cũ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(IOException e) {
+
+                }
+            });
+            ChangeFragment(CurrentFragment);
             return;
         }
     }

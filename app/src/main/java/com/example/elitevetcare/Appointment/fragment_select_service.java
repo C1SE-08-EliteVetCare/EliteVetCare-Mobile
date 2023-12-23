@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,10 +15,8 @@ import android.widget.Toast;
 
 import com.example.elitevetcare.Adapter.ServiceListItemAdapter;
 import com.example.elitevetcare.Helper.DataChangeObserver;
-import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-import com.example.elitevetcare.Model.CurrentUser;
-import com.example.elitevetcare.Model.ServicePackage;
+import com.example.elitevetcare.Model.ObjectModel.ServicePackage;
 import com.example.elitevetcare.Model.ViewModel.AppointmentViewModel;
 import com.example.elitevetcare.Model.ViewModel.BookAppointmentViewModel;
 import com.example.elitevetcare.R;

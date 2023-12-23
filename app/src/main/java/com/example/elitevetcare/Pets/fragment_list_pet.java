@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.elitevetcare.Helper.ProgressHelper;
-import com.example.elitevetcare.Model.CurrentPetList;
-import com.example.elitevetcare.Model.Pet;
+import com.example.elitevetcare.Model.CurrentData.CurrentPetList;
+import com.example.elitevetcare.Model.ObjectModel.Pet;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.Adapter.RecyclerViewPetListAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewPetListAdapter;
 import java.util.ArrayList;
 
 

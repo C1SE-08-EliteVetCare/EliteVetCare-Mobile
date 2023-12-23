@@ -20,8 +20,8 @@ import com.example.elitevetcare.Adapter.ViewPageAdapter.AppointmentViewPager2Ada
 import com.example.elitevetcare.Helper.DataChangeObserver;
 import com.example.elitevetcare.Helper.ProgressHelper;
 import com.example.elitevetcare.Interface.DataChangeListener;
-import com.example.elitevetcare.Model.CurrentAppointment;
-import com.example.elitevetcare.Model.CurrentUser;
+import com.example.elitevetcare.Model.CurrentData.CurrentAppointment;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.ViewModel.AppointmentViewModel;
 import com.example.elitevetcare.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -86,23 +86,6 @@ public class fragment_appointment extends Fragment implements DataChangeListener
         DataChangeObserver.getInstance().setListener(this);
     }
 
-    private synchronized void startApiPolling() {
-        if(appointmentViewModel.getisLoad().getValue() != null && appointmentViewModel.getisLoad().getValue() == true)
-            return;
-        appointmentViewModel.getisLoad().setValue(true);
-        Handler handler =  new Handler(Looper.myLooper());
-        final int delay = 60000;
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                GetDataByAPI(1);
-                GetDataByAPI(2);
-                GetDataByAPI(3);
-                // Lặp lại sau mỗi khoảng thời gian delay
-                handler.postDelayed(this, delay);
-            }
-        }, delay);
-    }
-
     private TabLayout appointment_tabLayout;
     private ViewPager2 appointment_viewPager2;
     private AppointmentViewPager2Adapter appointment_ViewPager2Adapter;
@@ -148,7 +131,6 @@ public class fragment_appointment extends Fragment implements DataChangeListener
     }
 
     public void GetDataByAPI(int status) {
-
         executor.submit(new Runnable() {
             @Override
             public void run() {
@@ -212,7 +194,22 @@ public class fragment_appointment extends Fragment implements DataChangeListener
             }
         }).attach();
     }
-
+    private synchronized void startApiPolling() {
+        if(appointmentViewModel.getisLoad().getValue() != null && appointmentViewModel.getisLoad().getValue() == true)
+            return;
+        appointmentViewModel.getisLoad().setValue(true);
+        Handler handler =  new Handler(Looper.myLooper());
+        final int delay = 60000;
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                GetDataByAPI(1);
+                GetDataByAPI(2);
+                GetDataByAPI(3);
+                // Lặp lại sau mỗi khoảng thời gian delay
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+    }
     @Override
     public void onDataChanged(int status) {
         GetDataByAPI(status);

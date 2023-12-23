@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-import com.example.elitevetcare.Model.Clinic;
+import com.example.elitevetcare.Model.ObjectModel.Clinic;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.Adapter.RecyclerViewClinicAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewClinicAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

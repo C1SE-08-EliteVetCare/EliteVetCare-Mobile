@@ -15,11 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.ContentView;
-import com.example.elitevetcare.Model.CurrentUser;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Model.ViewModel.PetViewModel;
-import com.example.elitevetcare.Model.PetCondition;
+import com.example.elitevetcare.Model.ObjectModel.PetCondition;
 import com.example.elitevetcare.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;

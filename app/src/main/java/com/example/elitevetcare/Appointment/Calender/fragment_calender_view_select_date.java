@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.elitevetcare.Model.ViewModel.BookAppointmentViewModel;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.Adapter.RecyclerViewCalenderAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewCalenderAdapter;
 
 import java.time.LocalDate;
 import java.time.YearMonth;

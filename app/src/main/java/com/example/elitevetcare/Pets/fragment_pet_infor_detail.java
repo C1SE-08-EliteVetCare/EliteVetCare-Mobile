@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Model.ViewModel.PetViewModel;
-import com.example.elitevetcare.Model.Pet;
+import com.example.elitevetcare.Model.ObjectModel.Pet;
 import com.example.elitevetcare.R;
 
 /**

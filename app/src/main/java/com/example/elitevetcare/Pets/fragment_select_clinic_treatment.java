@@ -12,11 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.elitevetcare.Adapter.RecyclerViewClinicAdapter;
-import com.example.elitevetcare.Adapter.RecyclerViewClinicTreatmentAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewClinicTreatmentAdapter;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-import com.example.elitevetcare.Model.Clinic;
-import com.example.elitevetcare.Model.Pet;
+import com.example.elitevetcare.Model.ObjectModel.Clinic;
+import com.example.elitevetcare.Model.ObjectModel.Pet;
 import com.example.elitevetcare.Model.ViewModel.PetViewModel;
 import com.example.elitevetcare.R;
 import com.google.gson.Gson;

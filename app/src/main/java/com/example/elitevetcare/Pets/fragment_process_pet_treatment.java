@@ -3,12 +3,16 @@ package com.example.elitevetcare.Pets;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewPetTreatmentAdapter;
+import com.example.elitevetcare.Model.ViewModel.PetTreatmentViewModel;
 import com.example.elitevetcare.R;
 
 /**
@@ -28,7 +32,6 @@ public class fragment_process_pet_treatment extends Fragment {
     private String mParam2;
 
     public fragment_process_pet_treatment() {
-        // Required empty public constructor
     }
 
     /**
@@ -48,7 +51,7 @@ public class fragment_process_pet_treatment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    PetTreatmentViewModel petTreatmentViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,15 +59,38 @@ public class fragment_process_pet_treatment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        petTreatmentViewModel = new ViewModelProvider(getActivity()).get(PetTreatmentViewModel.class);
     }
     RecyclerView Recycler_list_item_pet_treatment;
+    RecyclerViewPetTreatmentAdapter Pet_Treatment_adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_process_pet_treatment, container, false);
-        Recycler_list_item_pet_treatment = root.findViewById(R.id.Recycler_list_item_pet_treatment);
+        SetID(root);
+        ContentInit();
 
         // Inflate the layout for this fragment
         return root;
+    }
+
+    private void ContentInit() {
+        petTreatmentViewModel.getProcessingTotalItem().observe(getActivity(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer > 0 ){
+                    if(Pet_Treatment_adapter != null) {
+                        Pet_Treatment_adapter.notifyDataSetChanged();
+                        return;
+                    }
+                    Pet_Treatment_adapter = new RecyclerViewPetTreatmentAdapter(getActivity());
+                    Recycler_list_item_pet_treatment.setAdapter(Pet_Treatment_adapter);
+                }
+            }
+        });
+    }
+
+    private void SetID(View root) {
+        Recycler_list_item_pet_treatment = root.findViewById(R.id.Recycler_list_item_pet_treatment);
     }
 }
