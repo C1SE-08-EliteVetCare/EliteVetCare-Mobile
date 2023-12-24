@@ -7,9 +7,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.elitevetcare.Appointment.fragment_process;
-import com.example.elitevetcare.Appointment.fragment_reject;
-import com.example.elitevetcare.Appointment.fragment_schedule;
 import com.example.elitevetcare.Pets.fragment_accepted_pet_treatment;
 import com.example.elitevetcare.Pets.fragment_process_pet_treatment;
 

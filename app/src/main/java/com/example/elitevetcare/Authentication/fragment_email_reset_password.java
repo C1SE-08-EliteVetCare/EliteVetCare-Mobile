@@ -1,6 +1,5 @@
 package com.example.elitevetcare.Authentication;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,9 +13,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.Login;
-import com.example.elitevetcare.Helper.SignUpViewModel;
-import com.example.elitevetcare.Helper.ViewModel.EmailViewModel;
+import com.example.elitevetcare.Helper.HelperCallingAPI;
+import com.example.elitevetcare.Model.ViewModel.EmailViewModel;
 import com.example.elitevetcare.R;
+
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,10 +89,26 @@ public class fragment_email_reset_password extends Fragment {
 
                 String email =  edt_Emailconfirm.getText().toString();
                 viewModel.setEmail(email);
-
-
                 if( !edt_Emailconfirm.getText().toString().equals("") ){
-                    ((Login) getActivity()).changeFragment(new fragment_confirmEmail());
+                    FormBody body = new FormBody.Builder()
+                            .add("email", email)
+                            .build();
+                    HelperCallingAPI.CallingAPI_QueryParams_Post(HelperCallingAPI.FORGET_PASSWORD, null, body, new HelperCallingAPI.MyCallback() {
+                        @Override
+                        public void onResponse(Response response) {
+                            if(response.isSuccessful()){
+                                ((Login) getActivity()).changeFragment(new fragment_confirmEmail());
+                            }else {
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(IOException e) {
+
+                        }
+                    });
+
                 }else {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

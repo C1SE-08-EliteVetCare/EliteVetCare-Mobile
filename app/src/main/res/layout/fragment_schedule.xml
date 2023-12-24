@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Appointment.fragment_schedule">
+    tools:context=".Appointment.activity_schedule">
 
     <LinearLayout
         android:layout_width="match_parent"

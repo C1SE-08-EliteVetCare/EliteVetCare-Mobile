@@ -1,10 +1,5 @@
 package com.example.elitevetcare.Authentication;
 
-import static android.widget.Toast.LENGTH_SHORT;
-
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +16,9 @@ import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.Login;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-import com.example.elitevetcare.Helper.SignUpViewModel;
+import com.example.elitevetcare.Model.ViewModel.SignUpViewModel;
 import com.example.elitevetcare.R;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 

@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -26,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Activity.Login;
 import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
@@ -125,6 +127,7 @@ public class fragment_user_profile extends Fragment {
     TextView txt_username, txt_phonenumber;
     ImageView img_avatar;
     ImageButton btn_change_avatar,btn_accept_change;
+    LinearLayout ll_edit_profile;
     boolean isChanging = false;
 
     @Override
@@ -137,11 +140,21 @@ public class fragment_user_profile extends Fragment {
         img_avatar = root.findViewById(R.id.img_avatar_user_profile);
         btn_change_avatar = root.findViewById(R.id.btn_change_avatar);
         btn_accept_change = root.findViewById(R.id.btn_accept_change);
+        ll_edit_profile = root.findViewById(R.id.ll_edit_profile);
 
         txt_username.setText(CurrentUser.getCurrentUser().getFullName());
         txt_phonenumber.setText("(+84)"+CurrentUser.getCurrentUser().getPhone().substring(1));
         Libs.SetImageFromURL(CurrentUser.getCurrentUser().getAvatar(),img_avatar);
 
+        ll_edit_profile.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Intent intent = new Intent(getContext(), ContentView.class);
+                intent.putExtra("FragmentCalling", R.layout.fragment_edit_profile_user);
+                getActivity().startActivity(intent);
+                return false;
+            }
+        });
         btn_change_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

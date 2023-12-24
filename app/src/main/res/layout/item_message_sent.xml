@@ -16,6 +16,7 @@
         android:paddingHorizontal="20dp"
         android:textColor="@color/white"
         android:textSize="15dp"
+        android:maxWidth="300dp"
         android:textAppearance="@style/text_regular_font"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

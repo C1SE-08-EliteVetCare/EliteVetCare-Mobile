@@ -100,25 +100,9 @@ public class fragment_edit_profile_user extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        updateUserProfile();
-        showYearPickerDialog();
         GetDataProvince();
-
     }
-//    private void getUserInfomation(){
-//
-//        CurrentUser.getCurrentUser().getFullName();
-//        CurrentUser.getCurrentUser().getBirthYear();
-//        CurrentUser.getCurrentUser().getEmail();
-//        CurrentUser.getCurrentUser().getGender();
-//        CurrentUser.getCurrentUser().getCity();
-//        CurrentUser.getCurrentUser().getDistrict();
-//        CurrentUser.getCurrentUser().getWard();
-//        CurrentUser.getCurrentUser().getStreetAddress();
-//
-//
-//    }
+
 
     private void showYearPickerDialog() {
         // Create a custom dialog
@@ -167,6 +151,8 @@ public class fragment_edit_profile_user extends Fragment {
         spinner_ward = root.findViewById(R.id.spinner_ward_editprofile);
         edt_address = root.findViewById(R.id.edt_edit_user_address);
         btn_update = root.findViewById(R.id.btn_update_user_profile);
+        edt_username.setText(CurrentUser.getCurrentUser().getFullName());
+        edt_birthyear.setText(CurrentUser.getCurrentUser().getBirthYear());
 
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -30,6 +30,7 @@ import com.example.elitevetcare.Model.ObjectModel.Pet;
 import com.example.elitevetcare.Model.ObjectModel.PetCondition;
 import com.example.elitevetcare.Pets.fragment_pet_infor_detail;
 import com.example.elitevetcare.Pets.fragment_select_clinic_treatment;
+import com.example.elitevetcare.Profile.fragment_edit_profile_user;
 import com.example.elitevetcare.QuestionAndAnswer.fragment_conversation;
 import com.example.elitevetcare.R;
 import com.example.elitevetcare.Appointment.fragment_select_service;
@@ -120,6 +121,14 @@ public class ContentView extends AppCompatActivity {
             ResetData();
             txt_content.setText("Chọn Gói Khám");
             CurrentFragment = new fragment_select_service();
+            ChangeFragment(CurrentFragment);
+            return;
+        }
+        if(selected_fragment == R.layout.fragment_edit_profile_user){
+            PreviouseFragment = CurrentFragment;
+            ResetData();
+            txt_content.setText("Chỉnh Sửa");
+            CurrentFragment = new fragment_edit_profile_user();
             ChangeFragment(CurrentFragment);
             return;
         }

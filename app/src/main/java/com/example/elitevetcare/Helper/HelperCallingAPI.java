@@ -53,6 +53,8 @@ public class HelperCallingAPI {
     final public static String GET_ALL_CONVERSATION = "conversation/conversations/";
     final public static String GET_ALL_MESSAGE_OF_CONVERSATION = "message/";
     final public static String SEND_MESSAGE_CONVERSATION = "message/";
+    final public static String FORGET_PASSWORD = "auth/forgot-password/";
+
     static boolean refresh_status = false;
 
     public static void CallingAPI_Province(String API_PATH, String params , MyCallback callback){
