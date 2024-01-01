@@ -2,6 +2,7 @@ package com.example.elitevetcare.Model.CurrentData;
 
 
 import com.example.elitevetcare.Helper.HelperCallingAPI;
+import com.example.elitevetcare.Helper.ProgressHelper;
 import com.example.elitevetcare.Model.ObjectModel.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -56,6 +57,8 @@ public class CurrentUser {
             }
             @Override
             public void onFailure(IOException e) {
+                if(ProgressHelper.isDialogVisible())
+                    ProgressHelper.dismissDialog();
             }
         });
 

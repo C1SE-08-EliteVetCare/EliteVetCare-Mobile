@@ -1,5 +1,6 @@
 package com.example.elitevetcare.Adapter.RecyclerViewAdapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,16 +49,48 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
         if(getItemCount()-1 == position){
             if(message.getAuthor().getId() != CurrentUser.getCurrentUser().getId()){
                 MessageReceivedViewHolder newHolder = ((MessageReceivedViewHolder)holder);
+
+                if (message.getImgUrl() != null || message.getImgUrl() == "") {
+                    newHolder.txt_message_content.setVisibility(View.GONE);
+                    Libs.SetImageFromURL(message.getImgUrl(),newHolder.img_content);
+                    newHolder.img_content.setVisibility(View.VISIBLE);
+                    Libs.SetImageFromURL(message.getAuthor().getAvatar(),newHolder.avatar_recipient);
+                    newHolder.avatar_recipient.setVisibility(View.VISIBLE);
+                    newHolder.txt_time_received.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()) + " Trước");
+                    newHolder.txt_time_received.setVisibility(View.GONE);
+                    return;
+                }
+
                 newHolder.txt_message_content.setBackgroundResource(R.drawable.background_last_received_message);
                 newHolder.txt_message_content.setText(message.getContent());
+                newHolder.img_content.setVisibility(View.GONE);
+                newHolder.txt_message_content.setVisibility(View.VISIBLE);
                 Libs.SetImageFromURL(message.getAuthor().getAvatar(),newHolder.avatar_recipient);
                 newHolder.avatar_recipient.setVisibility(View.VISIBLE);
                 newHolder.txt_time_received.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()) + " Trước");
                 newHolder.txt_time_received.setVisibility(View.VISIBLE);
+
             }else if (message.getAuthor().getId() == CurrentUser.getCurrentUser().getId()) {
                 MessageSentViewHolder newHolder = ((MessageSentViewHolder)holder);
+                if (message.getContent() == null || message.getContent() == "") {
+
+                    if(message.getImgUrl() == null || message.getImgUrl() == ""){
+                        newHolder.img_content.setImageBitmap(message.getBmp());
+                    }else {
+                        Libs.SetImageFromURL(message.getImgUrl(),newHolder.img_content);
+                    }
+
+                    newHolder.txt_message_content.setVisibility(View.GONE);
+                    newHolder.img_content.setVisibility(View.VISIBLE);
+                    newHolder.txt_time_sent.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()) + " Trước");
+                    newHolder.txt_time_sent.setVisibility(View.GONE);
+                    return;
+                }
+
                 newHolder.txt_message_content.setBackgroundResource(R.drawable.background_last_sent_message);
                 newHolder.txt_message_content.setText(message.getContent());
+                newHolder.txt_message_content.setVisibility(View.VISIBLE);
+                newHolder.img_content.setVisibility(View.GONE);
                 newHolder.txt_time_sent.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()) + " Trước");
                 newHolder.txt_time_sent.setVisibility(View.VISIBLE);
             }
@@ -66,16 +99,47 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
             if(nextMessage.getAuthor().getId() != message.getAuthor().getId()){
                 if(message.getAuthor().getId() != CurrentUser.getCurrentUser().getId()){
                     MessageReceivedViewHolder newHolder = ((MessageReceivedViewHolder)holder);
+
+                    if (message.getImgUrl() != null || message.getImgUrl() == "") {
+                        newHolder.txt_message_content.setVisibility(View.GONE);
+                        Libs.SetImageFromURL(message.getImgUrl(),newHolder.img_content);
+                        newHolder.img_content.setVisibility(View.VISIBLE);
+                        Libs.SetImageFromURL(message.getAuthor().getAvatar(),newHolder.avatar_recipient);
+                        newHolder.avatar_recipient.setVisibility(View.VISIBLE);
+                        newHolder.txt_time_received.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()) + " Trước");
+                        newHolder.txt_time_received.setVisibility(View.GONE);
+                        return;
+                    }
+
                     newHolder.txt_message_content.setBackgroundResource(R.drawable.background_last_received_message);
                     newHolder.txt_message_content.setText(message.getContent());
+                    newHolder.txt_message_content.setVisibility(View.VISIBLE);
+                    newHolder.img_content.setVisibility(View.GONE);
                     Libs.SetImageFromURL(message.getAuthor().getAvatar(),newHolder.avatar_recipient);
                     newHolder.avatar_recipient.setVisibility(View.VISIBLE);
                     newHolder.txt_time_received.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()));
                     newHolder.txt_time_received.setVisibility(View.GONE);
                 }else if (message.getAuthor().getId() == CurrentUser.getCurrentUser().getId()) {
                     MessageSentViewHolder newHolder = ((MessageSentViewHolder)holder);
+                    if (message.getContent() == null || message.getContent() == "") {
+
+                        if(message.getImgUrl() == null || message.getImgUrl() == ""){
+                            newHolder.img_content.setImageBitmap(message.getBmp());
+                        }else {
+                            Libs.SetImageFromURL(message.getImgUrl(),newHolder.img_content);
+                        }
+                        newHolder.txt_message_content.setVisibility(View.GONE);
+                        newHolder.img_content.setVisibility(View.VISIBLE);
+                        newHolder.txt_time_sent.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()) + " Trước");
+                        newHolder.txt_time_sent.setVisibility(View.GONE);
+                        return;
+                    }
+
+
                     newHolder.txt_message_content.setBackgroundResource(R.drawable.background_last_sent_message);
                     newHolder.txt_message_content.setText(message.getContent());
+                    newHolder.txt_message_content.setVisibility(View.VISIBLE);
+                    newHolder.img_content.setVisibility(View.GONE);
                     newHolder.txt_time_sent.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()));
                     newHolder.txt_time_sent.setVisibility(View.GONE);
                 }
@@ -83,15 +147,45 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
             }else {
                 if(message.getAuthor().getId() != CurrentUser.getCurrentUser().getId()){
                     MessageReceivedViewHolder newHolder = ((MessageReceivedViewHolder)holder);
+
+                    if (message.getImgUrl() != null || message.getImgUrl() == "") {
+                        newHolder.txt_message_content.setVisibility(View.GONE);
+                        Libs.SetImageFromURL(message.getImgUrl(),newHolder.img_content);
+                        newHolder.img_content.setVisibility(View.VISIBLE);
+                        Libs.SetImageFromURL(message.getAuthor().getAvatar(),newHolder.avatar_recipient);
+                        newHolder.avatar_recipient.setVisibility(View.GONE);
+                        newHolder.txt_time_received.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()) + " Trước");
+                        newHolder.txt_time_received.setVisibility(View.GONE);
+                        return;
+                    }
+
                     newHolder.txt_message_content.setText(message.getContent());
                     newHolder.txt_message_content.setBackgroundResource(R.drawable.background_received_message);
                     newHolder.avatar_recipient.setVisibility(View.GONE);
+                    newHolder.img_content.setVisibility(View.GONE);
+                    newHolder.txt_message_content.setVisibility(View.VISIBLE);
                     newHolder.txt_time_received.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()));
                     newHolder.txt_time_received.setVisibility(View.GONE);
                 }else if (message.getAuthor().getId() == CurrentUser.getCurrentUser().getId()) {
                     MessageSentViewHolder newHolder = ((MessageSentViewHolder)holder);
+                    if (message.getContent() == null || message.getContent() == "") {
+
+                        if(message.getImgUrl() == null || message.getImgUrl() == ""){
+                            newHolder.img_content.setImageBitmap(message.getBmp());
+                        }else {
+                            Libs.SetImageFromURL(message.getImgUrl(),newHolder.img_content);
+                        }
+                        newHolder.txt_message_content.setVisibility(View.GONE);
+                        newHolder.img_content.setVisibility(View.VISIBLE);
+                        newHolder.txt_time_sent.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()) + " Trước");
+                        newHolder.txt_time_sent.setVisibility(View.GONE);
+                        return;
+                    }
+
                     newHolder.txt_message_content.setText(message.getContent());
                     newHolder.txt_message_content.setBackgroundResource(R.drawable.background_sent_message);
+                    newHolder.txt_message_content.setVisibility(View.VISIBLE);
+                    newHolder.img_content.setVisibility(View.GONE);
                     newHolder.txt_time_sent.setText(Libs.calculateDateDifference(message.getCreatedAt(), Calendar.getInstance().getTime()));
                     newHolder.txt_time_sent.setVisibility(View.GONE);
                 }
@@ -106,20 +200,24 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public class MessageSentViewHolder extends RecyclerView.ViewHolder {
         TextView txt_time_sent, txt_message_content;
+        RoundedImageView img_content;
         public MessageSentViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_time_sent = itemView.findViewById(R.id.txt_time_sent);
             txt_message_content = itemView.findViewById(R.id.txt_message_content);
+            img_content = itemView.findViewById(R.id.img_content);
         }
     }
     public class MessageReceivedViewHolder extends RecyclerView.ViewHolder {
         TextView txt_time_received, txt_message_content;
         RoundedImageView avatar_recipient;
+        RoundedImageView img_content;
         public MessageReceivedViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_message_content = itemView.findViewById(R.id.txt_message_content);
             txt_time_received = itemView.findViewById(R.id.txt_time_received);
             avatar_recipient = itemView.findViewById(R.id.recipient_Avatar);
+            img_content = itemView.findViewById(R.id.img_content);
         }
     }
 }

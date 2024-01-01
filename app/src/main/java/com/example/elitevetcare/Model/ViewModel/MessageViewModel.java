@@ -11,7 +11,11 @@ public class MessageViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<Message>> MessageArray = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public void AddNewMessage(Message Message){
-        MessageArray.getValue().add(Message);
+        ArrayList<Message> currentMessages = MessageArray.getValue();
+        if (currentMessages != null) {
+            currentMessages.add(Message);
+            MessageArray.postValue(currentMessages);
+        }
     }
     public void AddMessageArray(ArrayList<Message> ListMessage){
         if(MessageArray.getValue() != null){
@@ -41,5 +45,12 @@ public class MessageViewModel extends ViewModel {
 
     public MutableLiveData<ArrayList<Message>> getMessageArray() {
         return MessageArray;
+    }
+    public void removeMessage(Message message) {
+        ArrayList<Message> currentMessages = MessageArray.getValue();
+        if (currentMessages != null) {
+            currentMessages.remove(message);
+            MessageArray.postValue(currentMessages);
+        }
     }
 }

@@ -1,8 +1,19 @@
 package com.example.elitevetcare.QuestionAndAnswer;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
@@ -10,6 +21,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,12 +51,15 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
 import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.internal.Util;
@@ -94,6 +109,8 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
     }
 
     MessageViewModel messageViewModel;
+    ActivityResultLauncher<String> ImageGallaryResultLauncher;
+    ActivityResultLauncher<Intent> takePictureLauncher;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,15 +118,76 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        ImageGallaryResultLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                if(result == null)
+                    return;
+                Bitmap bitmap = Libs.uriToBitmap(result,getContext());
+                SendImageMessage(bitmap);
+            }
+        });
+
+        takePictureLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            Toast.makeText(getContext(), "true", Toast.LENGTH_SHORT).show();
+                            // Xử lý ảnh đã chụp
+                            Bundle extras = result.getData().getExtras();
+                            Bitmap bitmap = (Bitmap) extras.get("data");
+                            SendImageMessage(bitmap);
+                        }else{
+                            Toast.makeText(getContext(),result.getResultCode()+  " : " + RESULT_OK, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
         messageViewModel = new ViewModelProvider(getActivity()).get(MessageViewModel.class);
         SocketGate.addSocketEventListener(this);
     }
+
+    private void SendImageMessage(Bitmap bitmap) {
+        int conversationID = messageViewModel.getConversationID().getValue();
+        Message message = new Message(-1, "", bitmap,"",CurrentUser.getCurrentUser(), conversationID, Calendar.getInstance().getTime());
+        messageViewModel.getMessageArray().getValue().add(message);
+        UpdateUI();
+        File File_avatar = Libs.BitmapToFile(getActivity().getCacheDir(), bitmap);
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("conversationId", conversationID +"")
+                .addFormDataPart("img", "message_content.jpg", RequestBody.create(File_avatar, MediaType.parse("image/jpg")))
+                .build();
+        HelperCallingAPI.CallingAPI_QueryParams_Post(HelperCallingAPI.SEND_IMAGE_MESSAGE_CONVERSATION, null, body, new HelperCallingAPI.MyCallback() {
+            @Override
+            public void onResponse(Response response) {
+                if(response.isSuccessful()){
+                    Libs.Sendmessage(getActivity(), "Gửi Ảnh Thành Công");
+                }else {
+                    Libs.Sendmessage(getActivity(), "Gửi Ảnh Thất Bại");
+                    messageViewModel.removeMessage(message);
+                }
+
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                Libs.Sendmessage(getActivity(), "Gửi Ảnh Thất Bại");
+                listMessage.remove(message);
+                UpdateUI();
+            }
+        });
+    }
+
     RecyclerView Message_recycler_view;
     RecyclerViewMessageAdapter messageAdapter;
     ProgressBar progressBar;
     ArrayList<Message> listMessage;
-    ImageFilterButton btn_send_message;
+    ImageFilterButton btn_send_message, btn_send_image;
     AppCompatEditText edt_input_message;
+
     LinearLayout ll_inputsend;
    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,7 +197,15 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
         Message_recycler_view = root.findViewById(R.id.recycler_message);
         btn_send_message = root.findViewById(R.id.btn_send_message);
         edt_input_message = root.findViewById(R.id.edt_input_message);
+        btn_send_image = root.findViewById(R.id.btn_send_image);
 
+
+       btn_send_image.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               showImageSourcePopup();
+           }
+       });
         btn_send_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +221,6 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
                     return;
 
                 edt_input_message.setText("");
-
                 Message message = new Message(-1, messageContent, CurrentUser.getCurrentUser(), conversationID, Calendar.getInstance().getTime());
                 messageViewModel.AddNewMessage(message);
                 UpdateUI();
@@ -158,8 +243,7 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
                     @Override
                     public void onFailure(IOException e) {
                         Libs.Sendmessage(getActivity(), "Gửi Tin Nhắn Thất Bại");
-                        listMessage.remove(message);
-                        UpdateUI();
+                        messageViewModel.removeMessage(message);
                     }
                 });
             }
@@ -198,6 +282,7 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
                     if(listMessage != null){
                         messageAdapter = new RecyclerViewMessageAdapter(listMessage);
                         Message_recycler_view.setAdapter(messageAdapter);
+                        Message_recycler_view.scrollToPosition(listMessage.size()-1);
                     }
                 }else{
                     listMessage = messageViewModel.getMessageArray().getValue();
@@ -216,11 +301,34 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
             Message NewMessage = gson.fromJson(jsonObject.get("message").toString(), new TypeToken<Message>(){}.getType());
             if(NewMessage.getAuthor().getId() != CurrentUser.getCurrentUser().getId()){
                 messageViewModel.AddNewMessage(NewMessage);
-                UpdateUI();
             }
 
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+    private void showImageSourcePopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Chọn nguồn ảnh");
+        builder.setItems(new CharSequence[]{"Máy ảnh", "Thư viện ảnh"}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) { // Chọn máy ảnh
+                    PickImageFromCamera();
+                } else { // Chọn từ thư viện
+                    PickImageFromGallary();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void PickImageFromGallary() {
+        ImageGallaryResultLauncher.launch("image/*");
+    }
+
+    private void PickImageFromCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePictureLauncher.launch(takePictureIntent);
     }
 }

@@ -45,16 +45,21 @@ public class RecyclerViewConversationHistoryAdapter extends RecyclerView.Adapter
         Conversation conversation = CurrentConversationHistory.getConversationHistory().get(position);
         User Recipient = null;
         String messageContent = "";
-        if(conversation.getRecipient().getId() != CurrentUser.getCurrentUser().getId()){
-            Recipient = conversation.getRecipient();
-            messageContent += conversation.getLastMessageSent().getAuthor().getFullName() + ": " + conversation.getLastMessageSent().getContent();
-        }
+        if(conversation.getLastMessageSent().getAuthor().getId() != CurrentUser.getCurrentUser().getId()){
+            if(conversation.getLastMessageSent().getContent() == null || conversation.getLastMessageSent().getContent() == ""){
+                messageContent += conversation.getLastMessageSent().getAuthor().getFullName() + ": Đã gửi 1 Ảnh";
+            }else{
+                messageContent += conversation.getLastMessageSent().getAuthor().getFullName() + ": " + conversation.getLastMessageSent().getContent();
+            }
+        } else{
+            if(conversation.getLastMessageSent().getContent() == null || conversation.getLastMessageSent().getContent() == ""){
+                messageContent += "Bạn: Đã gửi 1 Ảnh";
+            }else{
+                messageContent += "Bạn: " + conversation.getLastMessageSent().getContent();
 
-        else{
-            Recipient = conversation.getCreator();
-            messageContent += "Bạn: " + conversation.getLastMessageSent().getContent();
+            }
         }
-
+        Recipient = conversation.getCreator().getId() == CurrentUser.getCurrentUser().getId() ? conversation.getRecipient() : CurrentUser.getCurrentUser();
         if(messageContent.length() > 30)
             messageContent = messageContent.substring(0,27) +"...";
         Libs.SetImageFromURL(Recipient.getAvatar(),holder.img_avatar_recipient);

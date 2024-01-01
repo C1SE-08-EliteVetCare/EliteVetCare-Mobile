@@ -22,6 +22,11 @@ import io.socket.engineio.client.transports.WebSocket;
 
 public class SocketGate {
     private static Socket mSocket = null;
+
+    public static Socket getmSocket() {
+        return mSocket;
+    }
+
     private static ArrayList<SocketOnMessageListener> listListenerEvent = new ArrayList<>();
     public static void OpenGate(Activity activity){
         if(mSocket != null)
@@ -57,10 +62,10 @@ public class SocketGate {
                     Log.d("Connectiona", args[0].toString());
                 }
             });
-            mSocket.on("onMessage", new Emitter.Listener() {
+            SocketGate.mSocket.on("onMessage", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-                    notifyListeners(args[0].toString());
+                    SocketGate.notifyListeners(args[0].toString());
                     Log.d("ConnectionaRespone", args[0].toString());
                 }
             });
@@ -70,7 +75,13 @@ public class SocketGate {
             e.printStackTrace();
         }
     }
-
+    public static void CloseGate() {
+        if (mSocket != null && mSocket.connected()) {
+            mSocket.disconnect();
+            mSocket.close();
+            mSocket = null;
+        }
+    }
     public static void addSocketEventListener(SocketOnMessageListener listener) {
         if (!listListenerEvent.contains(listener)) {
             listListenerEvent.add(listener);
@@ -81,7 +92,7 @@ public class SocketGate {
         listListenerEvent.remove(listener);
     }
 
-    private static void notifyListeners(String message) {
+    public static void notifyListeners(String message) {
         for (SocketOnMessageListener listener : listListenerEvent) {
             listener.onMessageListener(message);
         }

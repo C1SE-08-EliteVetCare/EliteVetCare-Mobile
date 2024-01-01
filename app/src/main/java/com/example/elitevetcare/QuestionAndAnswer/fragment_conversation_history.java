@@ -17,6 +17,7 @@ import com.example.elitevetcare.Model.CurrentData.CurrentConversationHistory;
 import com.example.elitevetcare.Model.ObjectModel.Conversation;
 import com.example.elitevetcare.Model.ObjectModel.User;
 import com.example.elitevetcare.R;
+import com.example.elitevetcare.fragment_vet_bottom_sheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -84,8 +85,22 @@ public class fragment_conversation_history extends Fragment implements SocketOnM
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_conversation_history, container, false);
-        new_conversation_btn = root.findViewById(R.id.QA_FloatingActionButton);
-        ConversationHistory_recycler_view = root.findViewById(R.id.recycler_conversation_history);
+        SetID(root);
+
+        new_conversation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_vet_bottom_sheet bottomSheetFragment = new fragment_vet_bottom_sheet();
+                bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
+        SetData();
+
+        // Inflate the layout for this fragment
+        return root;
+    }
+
+    private void SetData() {
         if(CurrentConversationHistory.getConversationHistory() == null)
             CurrentConversationHistory.CreateInstanceByAPI(new CurrentConversationHistory.UserCallback() {
                 @Override
@@ -94,12 +109,31 @@ public class fragment_conversation_history extends Fragment implements SocketOnM
                 }
             });
         else {
-            UpdateUI();
-        }
+            if(CurrentConversationHistory.isIsLoad() == true){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (CurrentConversationHistory.isIsLoad()){
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        UpdateUI();
+                    }
+                });
+            }else
+                UpdateUI();
 
-        // Inflate the layout for this fragment
-        return root;
+        }
     }
+
+    private void SetID(View root) {
+        new_conversation_btn = root.findViewById(R.id.QA_FloatingActionButton);
+        ConversationHistory_recycler_view = root.findViewById(R.id.recycler_conversation_history);
+    }
+
     private void UpdateUI() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -124,4 +158,5 @@ public class fragment_conversation_history extends Fragment implements SocketOnM
         }
         return -1;
     }
+
 }

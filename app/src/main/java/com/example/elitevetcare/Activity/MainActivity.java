@@ -2,6 +2,7 @@ package com.example.elitevetcare.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
@@ -40,9 +41,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import io.socket.emitter.Emitter;
+
 public class MainActivity extends AppCompatActivity implements SocketOnMessageListener {
 
     FragmentContainerView frm_view;
+    ImageFilterButton ic_notice;
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     AppointmentViewModel appointmentViewModel;
@@ -54,10 +58,21 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SocketGate.OpenGate(this);
-        SocketGate.addSocketEventListener(this);
-        // Sử dụng BottomNavigationView để chuyển đổi giữa các Fragment
-        bottomNavigationView = findViewById(R.id.bottom_Nav);
-        top_bar_select = findViewById(R.id.top_tab_bar);
+        SocketGate.getmSocket().on("onMessage", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                onMessageListener(args[0].toString());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ic_notice.setImageResource(R.drawable.ic_have_notice);
+                    }
+                });
+
+            }
+        });
+        SetID();
+
         appointmentViewModel = new ViewModelProvider(this).get(AppointmentViewModel.class);
         User currentUser = CurrentUser.getCurrentUser();
 
@@ -84,8 +99,10 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
                 int item_id = item.getItemId();
                 if(item_id == R.id.btn_bottomnav_home)
                     selectedFragment = new fragment_home();
-                if(item_id == R.id.btn_bottomnav_QA)
+                if(item_id == R.id.btn_bottomnav_QA){
                     selectedFragment = new fragment_conversation_history();
+                }
+
                 if(item_id == R.id.btn_bottomnav_appointment){
                     selectedFragment = new fragment_appointment();
                 }
@@ -113,6 +130,13 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
 
     }
 
+    private void SetID() {
+        // Sử dụng BottomNavigationView để chuyển đổi giữa các Fragment
+        bottomNavigationView = findViewById(R.id.bottom_Nav);
+        top_bar_select = findViewById(R.id.top_tab_bar);
+        ic_notice = findViewById(R.id.ic_notice);
+    }
+
     private void ChangeFragment(Fragment selectedFragment) {
         transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left);
@@ -132,6 +156,8 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
             Gson gson = new Gson();
             Conversation conversation = gson.fromJson(jsonObject.get("conversation").toString(), new TypeToken<Conversation>(){}.getType());
             int index = isExist(conversation.getId());
+            if(index == -2)
+                return;
             if(index != -1)
                 CurrentConversationHistory.getConversationHistory().remove(index);
             CurrentConversationHistory.getConversationHistory().add(0,conversation);
@@ -141,6 +167,17 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
     }
     int isExist(int id){
         ArrayList<Conversation> list = CurrentConversationHistory.getConversationHistory();
+        if (list == null){
+            CurrentConversationHistory.CreateInstanceByAPI(new CurrentConversationHistory.UserCallback() {
+                @Override
+                public void onGetSuccess() {
+                    CurrentConversationHistory.setIsLoad(false);
+                }
+            });
+            return -2;
+        }
+        if (CurrentConversationHistory.isIsLoad())
+            return -2;
         for (int i = 0; i < list.size(); i++) {
             Conversation obj = list.get(i);
             if (obj.getId() == id) {
