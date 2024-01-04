@@ -29,6 +29,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:inputType="text"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:background="@drawable/custom_input_box_grey"
             android:drawableEnd="@drawable/ic_edit_birth"
             android:paddingStart="20dp"

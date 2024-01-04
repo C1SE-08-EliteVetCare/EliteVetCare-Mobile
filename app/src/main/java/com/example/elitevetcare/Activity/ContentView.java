@@ -1,11 +1,5 @@
 package com.example.elitevetcare.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,28 +7,34 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.elitevetcare.Appointment.fragment_pet_owner_infor;
 import com.example.elitevetcare.Appointment.fragment_select_clinic;
 import com.example.elitevetcare.Appointment.fragment_select_datetime;
+import com.example.elitevetcare.Appointment.fragment_select_service;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Helper.ProgressHelper;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
-import com.example.elitevetcare.Model.ObjectModel.Appointment;
 import com.example.elitevetcare.Model.ObjectModel.Conversation;
 import com.example.elitevetcare.Model.ObjectModel.Message;
+import com.example.elitevetcare.Model.ObjectModel.Pet;
+import com.example.elitevetcare.Model.ObjectModel.PetCondition;
 import com.example.elitevetcare.Model.ObjectModel.User;
 import com.example.elitevetcare.Model.ViewModel.MessageViewModel;
 import com.example.elitevetcare.Model.ViewModel.PetViewModel;
-import com.example.elitevetcare.Model.ObjectModel.Pet;
-import com.example.elitevetcare.Model.ObjectModel.PetCondition;
 import com.example.elitevetcare.Pets.fragment_pet_infor_detail;
 import com.example.elitevetcare.Pets.fragment_select_clinic_treatment;
-import com.example.elitevetcare.QuestionAndAnswer.fragment_conversation;
-import com.example.elitevetcare.R;
-import com.example.elitevetcare.Appointment.fragment_select_service;
 import com.example.elitevetcare.Pets.fragment_tracking_pet_health;
 import com.example.elitevetcare.Pets.fragment_update_pet_condition;
+import com.example.elitevetcare.Profile.fragment_edit_profile_user;
+import com.example.elitevetcare.QuestionAndAnswer.fragment_conversation;
+import com.example.elitevetcare.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -95,6 +95,14 @@ public class ContentView extends AppCompatActivity {
     }
 
     private void CallingFragment() {
+        if (selected_fragment == R.layout.fragment_edit_profile_user){
+            PreviouseFragment = CurrentFragment;
+            ResetData();
+            txt_content.setText("Chỉnh Sửa Hồ Sơ");
+            CurrentFragment = new fragment_edit_profile_user();
+            ChangeFragment(CurrentFragment);
+            return;
+        }
         if (selected_fragment == R.layout.fragment_pet_infor_detail){
             CallingPetInforDetail();
             return;

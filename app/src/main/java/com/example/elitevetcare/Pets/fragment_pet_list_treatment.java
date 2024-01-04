@@ -1,16 +1,17 @@
 package com.example.elitevetcare.Pets;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.ViewPager2;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.elitevetcare.Adapter.ViewPageAdapter.PetTreatmentViewPager2Adapter;
 import com.example.elitevetcare.Helper.DataChangeObserver;
 import com.example.elitevetcare.Helper.ProgressHelper;
@@ -118,7 +119,6 @@ public class fragment_pet_list_treatment extends Fragment implements DataChangeL
                             });
 
                         if(status == 2)
-
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -126,8 +126,8 @@ public class fragment_pet_list_treatment extends Fragment implements DataChangeL
 
                                 }
                             });
-                            if(ProgressHelper.isDialogVisible())
-                                ProgressHelper.dismissDialog();
+                        if(ProgressHelper.isDialogVisible())
+                            ProgressHelper.dismissDialog();
                     }
                 });
             }

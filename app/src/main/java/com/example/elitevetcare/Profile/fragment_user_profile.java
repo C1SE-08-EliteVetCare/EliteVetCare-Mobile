@@ -7,14 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Activity.Login;
 import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
@@ -121,7 +121,7 @@ public class fragment_user_profile extends Fragment {
         );
     }
 
-    LinearLayout logout_layout;
+    LinearLayout logout_layout, ll_edit_profile;
     TextView txt_username, txt_phonenumber;
     ImageView img_avatar;
     ImageButton btn_change_avatar,btn_accept_change;
@@ -137,9 +137,12 @@ public class fragment_user_profile extends Fragment {
         img_avatar = root.findViewById(R.id.img_avatar_user_profile);
         btn_change_avatar = root.findViewById(R.id.btn_change_avatar);
         btn_accept_change = root.findViewById(R.id.btn_accept_change);
+        ll_edit_profile = root.findViewById(R.id.ll_edit_profile);
 
         txt_username.setText(CurrentUser.getCurrentUser().getFullName());
-        txt_phonenumber.setText("(+84)"+CurrentUser.getCurrentUser().getPhone().substring(1));
+
+        if(CurrentUser.getCurrentUser().getPhone() != null && CurrentUser.getCurrentUser().getPhone() != "" && +CurrentUser.getCurrentUser().getPhone().length() > 1)
+            txt_phonenumber.setText("(+84)"+CurrentUser.getCurrentUser().getPhone().substring(1));
         Libs.SetImageFromURL(CurrentUser.getCurrentUser().getAvatar(),img_avatar);
 
         btn_change_avatar.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +208,15 @@ public class fragment_user_profile extends Fragment {
             }
         });
 
+        ll_edit_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ContentView.class);
+                intent.putExtra("FragmentCalling", R.layout.fragment_edit_profile_user);
+                getActivity().startActivity(intent);
 
+            }
+        });
         // Inflate the layout for this fragment
         return root;
     }

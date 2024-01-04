@@ -1,17 +1,17 @@
 package com.example.elitevetcare.Appointment;
 
 import android.os.Bundle;
-
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.fragment.app.Fragment;
 
 import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
@@ -20,6 +20,9 @@ import com.example.elitevetcare.Helper.ProgressHelper;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.ObjectModel.User;
 import com.example.elitevetcare.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -131,7 +134,7 @@ public class fragment_pet_owner_infor extends Fragment {
                             if (!ProgressHelper.isDialogVisible())
                                 ProgressHelper.showDialog(getActivity(),"Đang cập nhập dữ liệu !");
                             RequestBody body = new FormBody.Builder()
-                                    .add("name", name)
+                                    .add("fullName", name)
                                     .add("gender", gender)
                                     .add("birthYear", age)
                                     .add("phone", phone)
@@ -144,9 +147,22 @@ public class fragment_pet_owner_infor extends Fragment {
                                     int statusCode = response.code();
                                     if (statusCode == 200 ){
                                         CurrentUser.CreateInstanceByAPI(currentUser -> {});
-                                        ((ContentView)getActivity()).setfragment(R.layout.fragment_select_service);
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ((ContentView)getActivity()).setfragment(R.layout.fragment_select_service);
+                                            }
+                                        });
+
                                     }else{
-                                        Libs.Sendmessage(getActivity(), "Đang Xảy Ra Lỗi Vui Lòng Thử Lại");
+                                        try {
+                                            Log.d("ResponeAPI",statusCode + ": " + (new JSONObject(response.body().string()).toString()));
+                                        } catch (JSONException e) {
+                                            throw new RuntimeException(e);
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        Libs.Sendmessage(getActivity(), "Đang Xảy Ra Lỗi Vui Lòng Thử Lại1");
                                     }
 
                                 }
@@ -155,7 +171,7 @@ public class fragment_pet_owner_infor extends Fragment {
                                 public void onFailure(IOException e) {
                                     if (ProgressHelper.isDialogVisible())
                                         ProgressHelper.dismissDialog();
-                                    Libs.Sendmessage(getActivity(), "Đang Xảy Ra Lỗi Vui Lòng Thử Lại");
+                                    Libs.Sendmessage(getActivity(), "Đang Xảy Ra Lỗi Vui Lòng Thử Lại2");
                                 }
                             });
                         }
