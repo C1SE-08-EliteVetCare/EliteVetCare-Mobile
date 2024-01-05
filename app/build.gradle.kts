@@ -52,4 +52,5 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.0.1")
     implementation ("io.socket:socket.io-client:2.1.0")
     implementation ("com.makeramen:roundedimageview:2.3.0")
+    implementation ("androidx.biometric:biometric:1.1.0")
 }

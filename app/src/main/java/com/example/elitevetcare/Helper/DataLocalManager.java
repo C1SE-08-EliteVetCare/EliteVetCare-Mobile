@@ -6,6 +6,7 @@ public class DataLocalManager {
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
     public static final String REFRESH_TOKEN_TIMEUP = "REFRESH_TOKEN_TIME";
     public static final String ACCESS_TOKEN_TIMEUP = "ACCESS_TOKEN_TIME";
+    public static final String ACCESS_EMAIL_USER = "ACCESS_EMAIL_USER";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static DataLocalManager instance = null;
     public static MySharedPreferences mySharedPreferences;
@@ -20,6 +21,12 @@ public class DataLocalManager {
         return instance;
     }
 
+    public static void SetEmailUser(String Email){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(ACCESS_EMAIL_USER,Email);
+    }
+    public static String GetEmailUser(){
+        return DataLocalManager.getInstance().mySharedPreferences.getStringValue(ACCESS_EMAIL_USER);
+    }
     public static void setRefreshToken(String Token){
         Long TimeUP = System.currentTimeMillis()+ 29 * 24 * 60 * 60 * 1000L;
         DataLocalManager.getInstance().mySharedPreferences.putStringValue(REFRESH_TOKEN,Token);

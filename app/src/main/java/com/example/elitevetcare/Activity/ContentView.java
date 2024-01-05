@@ -2,7 +2,6 @@ package com.example.elitevetcare.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,7 +22,6 @@ import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Helper.ProgressHelper;
 import com.example.elitevetcare.Model.CurrentData.CurrentConversationHistory;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
-import com.example.elitevetcare.Model.ObjectModel.Appointment;
 import com.example.elitevetcare.Model.ObjectModel.Conversation;
 import com.example.elitevetcare.Model.ObjectModel.Message;
 import com.example.elitevetcare.Model.ObjectModel.PetTreatment;
@@ -39,7 +37,8 @@ import com.example.elitevetcare.R;
 import com.example.elitevetcare.Appointment.fragment_select_service;
 import com.example.elitevetcare.Pets.fragment_tracking_pet_health;
 import com.example.elitevetcare.Pets.fragment_update_pet_condition;
-import com.example.elitevetcare.fragment_pet_treatment_detail;
+import com.example.elitevetcare.Appointment.fragment_detail_appointment;
+import com.example.elitevetcare.Pets.fragment_pet_treatment_detail;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -117,50 +116,7 @@ public class ContentView extends AppCompatActivity {
             if(CurrentUser.getCurrentUser().getRole().getId() == 2)
                 CallingTrackingPetHealth();
             else if (CurrentUser.getCurrentUser().getRole().getId() == 3) {
-                PreviouseFragment = CurrentFragment;
-                ResetData();
-                String PathParams = String.valueOf(CurrentPetViewModel.getCurrentPetTreatment().getPet().getId());
-                if(!ProgressHelper.isDialogVisible())
-                    ProgressHelper.showDialog(ContentView.this,"Đang Lấy Dữ Liệu");
-                HelperCallingAPI.CallingAPI_PathParams_Get(HelperCallingAPI.PET_CONDITION_PATH, PathParams, new HelperCallingAPI.MyCallback() {
-                    @Override
-                    public void onResponse(Response response) {
-                        if(response.isSuccessful()){
-                            try {
-                                JSONObject data = new JSONObject(response.body().string());
-                                JSONArray ListPetData = data.getJSONArray("data");
-                                Gson gson = new Gson();
-                                Type listType = new TypeToken<ArrayList<PetCondition>>(){}.getType();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        CurrentPetViewModel.setPetCondition(gson.fromJson(ListPetData.toString(), listType));
-                                        ArrayList<PetCondition> petConditions = CurrentPetViewModel.getPetCondition().getValue();
-                                        if(petConditions == null || petConditions.size() <= 0){
-                                            if(ProgressHelper.isDialogVisible())
-                                                ProgressHelper.dismissDialog();
-                                            ResetData();
-                                            CurrentFragment = PreviouseFragment;
-                                            PreviouseFragment = null;
-                                            Libs.Sendmessage(ContentView.this, "Chủ Sở Hữu Chưa cập nhập tình trạng không thể xem");
-                                            return;
-                                        }
-                                        txt_content.setText("Tình Trạng Thú Cưng");
-                                        CurrentFragment = new fragment_tracking_pet_health();
-                                        ChangeFragment(CurrentFragment);
-                                    }
-                                });
-                            } catch (JSONException | IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(IOException e) {
-
-                    }
-                });
+                CallingTrackingPetHealth_Vet();
             }
             return;
         }
@@ -198,6 +154,19 @@ public class ContentView extends AppCompatActivity {
         }
         if(selected_fragment == R.layout.fragment_select_clinic_treatment){
             CallingSelectClinicTreatment();
+            return;
+        }
+        if(selected_fragment == R.layout.fragment_detail_appointment){
+            PreviouseFragment = CurrentFragment;
+            ResetData();
+            txt_content.setText("Chi Tiết Lịch Hẹn");
+            CurrentFragment = new fragment_detail_appointment();
+            if(getIntent().hasExtra("Appointment")){
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Appointment", getIntent().getSerializableExtra("Appointment"));
+                CurrentFragment.setArguments(bundle);
+            }
+            ChangeFragment(CurrentFragment);
             return;
         }
         if(selected_fragment == R.layout.fragment_update_pet_condition){
@@ -257,6 +226,53 @@ public class ContentView extends AppCompatActivity {
             ChangeFragment(CurrentFragment);
             return;
         }
+    }
+
+    private void CallingTrackingPetHealth_Vet() {
+        PreviouseFragment = CurrentFragment;
+        ResetData();
+        String PathParams = String.valueOf(CurrentPetViewModel.getCurrentPetTreatment().getPet().getId());
+        if(!ProgressHelper.isDialogVisible())
+            ProgressHelper.showDialog(ContentView.this,"Đang Lấy Dữ Liệu");
+        HelperCallingAPI.CallingAPI_PathParams_Get(HelperCallingAPI.PET_CONDITION_PATH, PathParams, new HelperCallingAPI.MyCallback() {
+            @Override
+            public void onResponse(Response response) {
+                if(response.isSuccessful()){
+                    try {
+                        JSONObject data = new JSONObject(response.body().string());
+                        JSONArray ListPetData = data.getJSONArray("data");
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<ArrayList<PetCondition>>(){}.getType();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                CurrentPetViewModel.setPetCondition(gson.fromJson(ListPetData.toString(), listType));
+                                ArrayList<PetCondition> petConditions = CurrentPetViewModel.getPetCondition().getValue();
+                                if(petConditions == null || petConditions.size() <= 0){
+                                    if(ProgressHelper.isDialogVisible())
+                                        ProgressHelper.dismissDialog();
+                                    ResetData();
+                                    CurrentFragment = PreviouseFragment;
+                                    PreviouseFragment = null;
+                                    Libs.Sendmessage(ContentView.this, "Chủ Sở Hữu Chưa cập nhập tình trạng không thể xem");
+                                    return;
+                                }
+                                txt_content.setText("Tình Trạng Thú Cưng");
+                                CurrentFragment = new fragment_tracking_pet_health();
+                                ChangeFragment(CurrentFragment);
+                            }
+                        });
+                    } catch (JSONException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+
+            }
+        });
     }
 
     private void CallingConversationCreated() {

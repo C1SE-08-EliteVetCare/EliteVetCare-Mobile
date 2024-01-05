@@ -152,6 +152,7 @@ public class Login extends AppCompatActivity {
                                 public void onResponse(Response response) {
                                     int responeStatus = response.code();
                                     if (responeStatus == 201){
+                                        DataLocalManager.SetEmailUser(username);
                                         SetData(response);
                                         CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
                                             @Override
@@ -161,6 +162,7 @@ public class Login extends AppCompatActivity {
                                             }
                                         });
                                     } else if (responeStatus == 200) {
+                                        DataLocalManager.SetEmailUser(username);
                                         SetData(response);
                                         CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
                                             @Override

@@ -1,4 +1,4 @@
-package com.example.elitevetcare;
+package com.example.elitevetcare.QuestionAndAnswer;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -26,6 +26,7 @@ import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.CurrentData.CurrentVetRecommend;
 import com.example.elitevetcare.Model.ObjectModel.User;
+import com.example.elitevetcare.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

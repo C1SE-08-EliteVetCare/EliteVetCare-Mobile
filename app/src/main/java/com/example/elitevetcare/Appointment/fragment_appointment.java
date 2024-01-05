@@ -220,8 +220,14 @@ public class fragment_appointment extends Fragment implements DataChangeListener
 
     @Override
     public void onMessageListener(String message, int Code) {
-        if(Code != SocketGate.APPOINTMENT_CREATE_EVENT_CODE)
+        if(Code != SocketGate.APPOINTMENT_CREATE_EVENT_CODE && Code != SocketGate.APPOINTMENT_STATUS_EVENT_CODE)
             return;
-        GetDataByAPI(1);
+        if(Code == SocketGate.APPOINTMENT_CREATE_EVENT_CODE)
+            GetDataByAPI(1);
+        else if (Code == SocketGate.APPOINTMENT_STATUS_EVENT_CODE) {
+            GetDataByAPI(1);
+            GetDataByAPI(2);
+            GetDataByAPI(3);
+        }
     }
 }

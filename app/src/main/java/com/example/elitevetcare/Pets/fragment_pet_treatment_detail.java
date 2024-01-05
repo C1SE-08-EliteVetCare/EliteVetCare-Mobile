@@ -1,4 +1,4 @@
-package com.example.elitevetcare;
+package com.example.elitevetcare.Pets;
 
 import android.os.Bundle;
 
@@ -16,9 +16,9 @@ import android.widget.TextView;
 import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
-import com.example.elitevetcare.Model.ObjectModel.Pet;
 import com.example.elitevetcare.Model.ObjectModel.PetTreatment;
 import com.example.elitevetcare.Model.ViewModel.PetViewModel;
+import com.example.elitevetcare.R;
 
 /**
  * A simple {@link Fragment} subclass.

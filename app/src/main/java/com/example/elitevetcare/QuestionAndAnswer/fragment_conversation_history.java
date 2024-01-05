@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +14,8 @@ import com.example.elitevetcare.Helper.SocketGate;
 import com.example.elitevetcare.Interface.SocketOnMessageListener;
 import com.example.elitevetcare.Model.CurrentData.CurrentConversationHistory;
 import com.example.elitevetcare.Model.ObjectModel.Conversation;
-import com.example.elitevetcare.Model.ObjectModel.User;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.fragment_vet_bottom_sheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 

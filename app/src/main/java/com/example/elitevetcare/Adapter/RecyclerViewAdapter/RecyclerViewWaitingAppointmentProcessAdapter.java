@@ -1,10 +1,12 @@
 package com.example.elitevetcare.Adapter.RecyclerViewAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Helper.DataChangeObserver;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
@@ -81,6 +84,15 @@ public class RecyclerViewWaitingAppointmentProcessAdapter extends RecyclerView.A
             newHolder.txt_date.setText(Date);
             newHolder.txt_time.setText(Time);
             Libs.SetImageFromURL(appointment.getClinic().getLogo(),newHolder.clinicAvatar);
+            newHolder.ll_item_process.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Activity.getApplicationContext(), ContentView.class);
+                    intent.putExtra("FragmentCalling", R.layout.fragment_detail_appointment);
+                    intent.putExtra("Appointment", appointment);
+                    Activity.startActivity(intent);
+                }
+            });
         }
         if (getItemViewType(position) == VIEW_TYPE_VET){
             VetAppointmentViewHolder newHolder = (VetAppointmentViewHolder)holder;
@@ -166,6 +178,15 @@ public class RecyclerViewWaitingAppointmentProcessAdapter extends RecyclerView.A
                     });
                 }
             });
+            newHolder.ll_item_process.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Activity.getApplicationContext(), ContentView.class);
+                    intent.putExtra("FragmentCalling", R.layout.fragment_detail_appointment);
+                    intent.putExtra("Appointment", appointment);
+                    Activity.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -178,6 +199,7 @@ public class RecyclerViewWaitingAppointmentProcessAdapter extends RecyclerView.A
         public TextView txt_name_pet_owner, txt_date, txt_time;
         ImageFilterButton clinicAvatar;
         AppCompatButton btn_cancel;
+        LinearLayout ll_item_process;
         public PetOwnerAppointmentViewHolder(@NonNull View itemView)
         {
             super(itemView);
@@ -186,6 +208,7 @@ public class RecyclerViewWaitingAppointmentProcessAdapter extends RecyclerView.A
             txt_time = itemView.findViewById(R.id.txt_time);
             clinicAvatar = itemView.findViewById(R.id.process_appointment_avatar);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
+            ll_item_process = itemView.findViewById(R.id.ll_item_process);
         }
 
 
@@ -194,6 +217,7 @@ public class RecyclerViewWaitingAppointmentProcessAdapter extends RecyclerView.A
         public TextView txt_name_pet_owner, txt_date, txt_time;
         ImageFilterButton clinicAvatar;
         AppCompatButton btn_accept, btn_reject;
+        LinearLayout ll_item_process;
         public VetAppointmentViewHolder(@NonNull View itemView)
         {
             super(itemView);
@@ -203,6 +227,7 @@ public class RecyclerViewWaitingAppointmentProcessAdapter extends RecyclerView.A
             clinicAvatar = itemView.findViewById(R.id.process_appointment_avatar);
             btn_accept = itemView.findViewById(R.id.btn_accept_appointment);
             btn_reject = itemView.findViewById(R.id.btn_Reject_appointment);
+            ll_item_process = itemView.findViewById(R.id.ll_item_process);
         }
     }
 

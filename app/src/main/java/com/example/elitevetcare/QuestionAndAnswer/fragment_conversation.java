@@ -147,6 +147,7 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
                 }
         );
         messageViewModel = new ViewModelProvider(getActivity()).get(MessageViewModel.class);
+        SocketGate.setCurrentIDConversation(messageViewModel.getConversationID().getValue());
         SocketGate.addSocketEventListener(this);
     }
 
