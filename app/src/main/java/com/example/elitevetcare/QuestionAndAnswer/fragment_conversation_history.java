@@ -13,6 +13,7 @@ import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewConversa
 import com.example.elitevetcare.Helper.SocketGate;
 import com.example.elitevetcare.Interface.SocketOnMessageListener;
 import com.example.elitevetcare.Model.CurrentData.CurrentConversationHistory;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.ObjectModel.Conversation;
 import com.example.elitevetcare.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -78,7 +79,8 @@ public class fragment_conversation_history extends Fragment implements SocketOnM
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_conversation_history, container, false);
         SetID(root);
-
+        if(CurrentUser.getCurrentUser().getRole().getId() == 3)
+            new_conversation_btn.setVisibility(View.INVISIBLE);
         new_conversation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
