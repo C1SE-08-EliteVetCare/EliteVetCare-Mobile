@@ -80,7 +80,7 @@ public class fragment_verify extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        new CountDownTimer(60000, 1000){
+        new CountDownTimer(300000, 1000){
 
             public void onTick(long millisUntilFinished) {
                 long minutetimeCountDown = millisUntilFinished / 60000;

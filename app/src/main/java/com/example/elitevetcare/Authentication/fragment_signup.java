@@ -135,7 +135,7 @@ public class fragment_signup extends Fragment {
                 HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.REGISTER_PATH, requestBody, new HelperCallingAPI.MyCallback() {
                     @Override
                     public void onResponse(Response response) {
-                        if (response.code() == 201) {
+                        if (response.isSuccessful()) {
                             ((Login)getActivity()).changeFragment(new fragment_verify());
 
                         } else {
