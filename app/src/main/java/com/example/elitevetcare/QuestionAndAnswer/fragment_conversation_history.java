@@ -138,13 +138,20 @@ public class fragment_conversation_history extends Fragment implements SocketOnM
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ConversationHistory_adapter = new RecyclerViewConversationHistoryAdapter(getActivity());
-                ConversationHistory_recycler_view.setAdapter(ConversationHistory_adapter);
+                if(ConversationHistory_adapter == null){
+                    ConversationHistory_adapter = new RecyclerViewConversationHistoryAdapter(getActivity());
+                    ConversationHistory_recycler_view.setAdapter(ConversationHistory_adapter);
+                }else {
+                    ConversationHistory_adapter.resetData();
+                }
+
             }
         });
     }
     @Override
-    public void onMessageListener(String message) {
+    public void onMessageListener(String message, int Code) {
+        if(Code != SocketGate.MESSAGE_EVENT_CODE)
+            return;
         UpdateUI();
     }
 

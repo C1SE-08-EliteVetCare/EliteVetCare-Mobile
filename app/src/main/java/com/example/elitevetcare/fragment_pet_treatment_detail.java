@@ -1,4 +1,4 @@
-package com.example.elitevetcare.Pets;
+package com.example.elitevetcare;
 
 import android.os.Bundle;
 
@@ -15,16 +15,17 @@ import android.widget.TextView;
 
 import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Helper.Libs;
-import com.example.elitevetcare.Model.ViewModel.PetViewModel;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.ObjectModel.Pet;
-import com.example.elitevetcare.R;
+import com.example.elitevetcare.Model.ObjectModel.PetTreatment;
+import com.example.elitevetcare.Model.ViewModel.PetViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_pet_infor_detail#newInstance} factory method to
+ * Use the {@link fragment_pet_treatment_detail#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_pet_infor_detail extends Fragment {
+public class fragment_pet_treatment_detail extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +36,7 @@ public class fragment_pet_infor_detail extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public fragment_pet_infor_detail() {
+    public fragment_pet_treatment_detail() {
         // Required empty public constructor
     }
 
@@ -45,20 +46,21 @@ public class fragment_pet_infor_detail extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_pet_infor_detail.
+     * @return A new instance of fragment fragment_pet_treatment_detail.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_pet_infor_detail newInstance(String param1, String param2) {
-        fragment_pet_infor_detail fragment = new fragment_pet_infor_detail();
+    public static fragment_pet_treatment_detail newInstance(String param1, String param2) {
+        fragment_pet_treatment_detail fragment = new fragment_pet_treatment_detail();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
+
     PetViewModel CurrentPetViewModel;
     Bundle args;
-    Pet CurrentPet;
+    PetTreatment.Pet CurrentPet;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +70,7 @@ public class fragment_pet_infor_detail extends Fragment {
         }
         args = getArguments();
         CurrentPetViewModel = new ViewModelProvider(requireActivity()).get(PetViewModel .class);
-        CurrentPet = CurrentPetViewModel.getCurrentPet();
+        CurrentPet = CurrentPetViewModel.getCurrentPetTreatment().getPet();
     }
     TextView txt_PetName;
     ImageFilterView img_avatar;
@@ -77,17 +79,13 @@ public class fragment_pet_infor_detail extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_pet_infor_detail, container, false);
+        View root = inflater.inflate(R.layout.fragment_pet_treatment_detail, container, false);
         SetID(root);
-
         InitData();
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(CurrentPet.getClinic() == null || CurrentPet.getClinic().getName() == null){
-                    ((ContentView)getActivity()).setfragment(R.layout.fragment_select_clinic_treatment);
-                    return;
-                }
+
                 ((ContentView)getActivity()).setfragment(R.layout.fragment_tracking_pet_health);
             }
         });
@@ -104,7 +102,10 @@ public class fragment_pet_infor_detail extends Fragment {
         edt_weight.setText(CurrentPet.getWeight()+ " KG");
         edt_furColor.setText(CurrentPet.getFurColor());
 
-        Libs.SetImageFromURL(CurrentPet,img_avatar);
+        Libs.SetImageFromURL(CurrentPet.getAvatar(),img_avatar);
+
+        if(CurrentPetViewModel.getCurrentPetTreatment().getVet().getId() == CurrentUser.getCurrentUser().getId())
+            btn_next.setVisibility(View.VISIBLE);
     }
 
     private void SetID(View root) {

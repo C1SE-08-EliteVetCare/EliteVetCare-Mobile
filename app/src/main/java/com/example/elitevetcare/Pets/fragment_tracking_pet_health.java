@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.ContentView;
+import com.example.elitevetcare.Helper.ProgressHelper;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
@@ -38,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -80,6 +82,7 @@ public class fragment_tracking_pet_health extends Fragment {
         Current = new ViewModelProvider(requireActivity()).get(PetViewModel.class);
         DataCondition = Current.getPetCondition().getValue();
         role = CurrentUser.getCurrentUser().getRole().getId();
+
     }
     private LineChart chart1;
     private LineChart chart2;
@@ -91,6 +94,7 @@ public class fragment_tracking_pet_health extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tracking_pet_health, container, false);
+
         SetID(root);
         InitContent();
         SetEvent();
@@ -99,12 +103,19 @@ public class fragment_tracking_pet_health extends Fragment {
         SetDataChart(chart1,getActivity().getString(R.string.portion_pet));
         // Thiết lập dữ liệu cho biểu đồ 2
         SetDataChart(chart2,getActivity().getString(R.string.weight_pet));
+        if(ProgressHelper.isDialogVisible())
+            ProgressHelper.dismissDialog();
         // Inflate the layout for this fragment
         return root;
     }
 
     private void SetEvent() {
-        if(role == 3)
+        if(role == 3){
+            btn_Action.setText("Thêm Lời Khuyên");
+            if(DataCondition.get(0).getVetAdvice() != null && DataCondition.get(0).getVetAdvice() != ""){
+                EventUpdated();
+                return;
+            }
             btn_Action.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -119,49 +130,64 @@ public class fragment_tracking_pet_health extends Fragment {
                             .add("recommendedMeal", edt_food.getText().toString())
                             .build();
                     HelperCallingAPI.CallingAPI_PathParams_Put(HelperCallingAPI.UPDATE_ADVICE_PATH,
-                            String.valueOf(Current.getCurrentPet().getId()), body, new HelperCallingAPI.MyCallback() {
-                        @Override
-                        public void onResponse(Response response) {
-                            int responseStatus = response.code();
-                            JSONObject data = null;
-                            if(responseStatus == 200){
-                                try {
-                                    data = new JSONObject(response.body().string());
-                                    JSONObject finalData = data;
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                Toast.makeText(getContext(), finalData.getString("message"), Toast.LENGTH_SHORT).show();
-                                            } catch (JSONException e) {
-                                                throw new RuntimeException(e);
-                                            }
+                            String.valueOf(Current.getCurrentPetTreatment().getPet().getId()), body, new HelperCallingAPI.MyCallback() {
+                                @Override
+                                public void onResponse(Response response) {
+                                    int responseStatus = response.code();
+                                    JSONObject data = null;
+                                    if(responseStatus == 200){
+                                        try {
+                                            data = new JSONObject(response.body().string());
+                                            JSONObject finalData = data;
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    try {
+                                                        EventUpdated();
+                                                        Toast.makeText(getContext(), finalData.getString("message"), Toast.LENGTH_SHORT).show();
+                                                        ((ContentView)getActivity()).setfragment(R.layout.fragment_tracking_pet_health);
+                                                    } catch (JSONException e) {
+                                                        throw new RuntimeException(e);
+                                                    }
+                                                }
+                                            });
+                                        } catch (JSONException | IOException e) {
+                                            throw new RuntimeException(e);
                                         }
-                                    });
-                                } catch (JSONException | IOException e) {
-                                    throw new RuntimeException(e);
+                                    }
                                 }
-                            }
-                        }
 
-                        @Override
-                        public void onFailure(IOException e) {
+                                @Override
+                                public void onFailure(IOException e) {
 
-                        }
-                    });
+                                }
+                            });
                 }
             });
-        else if (role == 2) {
+        } else if (role == 2) {
+            btn_Action.setText("Cập Nhập Tình Trạng");
             btn_Action.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int TodayAdvance = DataCondition.size()-1;
-                    if (Libs.HandleString(DataCondition.get(TodayAdvance).getVetAdvice()) != "" )
+                    int TodayAdvance = 0;
+                    Log.d("LocalDateDataConditon",LocalDate.parse(DataCondition.get(TodayAdvance).getDateUpdate()) +" : " +LocalDate.now() );
+                    if (LocalDate.parse(DataCondition.get(TodayAdvance).getDateUpdate()).isEqual(LocalDate.now()) ){
                         Toast.makeText(getContext(),"Hôm nay đã câp nhập không cần phải cập nhập lại !!",Toast.LENGTH_SHORT).show();
-                    ((ContentView)getActivity()).setfragment(R.layout.fragment_tracking_pet_health);
+                        return;
+                    }
+                    ((ContentView)getActivity()).setfragment(R.layout.fragment_update_pet_condition);
                 }
             });
         }
+    }
+
+    private void EventUpdated() {
+        btn_Action.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Đã Cập nhập cho hôm nay", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void InitData() {
@@ -173,7 +199,8 @@ public class fragment_tracking_pet_health extends Fragment {
     }
 
     private void InitContent() {
-        int TodayAdvance = DataCondition.size()-1;
+        int TodayAdvance = 0;
+
         txt_dateUpdate.setText("Chi Tiết Thông số (" + DataCondition.get(TodayAdvance).getDateUpdate()  + ") :");
         txt_food_status.setText( DataCondition.get(TodayAdvance).getMeal() == null ? "Data" : DataCondition.get(TodayAdvance).getMeal() );
         txt_expression_status.setText(DataCondition.get(TodayAdvance).getManifestation() == null ? "Data" : DataCondition.get(TodayAdvance).getManifestation());
@@ -209,17 +236,24 @@ public class fragment_tracking_pet_health extends Fragment {
     }
 
     private void SetTextEdt(AppCompatEditText edt_current, String content) {
-        if(content == null || content == "")
+        if((content == null && role == 2)|| (content == "" && role == 2))
             content = "Bác Sĩ Chưa Đánh Giá";
+        else if((content == null && role == 3)|| (content == "" && role == 3)){
+            content = "";
+            edt_current.setText(content);
+            return;
+        }
         edt_current.setText(content);
         edt_current.setTextColor(getActivity().getColor(R.color.red));
     }
     private void SetEdtEnable(AppCompatEditText edt_current, boolean Status) {
         if (Status == false)
             edt_current.setBackgroundResource(R.drawable.custom_box_advance);
-        int TodayAdvance = DataCondition.size()-1;
-        if(DataCondition.get(TodayAdvance).getVetAdvice() == null || DataCondition.get(TodayAdvance).getVetAdvice() == "")
+        int TodayAdvance = 0;
+        if(DataCondition.get(TodayAdvance).getVetAdvice() != null && DataCondition.get(TodayAdvance).getVetAdvice() != ""){
             Status = false;
+        }
+
         edt_current.setFocusableInTouchMode(Status);
         edt_current.setClickable(Status);
         edt_current.setFocusable(Status);

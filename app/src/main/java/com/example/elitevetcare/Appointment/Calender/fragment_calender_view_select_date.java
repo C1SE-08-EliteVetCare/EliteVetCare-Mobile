@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Model.ViewModel.BookAppointmentViewModel;
 import com.example.elitevetcare.R;
 import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewCalenderAdapter;
@@ -23,6 +24,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -176,6 +178,12 @@ public class fragment_calender_view_select_date extends Fragment implements Recy
         int month = selectedDate.getMonthValue();
         int year = selectedDate.getYear();
         int day = Integer.parseInt(dayText.getText().toString());
+        LocalDate DateSelect = LocalDate.of(year , month ,day);
+        LocalDate CurrDate = LocalDate.now();
+        if(DateSelect.isBefore(CurrDate)){
+            Libs.Sendmessage(getActivity(), "Không Thể Chọn Các Ngày Đã Qua !");
+            return;
+        }
         bookAppointmentViewModel.setDate(year + "-" + month + "-" + day);
         calendarAdapter.setSelectedPosition(position);
     }

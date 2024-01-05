@@ -65,12 +65,12 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
                 <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_heart_red"/>
+                    android:src="@drawable/ic_star"/>
                 <TextView
-
+                    android:id="@+id/txt_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/text_regular_font"

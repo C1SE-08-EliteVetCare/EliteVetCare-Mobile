@@ -41,8 +41,17 @@ public class CurrentConversationHistory {
     public static ArrayList<Conversation> getConversationHistory() {
         return CurrentConversationHistory.getInstance().ConversationHistory;
     }
-    public void setConversationHistory(ArrayList<Conversation> AllOfConversation) {
+    public static void setConversationHistory(ArrayList<Conversation> AllOfConversation) {
         ConversationHistory = AllOfConversation;
+    }
+    public static void AddConversationHistory(Conversation conversation) {
+        if (CurrentConversationHistory.getConversationHistory() != null)
+            CurrentConversationHistory.getConversationHistory().add(conversation);
+        else{
+            ArrayList<Conversation> list = new ArrayList<Conversation>();
+            list.add(conversation);
+            CurrentConversationHistory.setConversationHistory(list);
+        }
     }
     public static CurrentConversationHistory CreateInstanceByAPI(CurrentConversationHistory.UserCallback callback){
         if(instance == null){

@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -193,11 +194,7 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_conversation, container, false);
-        progressBar = root.findViewById(R.id.progressBar);
-        Message_recycler_view = root.findViewById(R.id.recycler_message);
-        btn_send_message = root.findViewById(R.id.btn_send_message);
-        edt_input_message = root.findViewById(R.id.edt_input_message);
-        btn_send_image = root.findViewById(R.id.btn_send_image);
+       SetID(root);
 
 
        btn_send_image.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +228,8 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
                 HelperCallingAPI.CallingAPI_QueryParams_Post(HelperCallingAPI.SEND_MESSAGE_CONVERSATION, null, body, new HelperCallingAPI.MyCallback() {
                     @Override
                     public void onResponse(Response response) {
+                        if(getActivity() == null)
+                            return;
                         if(response.isSuccessful()){
                             Libs.Sendmessage(getActivity(), "Gửi Tin Nhắn Thành Công");
                         }else {
@@ -252,12 +251,14 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
         messageViewModel.isLoading().observe(getActivity(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(messageViewModel.isLoading().getValue() == false){
+                if(aBoolean == false){
                     progressBar.setVisibility(View.GONE);
                     Message_recycler_view.setVisibility(View.VISIBLE);
-                }else {
+                    Log.d("RecyclerViewConversation", "dahienthi");
+                }else if(aBoolean == true) {
                     progressBar.setVisibility(View.VISIBLE);
                     Message_recycler_view.setVisibility(View.INVISIBLE);
+                    Log.d("RecyclerViewConversation", "chuahienthi");
                 }
             }
         });
@@ -272,6 +273,14 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
         return root;
     }
 
+    private void SetID(View root) {
+        progressBar = root.findViewById(R.id.progressBar);
+        Message_recycler_view = root.findViewById(R.id.recycler_message);
+        btn_send_message = root.findViewById(R.id.btn_send_message);
+        edt_input_message = root.findViewById(R.id.edt_input_message);
+        btn_send_image = root.findViewById(R.id.btn_send_image);
+    }
+
     private void UpdateUI() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -282,11 +291,10 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
                     if(listMessage != null){
                         messageAdapter = new RecyclerViewMessageAdapter(listMessage);
                         Message_recycler_view.setAdapter(messageAdapter);
-                        Message_recycler_view.scrollToPosition(listMessage.size()-1);
+                        Message_recycler_view.scrollToPosition(messageAdapter.getItemCount()-1);
                     }
                 }else{
-                    listMessage = messageViewModel.getMessageArray().getValue();
-                    messageAdapter.notifyDataSetChanged();
+                    messageAdapter.ResetData(messageViewModel.getMessageArray().getValue());
                 }
 
             }
@@ -294,7 +302,9 @@ public class fragment_conversation extends Fragment implements SocketOnMessageLi
     }
 
     @Override
-    public void onMessageListener(String message) {
+    public void onMessageListener(String message, int Code) {
+        if(Code != SocketGate.MESSAGE_EVENT_CODE)
+            return;
         try {
             JSONObject jsonObject = new JSONObject(message);
             Gson gson = new Gson();

@@ -126,8 +126,8 @@ public class fragment_pet_list_treatment extends Fragment implements DataChangeL
 
                                 }
                             });
-                            if(ProgressHelper.isDialogVisible())
-                                ProgressHelper.dismissDialog();
+                        if(ProgressHelper.isDialogVisible())
+                            ProgressHelper.dismissDialog();
                     }
                 });
             }

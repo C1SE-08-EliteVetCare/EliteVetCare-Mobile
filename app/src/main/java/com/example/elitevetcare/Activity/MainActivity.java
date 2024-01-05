@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Helper.SocketGate;
 import com.example.elitevetcare.Home.fragment_home;
 import com.example.elitevetcare.Interface.SocketOnMessageListener;
@@ -35,6 +36,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
 
     FragmentContainerView frm_view;
     ImageFilterButton ic_notice;
+    RoundedImageView btn_avatar_updateprofile;
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     AppointmentViewModel appointmentViewModel;
@@ -58,22 +61,51 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SocketGate.OpenGate(this);
-        SocketGate.getmSocket().on("onMessage", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                onMessageListener(args[0].toString());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ic_notice.setImageResource(R.drawable.ic_have_notice);
-                    }
-                });
+        SocketGate.addSocketEventListener(this);
+        SetID();
+        InitData();
 
+        SetEvent();
+
+    }
+
+    private void SetEvent() {
+        bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                selectedFragment = null;
+                int item_id = item.getItemId();
+                if(item_id == R.id.btn_bottomnav_home)
+                    selectedFragment = new fragment_home();
+                if(item_id == R.id.btn_bottomnav_QA){
+                    selectedFragment = new fragment_conversation_history();
+                }
+                if(item_id == R.id.btn_bottomnav_appointment){
+                    selectedFragment = new fragment_appointment();
+                }
+                if(item_id == R.id.btn_bottomnav_pets){
+                    if(CurrentUser.getCurrentUser().getRole().getId() == 2)
+                        selectedFragment = new fragment_list_pet();
+                    else
+                        selectedFragment = new fragment_pet_list_treatment();
+                }
+                if(item_id == R.id.btn_bottomnav_profile){
+                    selectedFragment = new fragment_user_profile();
+                    top_bar_select.setVisibility(View.INVISIBLE);
+                }else if (top_bar_select.getVisibility() == View.INVISIBLE){
+                    top_bar_select.setVisibility(View.VISIBLE);
+                }
+
+                if (selectedFragment != null){
+                    ChangeFragment(selectedFragment);
+                    return true;
+                }
+                return false;
             }
         });
-        SetID();
+    }
 
-        appointmentViewModel = new ViewModelProvider(this).get(AppointmentViewModel.class);
+    private void InitData() {
         User currentUser = CurrentUser.getCurrentUser();
 
         if(currentUser.getBirthYear() == null)
@@ -91,43 +123,7 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
                     Log.d("Location", CurrentLocation.getCurrentLocation().getLatitude() + "  " + CurrentLocation.getCurrentLocation().getLongitude() );
                 }
             });
-
-        bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectedFragment = null;
-                int item_id = item.getItemId();
-                if(item_id == R.id.btn_bottomnav_home)
-                    selectedFragment = new fragment_home();
-                if(item_id == R.id.btn_bottomnav_QA){
-                    selectedFragment = new fragment_conversation_history();
-                }
-
-                if(item_id == R.id.btn_bottomnav_appointment){
-                    selectedFragment = new fragment_appointment();
-                }
-                if(item_id == R.id.btn_bottomnav_pets){
-                    if(CurrentUser.getCurrentUser().getRole().getId() == 2)
-                        selectedFragment = new fragment_list_pet();
-                    else
-                        selectedFragment = new fragment_pet_list_treatment();
-                }
-
-                if(item_id == R.id.btn_bottomnav_profile){
-                    selectedFragment = new fragment_user_profile();
-                    top_bar_select.setVisibility(View.INVISIBLE);
-                }else if (top_bar_select.getVisibility() == View.INVISIBLE){
-                    top_bar_select.setVisibility(View.VISIBLE);
-                }
-
-                if (selectedFragment != null){
-                    ChangeFragment(selectedFragment);
-                    return true;
-                }
-                return false;
-            }
-        });
-
+        Libs.SetImageFromURL(currentUser.getAvatar(),btn_avatar_updateprofile);
     }
 
     private void SetID() {
@@ -135,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
         bottomNavigationView = findViewById(R.id.bottom_Nav);
         top_bar_select = findViewById(R.id.top_tab_bar);
         ic_notice = findViewById(R.id.ic_notice);
+        btn_avatar_updateprofile = findViewById(R.id.btn_avatar_updateprofile);
+        appointmentViewModel = new ViewModelProvider(this).get(AppointmentViewModel.class);
     }
 
     private void ChangeFragment(Fragment selectedFragment) {
@@ -150,7 +148,9 @@ public class MainActivity extends AppCompatActivity implements SocketOnMessageLi
     }
 
     @Override
-    public void onMessageListener(String message) {
+    public void onMessageListener(String message, int Code) {
+        if(Code != SocketGate.MESSAGE_EVENT_CODE)
+            return;
         try {
             JSONObject jsonObject = new JSONObject(message);
             Gson gson = new Gson();

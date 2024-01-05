@@ -26,7 +26,7 @@ public class MessageViewModel extends ViewModel {
     }
 
     public void SetLoading(Boolean IsBoolean){
-        isLoading.setValue(IsBoolean);
+        isLoading.postValue(IsBoolean);
     }
 
     public MutableLiveData<Boolean> isLoading() {

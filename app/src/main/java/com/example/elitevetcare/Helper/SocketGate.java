@@ -5,6 +5,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Interface.SocketOnMessageListener;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
+import com.example.elitevetcare.Model.ObjectModel.Conversation;
+import com.example.elitevetcare.Model.ObjectModel.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -22,7 +30,8 @@ import io.socket.engineio.client.transports.WebSocket;
 
 public class SocketGate {
     private static Socket mSocket = null;
-
+    public static int MESSAGE_EVENT_CODE = 1;
+    public static int APPOINTMENT_CREATE_EVENT_CODE = 2;
     public static Socket getmSocket() {
         return mSocket;
     }
@@ -60,13 +69,65 @@ public class SocketGate {
                     // Ví dụ: String data = (String) args[0];
 
                     Log.d("Connectiona", args[0].toString());
+
                 }
             });
             SocketGate.mSocket.on("onMessage", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-                    SocketGate.notifyListeners(args[0].toString());
-                    Log.d("ConnectionaRespone", args[0].toString());
+                    SocketGate.notifyListeners(args[0].toString(), MESSAGE_EVENT_CODE);
+
+                    try {
+                        Gson gson = new Gson();
+                        Conversation conversation = gson.fromJson((new JSONObject(args[0].toString())).get("conversation").toString(), new TypeToken<Conversation>(){}.getType());
+                        if(conversation.getLastMessageSent().getAuthor().getId() != CurrentUser.getCurrentUser().getId()){
+                            User Recipient = conversation.getCreator().getId() == CurrentUser.getCurrentUser().getId() ? conversation.getRecipient() : conversation.getCreator();
+                            NotificationHelper.showNotification(activity.getApplicationContext(), "Tin Nhắn Mới", Recipient.getFullName()+" Đã Gửi cho bạn 1 tin nhắn", Recipient.getId());
+                        }
+
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            SocketGate.mSocket.on("onAppointmentCreate", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    SocketGate.notifyListeners(args[0].toString(), APPOINTMENT_CREATE_EVENT_CODE);
+                    try {
+                        Gson gson = new Gson();
+                        if(CurrentUser.getCurrentUser().getRole().getId() == 3){
+
+                            User Recipient = gson.fromJson((new JSONObject(args[0].toString())).get("user").toString(), new TypeToken<User>(){}.getType());
+                            NotificationHelper.showNotification(activity.getApplicationContext(), "Cuộc hẹn chưa xử lý", Recipient.getFullName()+" đã đặt lịch khám! Bạn nên xem thử!", CurrentUser.getCurrentUser().getId());
+                        }
+
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                }
+            });
+            SocketGate.mSocket.on("onAppointmentStatus", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    SocketGate.notifyListeners(args[0].toString(), MESSAGE_EVENT_CODE);
+
+                    try {
+                        Gson gson = new Gson();
+                        Conversation conversation = gson.fromJson((new JSONObject(args[0].toString())).get("conversation").toString(), new TypeToken<Conversation>(){}.getType());
+                        if(conversation.getLastMessageSent().getAuthor().getId() != CurrentUser.getCurrentUser().getId()){
+                            User Recipient = conversation.getCreator().getId() == CurrentUser.getCurrentUser().getId() ? conversation.getRecipient() : conversation.getCreator();
+                            NotificationHelper.showNotification(activity.getApplicationContext(), "Tin Nhắn Mới", Recipient.getFullName()+" Đã Gửi cho bạn 1 tin nhắn", Recipient.getId());
+                        }
+
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
             // Kết nối đến server
@@ -92,9 +153,9 @@ public class SocketGate {
         listListenerEvent.remove(listener);
     }
 
-    public static void notifyListeners(String message) {
+    public static void notifyListeners(String message, int Code) {
         for (SocketOnMessageListener listener : listListenerEvent) {
-            listener.onMessageListener(message);
+            listener.onMessageListener(message, Code);
         }
     }
 }

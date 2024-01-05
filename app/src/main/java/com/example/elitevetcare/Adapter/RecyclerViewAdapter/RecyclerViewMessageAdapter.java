@@ -19,11 +19,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    ArrayList<Message> listMessage;
+    ArrayList<Message> listMessage =  new ArrayList<>();
     final private int MESSAGE_SENT_TYPE = 1;
     final private int MESSAGE_RECEIVED_TYPE = 2;
     public RecyclerViewMessageAdapter(ArrayList<Message> listMessage) {
-        this.listMessage = listMessage;
+        for(Message message : listMessage){
+            if(message.getContent() != null){
+                if(!message.getContent().contains("/start"))
+                    this.listMessage.add(message);
+            }else if(message.getImgUrl() != null)
+                this.listMessage.add(message);
+        }
+
+
     }
     @NonNull
     @Override
@@ -196,6 +204,18 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemCount() {
         return listMessage.size();
+    }
+
+    public void ResetData(ArrayList<Message> listMessage) {
+        this.listMessage = new ArrayList<>();
+        for(Message message : listMessage){
+            if(message.getContent() != null){
+                if(!message.getContent().contains("/start"))
+                    this.listMessage.add(message);
+            }else if(message.getImgUrl() != null)
+                this.listMessage.add(message);
+        }
+        notifyDataSetChanged();
     }
 
     public class MessageSentViewHolder extends RecyclerView.ViewHolder {

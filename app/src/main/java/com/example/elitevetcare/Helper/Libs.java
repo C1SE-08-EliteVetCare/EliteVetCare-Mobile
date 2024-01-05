@@ -141,7 +141,7 @@ public class Libs {
 
         if (seconds >= 7 * 24 * 60 * 60) {
             // Khoảng cách hơn 7 ngày, trả về ngày xa hơn
-            return formatDate(endDate, "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            return formatDate(endDate, "dd-MM", Locale.getDefault());
         } else if (seconds >= 24 * 60 * 60) {
             // Khoảng cách dưới 7 ngày, trả về số ngày
             long days = seconds / (24 * 60 * 60);
@@ -450,6 +450,12 @@ public class Libs {
     static class DistanceComparator implements Comparator<Clinic> {
         @Override
         public int compare(Clinic o1, Clinic o2) {
+            float distanceCom  = (o1.getDistance()/1000) - (o2.getDistance()/1000);
+            if((distanceCom < 0.1 &&distanceCom > 0 )|| (distanceCom > -0.1 && distanceCom < 0))
+                if(o1.getAverageRating() > o2.getAverageRating())
+                    return -1;
+                else
+                    return 1;
             return Float.compare(o1.getDistance(), o2.getDistance());
         }
     }

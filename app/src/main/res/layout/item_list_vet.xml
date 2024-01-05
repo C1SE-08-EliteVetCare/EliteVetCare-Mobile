@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
+        android:id="@+id/ll_vet_conversation"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginHorizontal="10dp"
@@ -37,7 +38,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="20dp"
                     android:text="NAME"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     android:textAppearance="@style/text_regular_font" />
 
