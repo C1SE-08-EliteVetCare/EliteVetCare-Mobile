@@ -14,9 +14,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.elitevetcare.Appointment.fragment_pet_owner_infor;
 import com.example.elitevetcare.Appointment.fragment_select_clinic;
 import com.example.elitevetcare.Appointment.fragment_select_datetime;
+import com.example.elitevetcare.Appointment.fragment_select_service;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Helper.ProgressHelper;
@@ -24,21 +31,26 @@ import com.example.elitevetcare.Model.CurrentData.CurrentConversationHistory;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.ObjectModel.Conversation;
 import com.example.elitevetcare.Model.ObjectModel.Message;
+import com.example.elitevetcare.Model.ObjectModel.Pet;
+import com.example.elitevetcare.Model.ObjectModel.PetCondition;
 import com.example.elitevetcare.Model.ObjectModel.PetTreatment;
+
 import com.example.elitevetcare.Model.ObjectModel.User;
 import com.example.elitevetcare.Model.ViewModel.MessageViewModel;
 import com.example.elitevetcare.Model.ViewModel.PetViewModel;
-import com.example.elitevetcare.Model.ObjectModel.Pet;
-import com.example.elitevetcare.Model.ObjectModel.PetCondition;
 import com.example.elitevetcare.Pets.fragment_pet_infor_detail;
 import com.example.elitevetcare.Pets.fragment_select_clinic_treatment;
+
+import com.example.elitevetcare.Profile.fragment_edit_profile_user;
 import com.example.elitevetcare.QuestionAndAnswer.fragment_conversation;
 import com.example.elitevetcare.R;
 import com.example.elitevetcare.Appointment.fragment_select_service;
 import com.example.elitevetcare.Pets.fragment_tracking_pet_health;
 import com.example.elitevetcare.Pets.fragment_update_pet_condition;
+
 import com.example.elitevetcare.Appointment.fragment_detail_appointment;
 import com.example.elitevetcare.Pets.fragment_pet_treatment_detail;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -108,6 +120,14 @@ public class ContentView extends AppCompatActivity {
     }
 
     private void CallingFragment() {
+        if (selected_fragment == R.layout.fragment_edit_profile_user){
+            PreviouseFragment = CurrentFragment;
+            ResetData();
+            txt_content.setText("Chỉnh Sửa Hồ Sơ");
+            CurrentFragment = new fragment_edit_profile_user();
+            ChangeFragment(CurrentFragment);
+            return;
+        }
         if (selected_fragment == R.layout.fragment_pet_infor_detail){
             CallingPetInforDetail();
             return;
@@ -140,94 +160,99 @@ public class ContentView extends AppCompatActivity {
             ChangeFragment(CurrentFragment);
             return;
         }
-        if(selected_fragment == R.layout.fragment_pet_treatment_detail){
+        if(selected_fragment == R.layout.fragment_edit_profile_user){
             PreviouseFragment = CurrentFragment;
             ResetData();
-            PetTreatment pet = null;
-            if(getIntent().hasExtra("PetTreatment"))
-                pet = (PetTreatment) getIntent().getSerializableExtra("PetTreatment");
-            CurrentPetViewModel.setCurrentPetTreatment(pet);
-            CurrentFragment = new fragment_pet_treatment_detail();
-            txt_content.setText("Thông Tin Chi Tiết");
-            ChangeFragment(CurrentFragment);
-            return;
-        }
-        if(selected_fragment == R.layout.fragment_select_clinic_treatment){
-            CallingSelectClinicTreatment();
-            return;
-        }
-        if(selected_fragment == R.layout.fragment_detail_appointment){
-            PreviouseFragment = CurrentFragment;
-            ResetData();
-            txt_content.setText("Chi Tiết Lịch Hẹn");
-            CurrentFragment = new fragment_detail_appointment();
-            if(getIntent().hasExtra("Appointment")){
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("Appointment", getIntent().getSerializableExtra("Appointment"));
-                CurrentFragment.setArguments(bundle);
+            txt_content.setText("Chỉnh Sửa");
+            CurrentFragment = new fragment_edit_profile_user();
+            if(selected_fragment == R.layout.fragment_pet_treatment_detail){
+                PreviouseFragment = CurrentFragment;
+                ResetData();
+                PetTreatment pet = null;
+                if(getIntent().hasExtra("PetTreatment"))
+                    pet = (PetTreatment) getIntent().getSerializableExtra("PetTreatment");
+                CurrentPetViewModel.setCurrentPetTreatment(pet);
+                CurrentFragment = new fragment_pet_treatment_detail();
+                txt_content.setText("Thông Tin Chi Tiết");
+                ChangeFragment(CurrentFragment);
+                return;
             }
-            ChangeFragment(CurrentFragment);
-            return;
-        }
-        if(selected_fragment == R.layout.fragment_update_pet_condition){
-            PreviouseFragment = CurrentFragment;
-            ResetData();
-            txt_content.setText("Cập nhập tình trạng thú cưng");
-            CurrentFragment = new fragment_update_pet_condition();
-            ChangeFragment(CurrentFragment);
-            return;
-        }
-        if(selected_fragment == R.layout.fragment_conversation){
-            PreviouseFragment = CurrentFragment;
-            ResetData();
-            CurrentFragment = new fragment_conversation();
-            if(getIntent().hasExtra("conversation"))
-                CallingConversationCreated();
-            else if (getIntent().hasExtra("User")){
-                User Recipient = (User) getIntent().getSerializableExtra("User");
-                MessageViewModel.SetLoading(true);
-                Libs.SetImageFromURL(Recipient.getAvatar(), img_avatar_conversation);
-                img_avatar_conversation.setVisibility(View.VISIBLE);
-                txt_content.setText(Recipient.getFullName());
-                FormBody body = new FormBody.Builder()
-                        .add("email", Recipient.getEmail())
-                        .add("message", "/start")
-                        .build();
-                HelperCallingAPI.CallingAPI_QueryParams_Post(HelperCallingAPI.CREATE_CONVERSATION_API_PATH, null, body, new HelperCallingAPI.MyCallback() {
-                    @Override
-                    public void onResponse(Response response) {
-                        if(response.isSuccessful()){
-                            try {
-                                JSONObject data = new JSONObject(response.body().string());
-                                Gson gson = new Gson();
-                                Conversation NewConversation = gson.fromJson(data.toString(), new TypeToken<Conversation>(){}.getType());
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        CurrentConversationHistory.AddConversationHistory(NewConversation);
-                                        MessageViewModel.AddMessageArray(new ArrayList<>());
-                                        MessageViewModel.SetConversationID(NewConversation.getId());
-                                        MessageViewModel.SetLoading(false);
-                                    }
-                                });
-                            } catch (JSONException | IOException e) {
-                                throw new RuntimeException(e);
+            if(selected_fragment == R.layout.fragment_select_clinic_treatment){
+                CallingSelectClinicTreatment();
+                return;
+            }
+            if(selected_fragment == R.layout.fragment_detail_appointment){
+                PreviouseFragment = CurrentFragment;
+                ResetData();
+                txt_content.setText("Chi Tiết Lịch Hẹn");
+                CurrentFragment = new fragment_detail_appointment();
+                if(getIntent().hasExtra("Appointment")){
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("Appointment", getIntent().getSerializableExtra("Appointment"));
+                    CurrentFragment.setArguments(bundle);
+                }
+                ChangeFragment(CurrentFragment);
+                return;
+            }
+            if(selected_fragment == R.layout.fragment_update_pet_condition){
+                PreviouseFragment = CurrentFragment;
+                ResetData();
+                txt_content.setText("Cập nhập tình trạng thú cưng");
+                CurrentFragment = new fragment_update_pet_condition();
+                ChangeFragment(CurrentFragment);
+                return;
+            }
+            if(selected_fragment == R.layout.fragment_conversation){
+                PreviouseFragment = CurrentFragment;
+                ResetData();
+                CurrentFragment = new fragment_conversation();
+                if(getIntent().hasExtra("conversation"))
+                    CallingConversationCreated();
+                else if (getIntent().hasExtra("User")){
+                    User Recipient = (User) getIntent().getSerializableExtra("User");
+                    MessageViewModel.SetLoading(true);
+                    Libs.SetImageFromURL(Recipient.getAvatar(), img_avatar_conversation);
+                    img_avatar_conversation.setVisibility(View.VISIBLE);
+                    txt_content.setText(Recipient.getFullName());
+                    FormBody body = new FormBody.Builder()
+                            .add("email", Recipient.getEmail())
+                            .add("message", "/start")
+                            .build();
+                    HelperCallingAPI.CallingAPI_QueryParams_Post(HelperCallingAPI.CREATE_CONVERSATION_API_PATH, null, body, new HelperCallingAPI.MyCallback() {
+                        @Override
+                        public void onResponse(Response response) {
+                            if(response.isSuccessful()){
+                                try {
+                                    JSONObject data = new JSONObject(response.body().string());
+                                    Gson gson = new Gson();
+                                    Conversation NewConversation = gson.fromJson(data.toString(), new TypeToken<Conversation>(){}.getType());
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            CurrentConversationHistory.AddConversationHistory(NewConversation);
+                                            MessageViewModel.AddMessageArray(new ArrayList<>());
+                                            MessageViewModel.SetConversationID(NewConversation.getId());
+                                            MessageViewModel.SetLoading(false);
+                                        }
+                                    });
+                                } catch (JSONException | IOException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(IOException e) {
+                        @Override
+                        public void onFailure(IOException e) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
+                ChangeFragment(CurrentFragment);
+                return;
             }
-
-            ChangeFragment(CurrentFragment);
-            return;
         }
     }
-
     private void CallingTrackingPetHealth_Vet() {
         PreviouseFragment = CurrentFragment;
         ResetData();
@@ -320,7 +345,6 @@ public class ContentView extends AppCompatActivity {
             }
         });
     }
-
     private void CallingSelectClinicTreatment() {
         PreviouseFragment = CurrentFragment;
         ResetData();
@@ -413,7 +437,7 @@ public class ContentView extends AppCompatActivity {
         });
     }
 
-    private void CallingPetInforDetail() {
+    private void CallingPetInforDetail(){
         PreviouseFragment = CurrentFragment;
         ResetData();
         CurrentPetViewModel.setCurrentPet(currentPet);

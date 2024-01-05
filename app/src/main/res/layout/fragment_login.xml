@@ -71,6 +71,7 @@
                 />
         </LinearLayout>
         <TextView
+            android:id="@+id/txt_quenmatkhau"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Quên Mật Khẩu?"

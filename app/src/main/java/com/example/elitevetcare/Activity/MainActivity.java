@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Helper.SocketGate;
 import com.example.elitevetcare.Home.fragment_home;

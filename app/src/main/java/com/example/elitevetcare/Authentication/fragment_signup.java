@@ -1,7 +1,5 @@
 package com.example.elitevetcare.Authentication;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -16,14 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.Login;
-import com.example.elitevetcare.Activity.MainActivity;
-import com.example.elitevetcare.Helper.DataLocalManager;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-import com.example.elitevetcare.Helper.SignUpViewModel;
+import com.example.elitevetcare.Model.ViewModel.SignUpViewModel;
 import com.example.elitevetcare.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 

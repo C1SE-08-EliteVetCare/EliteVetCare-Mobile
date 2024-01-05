@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.elitevetcare.Activity.Login;
@@ -93,6 +94,8 @@ public class fragment_login extends Fragment {
     AppCompatButton btn_login;
     ImageFilterButton btn_fingerPrint_login;
     AppCompatEditText edt_email, edt_password;
+
+    TextView txt_Quenmatkhau;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -113,51 +116,59 @@ public class fragment_login extends Fragment {
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
     private void SetEvent() {
-        btn_fingerPrint_login.setOnClickListener(new View.OnClickListener() {
+        txt_Quenmatkhau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BiometricManager biometricManager = BiometricManager.from(getContext());
-                switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
-                    case BiometricManager.BIOMETRIC_SUCCESS:
-                        biometricPrompt.authenticate(promptInfo);
-                        break;
-                    case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                        Libs.Sendmessage(getActivity(),"Thiết bị không có tính nâng vân tay");
-                        break;
-                    case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                        Libs.Sendmessage(getActivity(),"Thiết bị tắt tính nâng vân tay");
-                        break;
-                    case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                        Libs.Sendmessage(getActivity(),"Thiết bị chưa đăng ký vân tay");
-                        break;
-                }
+                ((Login) getActivity()).changeFragment(new fragment_email_reset_password());
+                btn_fingerPrint_login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BiometricManager biometricManager = BiometricManager.from(getContext());
+                        switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
+                            case BiometricManager.BIOMETRIC_SUCCESS:
+                                biometricPrompt.authenticate(promptInfo);
+                                break;
+                            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+                                Libs.Sendmessage(getActivity(), "Thiết bị không có tính nâng vân tay");
+                                break;
+                            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+                                Libs.Sendmessage(getActivity(), "Thiết bị tắt tính nâng vân tay");
+                                break;
+                            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+                                Libs.Sendmessage(getActivity(), "Thiết bị chưa đăng ký vân tay");
+                                break;
+                        }
+                    }
+                });
             }
         });
+
+        //
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String email = String.valueOf(edt_email.getText());
                 String password = String.valueOf(edt_password.getText());
-                if(email.isEmpty()){
-                    Libs.Sendmessage(getActivity(),"Vui lòng nhập email !");
+                if (email.isEmpty()) {
+                    Libs.Sendmessage(getActivity(), "Vui lòng nhập email !");
                     return;
                 }
-                if(password.isEmpty()){
-                    Libs.Sendmessage(getActivity(),"Vui lòng nhập mật khẩu !");
+                if (password.isEmpty()) {
+                    Libs.Sendmessage(getActivity(), "Vui lòng nhập mật khẩu !");
                     return;
                 }
-                ProgressHelper.showDialog(requireActivity(),"Đang đăng nhập");
+                ProgressHelper.showDialog(requireActivity(), "Đang đăng nhập");
                 RequestBody LoginBody = new FormBody.Builder()
                         .add("email", email)
-                        .add("password",password)
+                        .add("password", password)
                         .build();
                 HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.LOGIN_PATH, LoginBody, new HelperCallingAPI.MyCallback() {
                     @Override
-                    public void onResponse(Response response){
+                    public void onResponse(Response response) {
                         int statusCode = response.code();
                         JSONObject data = null;
-                        if(statusCode == 200) {
+                        if (statusCode == 200) {
                             try {
                                 data = new JSONObject(response.body().string());
                                 String AccessToken = data.getString("accessToken");
@@ -168,37 +179,37 @@ public class fragment_login extends Fragment {
                                 CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
                                     @Override
                                     public void onUserGeted(CurrentUser currentUser) {
-                                        if(ProgressHelper.isDialogVisible())
+                                        if (ProgressHelper.isDialogVisible())
                                             ProgressHelper.dismissDialog();
-                                        ((Login)getActivity()).RedictToMainAction();
+                                        ((Login) getActivity()).RedictToMainAction();
                                     }
                                 });
                             } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
                             }
-                        }else if(statusCode == 401){
+                        } else if (statusCode == 401) {
                             try {
                                 data = new JSONObject(response.body().string());
-                                if(ProgressHelper.isDialogVisible())
+                                if (ProgressHelper.isDialogVisible())
                                     ProgressHelper.dismissDialog();
                                 Libs.Sendmessage(getActivity(), data.getString("message"));
 
-                            }catch (JSONException | IOException e){
+                            } catch (JSONException | IOException e) {
 
                             }
-                        }else if (statusCode == 400){
+                        } else if (statusCode == 400) {
                             try {
                                 data = new JSONObject(response.body().string());
-                                if(ProgressHelper.isDialogVisible())
+                                if (ProgressHelper.isDialogVisible())
                                     ProgressHelper.dismissDialog();
                                 JSONArray jsonArray = data.getJSONArray("message");
                                 JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                if(jsonObject.has("password"))
+                                if (jsonObject.has("password"))
                                     Libs.Sendmessage(getActivity(), jsonObject.getString("password"));
                                 else if (jsonObject.has("email"))
                                     Libs.Sendmessage(getActivity(), jsonObject.getString("email"));
 
-                            }catch (JSONException | IOException e){
+                            } catch (JSONException | IOException e) {
 
                             }
                         }
@@ -210,7 +221,7 @@ public class fragment_login extends Fragment {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getContext(),"false",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "false", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -219,11 +230,6 @@ public class fragment_login extends Fragment {
         });
     }
 
-    private void SetAnimator() {
-        group_login.setTranslationX(800);
-        //animation
-        group_login.animate().translationX(0).alpha(1).setDuration(1200).setStartDelay(1000).start();
-    }
 
     private void SetID(View root) {
 
@@ -232,7 +238,7 @@ public class fragment_login extends Fragment {
         btn_fingerPrint_login = root.findViewById(R.id.btn_fingerPrint_login);
         edt_email = root.findViewById(R.id.edt_email_login);
         edt_password = root.findViewById(R.id.edt_password_login);
-
+        txt_Quenmatkhau = root.findViewById(R.id.txt_quenmatkhau);
         executor = getContext().getMainExecutor();
         biometricPrompt = new BiometricPrompt(getActivity(),
                 executor, new BiometricPrompt.AuthenticationCallback() {
@@ -249,35 +255,35 @@ public class fragment_login extends Fragment {
             public void onAuthenticationSucceeded(
                     @NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                if(DataLocalManager.GetEmailUser() == null ||DataLocalManager.GetEmailUser() == ""){
-                    Libs.Sendmessage(getActivity(),"chưa từng đăng nhập account không thể đăng nhập bằng vân tay!");
+                if (DataLocalManager.GetEmailUser() == null || DataLocalManager.GetEmailUser() == "") {
+                    Libs.Sendmessage(getActivity(), "chưa từng đăng nhập account không thể đăng nhập bằng vân tay!");
                     return;
                 }
-                Log.d("NAMEEMAIL", edt_email.getText().toString() +"\n" + DataLocalManager.GetEmailUser());
-                if(!DataLocalManager.GetEmailUser().equals(edt_email.getText().toString())){
-                    Libs.Sendmessage(getActivity(),"tài khoản này chưa từng đăng nhập trên thiết bị! ");
+                Log.d("NAMEEMAIL", edt_email.getText().toString() + "\n" + DataLocalManager.GetEmailUser());
+                if (!DataLocalManager.GetEmailUser().equals(edt_email.getText().toString())) {
+                    Libs.Sendmessage(getActivity(), "tài khoản này chưa từng đăng nhập trên thiết bị! ");
                     return;
                 }
-                if(!ProgressHelper.isDialogVisible())
+                if (!ProgressHelper.isDialogVisible())
                     ProgressHelper.showDialog(getActivity(), "Đang Đăng Nhập Vui Lòng Đợi!");
                 RequestBody body = new FormBody.Builder()
-                        .add("email",DataLocalManager.GetEmailUser())
+                        .add("email", DataLocalManager.GetEmailUser())
                         .add("password", Libs.generatePassword(10))
-                        .add("fullName","")
+                        .add("fullName", "")
                         .build();
                 HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.GOOGLE_LOGIN, body, new HelperCallingAPI.MyCallback() {
                     @Override
                     public void onResponse(Response response) {
                         int responeStatus = response.code();
-                        if (responeStatus == 201){
+                        if (responeStatus == 201) {
                             SetData(response);
                             CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
                                 @Override
                                 public void onUserGeted(CurrentUser currentUser) {
-                                    if(ProgressHelper.isDialogVisible())
+                                    if (ProgressHelper.isDialogVisible())
                                         ProgressHelper.dismissDialog();
-                                    ((Login)getActivity()).RedictToMainAction();
-                                    Libs.Sendmessage(getActivity(),"Đăng Nhập Thành Công");
+                                    ((Login) getActivity()).RedictToMainAction();
+                                    Libs.Sendmessage(getActivity(), "Đăng Nhập Thành Công");
                                 }
                             });
                         } else if (responeStatus == 200) {
@@ -285,14 +291,14 @@ public class fragment_login extends Fragment {
                             CurrentUser.CreateInstanceByAPI(new CurrentUser.UserCallback() {
                                 @Override
                                 public void onUserGeted(CurrentUser currentUser) {
-                                    if(ProgressHelper.isDialogVisible())
+                                    if (ProgressHelper.isDialogVisible())
                                         ProgressHelper.dismissDialog();
-                                    ((Login)getActivity()).RedictToMainAction();
-                                    Libs.Sendmessage(getActivity(),"Đăng Nhập Thành Công");
+                                    ((Login) getActivity()).RedictToMainAction();
+                                    Libs.Sendmessage(getActivity(), "Đăng Nhập Thành Công");
                                 }
                             });
-                        }else {
-                            Libs.Sendmessage(getActivity(),"Thất Bại");
+                        } else {
+                            Libs.Sendmessage(getActivity(), "Thất Bại");
                         }
                     }
 
@@ -318,6 +324,12 @@ public class fragment_login extends Fragment {
                 .setNegativeButtonText("Use account password")
                 .build();
     }
+    private void SetAnimator() {
+        group_login.setTranslationX(800);
+        //animation
+        group_login.animate().translationX(0).alpha(1).setDuration(1200).setStartDelay(1000).start();
+    }
+
     private static void SetData(Response response) {
         JSONObject data = null;
         try {

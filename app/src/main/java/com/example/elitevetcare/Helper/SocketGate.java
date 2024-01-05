@@ -28,8 +28,6 @@ import java.util.Map;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import io.socket.engineio.client.transports.WebSocket;
-
 
 public class SocketGate {
     private static Socket mSocket = null;

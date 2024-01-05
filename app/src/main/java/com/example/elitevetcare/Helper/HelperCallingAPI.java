@@ -54,6 +54,7 @@ public class HelperCallingAPI {
     final public static String GET_ALL_CONVERSATION = "conversation/conversations/";
     final public static String GET_ALL_MESSAGE_OF_CONVERSATION = "message/";
     final public static String SEND_MESSAGE_CONVERSATION = "message/";
+    final public static String FORGET_PASSWORD = "auth/forgot-password/";
     final public static String SEND_IMAGE_MESSAGE_CONVERSATION = "message/upload-image/";
     final public static String VET_RECOMMEND_API_PATH = "user/vets/recommend/";
     final public static String FIND_VET_API_PATH = "user/vets/";

@@ -100,24 +100,24 @@
             android:layout_marginTop="60dp"
             android:layout_gravity="center"
             >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Hết Hạn Sau "
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textAppearance="@style/text_regular_font"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Hết Hạn Sau "
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
 
-        <TextView
-            android:id="@+id/timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text = " 05:00 m"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textAppearance="@style/text_regular_font"/>
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text = " 05:00 m"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_regular_font"/>
         </LinearLayout>
 
         <TextView

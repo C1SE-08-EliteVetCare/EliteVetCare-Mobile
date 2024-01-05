@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_edits_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -22,11 +23,14 @@
             android:textStyle="bold"
             android:textAppearance="@style/text_regular_font"/>
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/date_edit_birthday_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:inputType="text"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:background="@drawable/custom_input_box_grey"
             android:drawableEnd="@drawable/ic_edit_birth"
             android:paddingStart="20dp"
@@ -36,6 +40,7 @@
             android:textStyle="bold"
             android:textAppearance="@style/text_regular_font"/>
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_edit_user_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -156,6 +161,7 @@
                 android:background="@drawable/ic_edit_dropdown" />
         </RelativeLayout>
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_edit_user_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -168,6 +174,7 @@
             android:textSize="15dp"
             android:textAppearance="@style/edit_text_font"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_update_user_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"

@@ -21,6 +21,8 @@
     <!-- Màu cho nút tròn (thumb) khi trạng thái bật (on) -->
     <color name="switch_thumb_color">@color/green</color>
 
+    <color name="gray">#888</color>
+
     <!-- Màu cho đường dẫn (track) khi trạng thái bật (on) -->
     <color name="switch_track_color">@color/light_gray</color>
 </resources>

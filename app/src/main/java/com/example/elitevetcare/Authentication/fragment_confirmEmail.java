@@ -1,23 +1,22 @@
 package com.example.elitevetcare.Authentication;
 
-import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.elitevetcare.Activity.Login;
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-import com.example.elitevetcare.Model.ViewModel.SignUpViewModel;
+import com.example.elitevetcare.Model.ViewModel.EmailViewModel;
 import com.example.elitevetcare.R;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -29,10 +28,10 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_verify#newInstance} factory method to
+ * Use the {@link fragment_confirmEmail#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_verify extends Fragment {
+public class fragment_confirmEmail extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,7 +49,7 @@ public class fragment_verify extends Fragment {
 
     TextView timer;
     int timecount = 60;
-    public fragment_verify() {
+    public fragment_confirmEmail() {
         // Required empty public constructor
     }
 
@@ -72,7 +71,7 @@ public class fragment_verify extends Fragment {
         return fragment;
     }
 
-    SignUpViewModel viewModel;
+    EmailViewModel viewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,18 +82,19 @@ public class fragment_verify extends Fragment {
         new CountDownTimer(60000, 1000){
 
             public void onTick(long millisUntilFinished) {
-                long minutetimeCountDown = millisUntilFinished / 60000;
-                long secondsCountDown = (millisUntilFinished % 60000) / 1000;  // Lấy giây còn lại từ mili giây
-                timer.setText(minutetimeCountDown + ":" + secondsCountDown);
-                timer.setTextColor(Color.RED);
+                long timeCountDown = millisUntilFinished / 1000;
+                timer.setText( "" + timeCountDown);
             }
 
             public void onFinish() {
-                timer.setText("0:00");
-                timer.setTextColor(Color.RED);
+                // Đếm ngược kết thúc, thực hiện các hành động như hiển thị một tin nhắn
+                // hoặc thực hiện một công việc cụ thể
+                // Ví dụ: textView.setText("Đếm ngược Kết thúc!");
             }
         }.start();
-        viewModel = new ViewModelProvider(requireActivity()).get( SignUpViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get( EmailViewModel.class);
+
+
     }
 
     @Override
@@ -109,23 +109,23 @@ public class fragment_verify extends Fragment {
 
     private void SetEvent(){
         verify_code_1.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 1) {
+                    verify_code_1.clearFocus(); // Loại bỏ sự tập trung của editText1
+                    verify_code_2.requestFocus(); // Chuyển sự tập trung đến editText
+                    otp += s;
 
                 }
+            }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.length() == 1) {
-                        verify_code_1.clearFocus(); // Loại bỏ sự tập trung của editText1
-                        verify_code_2.requestFocus(); // Chuyển sự tập trung đến editText
-                        otp += s;
-
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
@@ -133,6 +133,7 @@ public class fragment_verify extends Fragment {
         verify_code_2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
@@ -225,55 +226,49 @@ public class fragment_verify extends Fragment {
                 if (s.length() == 1) {
                     otp += s;
 
-                        RequestBody requestBody = new FormBody.Builder()
-                                .add("email", viewModel.getEmail().getValue())
-                                .add("otp", otp)
-                                .build();
-                        HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.VERIFY_PATH, requestBody, new HelperCallingAPI.MyCallback() {
-                            @Override
-                            public void onResponse(Response response) {
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("email", viewModel.getEmail().getValue())
+                            .add("otp", otp)
+                            .build();
+                    HelperCallingAPI.CallingAPI_noHeader(HelperCallingAPI.VERIFY_PATH, requestBody, new HelperCallingAPI.MyCallback() {
+                        @Override
+                        public void onResponse(Response response) {
 
-//                                Log.d( "onResponse: ", String.valueOf(response.code() ) );
-//                                try {
-//                                    Log.d("onResponse: ", new JSONObject(response.body().string()).toString()  );
-//                                } catch (IOException e) {
-//                                    throw new RuntimeException(e);
-//                                } catch (JSONException e) {
-//                                    throw new RuntimeException(e);
-//                                }
+                            String tst = viewModel.getEmail().toString();
+                            Log.d( "DAD", "onCreate: " + tst);
 
-                                if (response.code() == 200) {
-                                        ((Login) getActivity()).changeFragment(new fragment_success());
-                                    }
-
-                                    else {
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(getActivity(), "Mã OTP không hợp lệ! vui lòng nhập lại.", Toast.LENGTH_LONG).show();
-                                                verify_code_6.clearFocus();
-                                                verify_code_1.requestFocus();
-                                                verify_code_1.setText("");
-                                                verify_code_2.setText("");
-                                                verify_code_3.setText("");
-                                                verify_code_4.setText("");
-                                                verify_code_5.setText("");
-                                                verify_code_6.setText("");
-                                            }
-                                        });
-
-                                    }
+                            if (response.code() == 200) {
+                                ((Login) getActivity()).changeFragment(new fragment_reset_password());
                             }
 
+                            else {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getActivity(), "Mã OTP không hợp lệ! vui lòng nhập lại.", Toast.LENGTH_LONG).show();
+                                        verify_code_6.clearFocus();
+                                        verify_code_1.requestFocus();
+                                        verify_code_1.setText("");
+                                        verify_code_2.setText("");
+                                        verify_code_3.setText("");
+                                        verify_code_4.setText("");
+                                        verify_code_5.setText("");
+                                        verify_code_6.setText("");
+                                    }
+                                });
 
-
-                            @Override
-                            public void onFailure(IOException e) {
-                                if (getActivity() != null) {
-                                    Toast.makeText(getActivity(), "Lỗi kết nối mạng. Vui lòng kiểm tra lại kết nối của bạn.", Toast.LENGTH_SHORT).show();
-                                }
                             }
-                        });
+                        }
+
+
+
+                        @Override
+                        public void onFailure(IOException e) {
+                            if (getActivity() != null) {
+                                Toast.makeText(getActivity(), "Lỗi kết nối mạng. Vui lòng kiểm tra lại kết nối của bạn.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
 
                 }
             }
