@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,8 @@ import com.example.elitevetcare.Helper.SocketGate;
 import com.example.elitevetcare.Interface.SocketOnMessageListener;
 import com.example.elitevetcare.Model.CurrentData.CurrentConversationHistory;
 import com.example.elitevetcare.Model.ObjectModel.Conversation;
-import com.example.elitevetcare.Model.ObjectModel.User;
 import com.example.elitevetcare.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -84,8 +77,22 @@ public class fragment_conversation_history extends Fragment implements SocketOnM
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_conversation_history, container, false);
-        new_conversation_btn = root.findViewById(R.id.QA_FloatingActionButton);
-        ConversationHistory_recycler_view = root.findViewById(R.id.recycler_conversation_history);
+        SetID(root);
+
+        new_conversation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_vet_bottom_sheet bottomSheetFragment = new fragment_vet_bottom_sheet();
+                bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
+        SetData();
+
+        // Inflate the layout for this fragment
+        return root;
+    }
+
+    private void SetData() {
         if(CurrentConversationHistory.getConversationHistory() == null)
             CurrentConversationHistory.CreateInstanceByAPI(new CurrentConversationHistory.UserCallback() {
                 @Override
@@ -94,23 +101,49 @@ public class fragment_conversation_history extends Fragment implements SocketOnM
                 }
             });
         else {
-            UpdateUI();
-        }
+            if(CurrentConversationHistory.isIsLoad() == true){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (CurrentConversationHistory.isIsLoad()){
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        UpdateUI();
+                    }
+                });
+            }else
+                UpdateUI();
 
-        // Inflate the layout for this fragment
-        return root;
+        }
     }
+
+    private void SetID(View root) {
+        new_conversation_btn = root.findViewById(R.id.QA_FloatingActionButton);
+        ConversationHistory_recycler_view = root.findViewById(R.id.recycler_conversation_history);
+    }
+
     private void UpdateUI() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ConversationHistory_adapter = new RecyclerViewConversationHistoryAdapter(getActivity());
-                ConversationHistory_recycler_view.setAdapter(ConversationHistory_adapter);
+                if(ConversationHistory_adapter == null){
+                    ConversationHistory_adapter = new RecyclerViewConversationHistoryAdapter(getActivity());
+                    ConversationHistory_recycler_view.setAdapter(ConversationHistory_adapter);
+                }else {
+                    ConversationHistory_adapter.resetData();
+                }
+
             }
         });
     }
     @Override
-    public void onMessageListener(String message) {
+    public void onMessageListener(String message, int Code) {
+        if(Code != SocketGate.MESSAGE_EVENT_CODE)
+            return;
         UpdateUI();
     }
 
@@ -124,4 +157,5 @@ public class fragment_conversation_history extends Fragment implements SocketOnM
         }
         return -1;
     }
+
 }

@@ -47,6 +47,7 @@ public class RecyclerViewClinicAdapter extends RecyclerView.Adapter<RecyclerView
         Clinic clinic = dataClinic.get(position);
         holder.nameofclinic.setText(clinic.getName());
         holder.address_of_clinic.setText("Địa Chỉ: " + clinic.getStreetAddress() + ", " + clinic.getWard() + ", " + clinic.getDistrict() + ", " + clinic.getCity());
+        holder.number_of_like.setText(clinic.getAverageRating()+"");
         Libs.SetImageFromURL(clinic.getLogo(), holder.clinic_avatar);
         holder.btn_select_clinic.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -48,7 +48,8 @@ public class RecyclerViewClinicHomeAdapter extends RecyclerView.Adapter<Recycler
         holder.txt_address.setText("Địa Chỉ: " + clinic.getStreetAddress() );
         holder.txt_distance.setText(String.format("%.1f", clinic.getDistance()/1000));
         Libs.SetImageFromURL(clinic.getLogo(),holder.img_clinic);
-        Log.d("Location", position +": " + clinic.getDistance());
+        holder.txt_like.setText(clinic.getAverageRating()+"");
+
     }
 
     @Override
@@ -65,7 +66,7 @@ public class RecyclerViewClinicHomeAdapter extends RecyclerView.Adapter<Recycler
             txt_name = itemView.findViewById(R.id.name_of_clinic);
             txt_address = itemView.findViewById(R.id.address_of_clinic);
             txt_distance = itemView.findViewById(R.id.txt_distance);
-
+            txt_like = itemView.findViewById(R.id.txt_rating);
         }
     }
 }

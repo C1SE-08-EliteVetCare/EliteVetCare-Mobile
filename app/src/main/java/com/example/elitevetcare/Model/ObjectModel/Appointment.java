@@ -2,7 +2,9 @@ package com.example.elitevetcare.Model.ObjectModel;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Appointment {
+import java.io.Serializable;
+
+public class Appointment implements Serializable {
 
     @SerializedName("id")
     private int id;
@@ -50,9 +52,9 @@ public class Appointment {
 //        this.vetAppointment = vetAppointment;
 //        this.clinic = clinic;
 //    }
-public int getId() {
-    return id;
-}
+    public int getId() {
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -138,7 +140,7 @@ public int getId() {
         this.petOwner = petOwner;
     }
 
-    public class VetAppointment {
+    public class VetAppointment implements Serializable {
         @SerializedName("vetId")
         private int vetId;
 
@@ -175,7 +177,7 @@ public int getId() {
             return dateAccepted;
         }
     }
-    public class PetOwner {
+    public class PetOwner implements Serializable{
         @SerializedName("id")
         private int id;
 

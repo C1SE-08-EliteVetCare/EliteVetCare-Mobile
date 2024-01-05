@@ -95,13 +95,9 @@ public class fragment_edit_profile_user extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-<<<<<<< HEAD
-        GetDataProvince();
-    }
-
-=======
 
     }
+
 
     public void setData(){
         User user = CurrentUser.getCurrentUser();
@@ -113,7 +109,6 @@ public class fragment_edit_profile_user extends Fragment {
         GetDataProvince(2);
         edt_address.setText(user.getStreetAddress());
     }
->>>>>>> a25147a4e45b1e51c5b870d3a2dec78c4d188046
 
     private void showYearPickerDialog() {
         // Create a custom dialog

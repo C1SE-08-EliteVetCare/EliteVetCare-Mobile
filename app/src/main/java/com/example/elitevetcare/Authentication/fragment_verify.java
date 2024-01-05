@@ -1,5 +1,6 @@
 package com.example.elitevetcare.Authentication;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -82,14 +83,15 @@ public class fragment_verify extends Fragment {
         new CountDownTimer(60000, 1000){
 
             public void onTick(long millisUntilFinished) {
-                long timeCountDown = millisUntilFinished / 1000;
-                timer.setText( "" + timeCountDown);
+                long minutetimeCountDown = millisUntilFinished / 60000;
+                long secondsCountDown = (millisUntilFinished % 60000) / 1000;  // Lấy giây còn lại từ mili giây
+                timer.setText(minutetimeCountDown + ":" + secondsCountDown);
+                timer.setTextColor(Color.RED);
             }
 
             public void onFinish() {
-                // Đếm ngược kết thúc, thực hiện các hành động như hiển thị một tin nhắn
-                // hoặc thực hiện một công việc cụ thể
-                // Ví dụ: textView.setText("Đếm ngược Kết thúc!");
+                timer.setText("0:00");
+                timer.setTextColor(Color.RED);
             }
         }.start();
         viewModel = new ViewModelProvider(requireActivity()).get( SignUpViewModel.class);

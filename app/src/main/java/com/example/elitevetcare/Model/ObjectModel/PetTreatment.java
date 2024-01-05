@@ -1,7 +1,9 @@
 package com.example.elitevetcare.Model.ObjectModel;
 
 
-public class PetTreatment {
+import java.io.Serializable;
+
+public class PetTreatment implements Serializable{
     private int id;
     private int clinicId;
     private String dateAccepted;
@@ -59,7 +61,7 @@ public class PetTreatment {
 
 
 
-    public class Pet {
+    public class Pet implements Serializable {
         private int id;
         private String name;
         private String species;
@@ -152,7 +154,7 @@ public class PetTreatment {
         public void setOwner(Owner owner) {
             this.owner = owner;
         }
-        public class Owner {
+        public class Owner implements Serializable{
             private int id;
             private String email;
 
@@ -198,7 +200,7 @@ public class PetTreatment {
 
 
 
-    public class Vet {
+    public class Vet implements Serializable{
         private int id;
         private String email;
         private String fullName;

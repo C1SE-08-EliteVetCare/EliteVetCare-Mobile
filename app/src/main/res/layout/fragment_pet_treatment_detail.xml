@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Profile.fragment_user_profile">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_avatar_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="12dp"
+                app:cardCornerRadius="1000dp"
+                android:layout_centerInParent="true"
+                android:shape="ring"
+                android:thicknessRatio="1.9" >
+                <androidx.constraintlayout.utils.widget.ImageFilterView
+                    android:id="@+id/img_detail_avatar_pet_profile"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/image_logo"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/custom_img_view_avatar"/>
+            </androidx.cardview.widget.CardView>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:background="@drawable/ic_edit"
+                android:layout_marginRight="20dp"
+                android:translationZ="3dp"
+                android:layout_alignBottom="@id/cardview_avatar_profile"
+                android:layout_alignRight="@id/cardview_avatar_profile"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/txt_pet_name_pet_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="PetsName"
+            android:textAlignment="center"
+            android:textAppearance="@style/Title_regular_font"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:text="Tuổi "
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_age_pet_detail"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_input_box_white"
+                android:elevation="10dp"
+                android:fontFamily="@style/edit_text_font"
+                android:inputType="none"
+                android:focusable = "false"
+                android:focusableInTouchMode = "false"
+                android:paddingStart="20dp"
+                android:textSize="15dp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giới Tính "
+                android:layout_gravity="center"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_gender_pet_detail"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="65dp"
+                android:layout_marginVertical="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_input_box_white"
+                android:elevation="10dp"
+                android:fontFamily="@style/edit_text_font"
+                android:inputType="none"
+                android:focusable = "false"
+                android:focusableInTouchMode = "false"
+                android:paddingStart="20dp"
+                android:textSize="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Loài"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_species_pet_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/custom_input_box_white"
+                android:elevation="10dp"
+                android:entries="@array/pet_species"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@style/edit_text_font"
+                android:hint="Chihuahua, Alaska, .... "
+                android:inputType="none"
+                android:paddingStart="20dp"
+                android:textSize="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Giống"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_breed_pet_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_input_box_white"
+                android:elevation="10dp"
+                android:entries="@array/pet_species"
+                android:fontFamily="@style/edit_text_font"
+                android:inputType="none"
+                android:focusable = "false"
+                android:focusableInTouchMode = "false"
+                android:paddingStart="20dp"
+                android:hint="Chihuahua, Alaska, .... "
+                android:textSize="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Cân Nặng"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_weight_pet_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_input_box_white"
+                android:elevation="10dp"
+                android:entries="@array/pet_species"
+                android:fontFamily="@style/edit_text_font"
+                android:inputType="none"
+                android:focusable = "false"
+                android:focusableInTouchMode = "false"
+                android:paddingStart="20dp"
+                android:hint="Chihuahua, Alaska, .... "
+                android:textSize="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Màu Lông"
+                android:textAppearance="@style/text_regular_font"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_furColor_pet_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_input_box_white"
+                android:elevation="10dp"
+                android:entries="@array/pet_species"
+                android:fontFamily="@style/edit_text_font"
+                android:inputType="none"
+                android:focusable = "false"
+                android:focusableInTouchMode = "false"
+                android:paddingStart="20dp"
+                android:hint="Chihuahua, Alaska, .... "
+                android:textSize="15dp" />
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_nextAction"
+            android:visibility="gone"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginVertical="15dp"
+            android:layout_gravity="end"
+            android:background="@drawable/custom_button_next" />
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

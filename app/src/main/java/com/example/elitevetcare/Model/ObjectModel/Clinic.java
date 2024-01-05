@@ -25,6 +25,15 @@ public class Clinic implements Serializable {
 
     @SerializedName("logo")
     private String logo;
+    private float averageRating;
+
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
+    }
 
     public float getDistance() {
         return distance;

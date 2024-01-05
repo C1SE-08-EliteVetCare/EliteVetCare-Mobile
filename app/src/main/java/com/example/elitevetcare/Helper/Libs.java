@@ -14,6 +14,7 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
@@ -51,6 +53,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Libs {
+    private static ExecutorService executor = Executors.newFixedThreadPool(5);
+    private static Handler handler = new Handler(Looper.getMainLooper());
     public static String AgeToBirthYear(String age){
         String result = "";
         result = String.valueOf(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(age));
@@ -101,7 +105,6 @@ public class Libs {
         return null;
     }
     public static Future<Bitmap> URLtoBitMap(Pet currentPetPosition) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
         return executor.submit(new Callable<Bitmap>() {
             @Override
             public Bitmap call() {
@@ -130,24 +133,6 @@ public class Libs {
     /**
      *  Đây là hàm tự tạo ký tự gồm 8 chữ cái
      */
-    public static void SetImageFromURL(Pet currentPetPosition, RecyclerViewPetListAdapter.PetListViewHolder currentHolder){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                //Background work here
-                Bitmap bitmap = Libs.DownloadImageFromPath(currentPetPosition.getAvatar());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //UI Thread work here
-                        currentHolder.image_avatar.setImageBitmap(bitmap);
-                    }
-                });
-            }
-        });
-    }
     public static String calculateDateDifference(Date startDate, Date endDate) {
         long timeDiff = endDate.getTime() - startDate.getTime();
 
@@ -156,7 +141,7 @@ public class Libs {
 
         if (seconds >= 7 * 24 * 60 * 60) {
             // Khoảng cách hơn 7 ngày, trả về ngày xa hơn
-            return formatDate(endDate, "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            return formatDate(endDate, "dd-MM", Locale.getDefault());
         } else if (seconds >= 24 * 60 * 60) {
             // Khoảng cách dưới 7 ngày, trả về số ngày
             long days = seconds / (24 * 60 * 60);
@@ -178,6 +163,22 @@ public class Libs {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern, locale);
         return sdf.format(date);
     }
+    public static void SetImageFromURL(Pet currentPetPosition, RecyclerViewPetListAdapter.PetListViewHolder currentHolder){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                //Background work here
+                Bitmap bitmap = Libs.DownloadImageFromPath(currentPetPosition.getAvatar());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //UI Thread work here
+                        currentHolder.image_avatar.setImageBitmap(bitmap);
+                    }
+                });
+            }
+        });
+    }
     public static void SetImageFromURL(String URL, RoundedImageView imageFilterButton){
         if(URL == null || URL == ""){
             if (CurrentUser.getCurrentUser().getRole().getId() == 3)
@@ -186,8 +187,7 @@ public class Libs {
                 imageFilterButton.setImageResource(R.drawable.image_nonavatar_clinic);
             return;
         }
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
+
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -211,8 +211,6 @@ public class Libs {
                 imageFilterButton.setImageResource(R.drawable.image_nonavatar_clinic);
             return;
         }
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -236,8 +234,6 @@ public class Libs {
                 imageFilterButton.setImageResource(R.drawable.image_nonavatar_clinic);
             return;
         }
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -254,8 +250,6 @@ public class Libs {
         });
     }
     public static void SetImageFromURL(Pet currentPetPosition, ImageFilterView CurrentImage){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -272,8 +266,6 @@ public class Libs {
         });
     }
     public static void SetImageFromURL(Pet currentPetPosition, ImageView CurrentImage){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -297,8 +289,6 @@ public class Libs {
                 imageFilterButton.setImageResource(R.drawable.image_nonavatar_clinic);
             return;
         }
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -314,7 +304,11 @@ public class Libs {
             }
         });
     }
+
     private static Bitmap DownloadImageFromPath(String path){
+        if(isValidURL(path) == false){
+
+        }
         InputStream in =null;
         Bitmap bmp=null;
         int responseCode = -1;
@@ -337,7 +331,14 @@ public class Libs {
         }
         return null;
     }
-
+    public static boolean isValidURL(String urlString) {
+        try {
+            new URL(urlString);
+            return true;
+        } catch (MalformedURLException e) {
+            return false;
+        }
+    }
     /**
      *  Đây là hàm chuyển đổi URI thành FILE để lưu trữ
      */
@@ -439,7 +440,6 @@ public class Libs {
         return result;
     }
     public static Future<ArrayList<Clinic>> GetHomeClinic(ArrayList<Clinic> list, Geocoder geocoder ) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
         return executor.submit(new Callable<ArrayList<Clinic>>() {
             @Override
             public ArrayList<Clinic> call() throws Exception {
@@ -450,6 +450,12 @@ public class Libs {
     static class DistanceComparator implements Comparator<Clinic> {
         @Override
         public int compare(Clinic o1, Clinic o2) {
+            float distanceCom  = (o1.getDistance()/1000) - (o2.getDistance()/1000);
+            if((distanceCom < 0.1 &&distanceCom > 0 )|| (distanceCom > -0.1 && distanceCom < 0))
+                if(o1.getAverageRating() > o2.getAverageRating())
+                    return -1;
+                else
+                    return 1;
             return Float.compare(o1.getDistance(), o2.getDistance());
         }
     }

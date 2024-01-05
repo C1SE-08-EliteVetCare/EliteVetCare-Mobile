@@ -106,7 +106,7 @@ public class fragment_reject extends Fragment {
                         RejectAppointmentAdapter.notifyDataSetChanged();
                         return;
                     }
-                    RejectAppointmentAdapter = new RecyclerViewRejectAppointmentAdapter();
+                    RejectAppointmentAdapter = new RecyclerViewRejectAppointmentAdapter(getActivity());
                     recycler_AppointmentView.setAdapter(RejectAppointmentAdapter);
                     recycler_AppointmentView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                         @Override

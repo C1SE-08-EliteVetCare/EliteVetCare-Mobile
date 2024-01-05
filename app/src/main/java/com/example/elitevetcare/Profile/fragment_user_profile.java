@@ -19,8 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-=======
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -28,7 +26,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
->>>>>>> a25147a4e45b1e51c5b870d3a2dec78c4d188046
 import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Activity.Login;
 import com.example.elitevetcare.Helper.DataLocalManager;
@@ -129,7 +126,6 @@ public class fragment_user_profile extends Fragment {
     TextView txt_username, txt_phonenumber;
     ImageView img_avatar;
     ImageButton btn_change_avatar,btn_accept_change;
-    LinearLayout ll_edit_profile;
     boolean isChanging = false;
 
     @Override

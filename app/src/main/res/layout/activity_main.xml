@@ -21,16 +21,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
         <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:id="@+id/ic_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:background="@drawable/ic_notice"/>
-        <androidx.constraintlayout.utils.widget.ImageFilterButton
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/btn_avatar_updateprofile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_gravity="right"
-            android:background="@drawable/ic_non_avatar"/>
+            android:scaleType="centerCrop"
+            app:riv_oval="true"
+            android:src="@drawable/images"/>
     </LinearLayout>
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frm_view_main"

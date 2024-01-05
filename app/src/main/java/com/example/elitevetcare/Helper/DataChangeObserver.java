@@ -4,7 +4,7 @@ import com.example.elitevetcare.Interface.DataChangeListener;
 public class DataChangeObserver {
     private static DataChangeObserver instance;
 
-    private DataChangeListener listener;
+    private DataChangeListener listener = null;
 
     private DataChangeObserver() {
         // Không để nó tạo instance

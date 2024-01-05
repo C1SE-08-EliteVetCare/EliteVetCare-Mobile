@@ -12,10 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.elitevetcare.Activity.Login;
-<<<<<<< HEAD
+
 import com.example.elitevetcare.Helper.HelperCallingAPI;
-=======
->>>>>>> a25147a4e45b1e51c5b870d3a2dec78c4d188046
+
 import com.example.elitevetcare.Model.ViewModel.EmailViewModel;
 import com.example.elitevetcare.R;
 

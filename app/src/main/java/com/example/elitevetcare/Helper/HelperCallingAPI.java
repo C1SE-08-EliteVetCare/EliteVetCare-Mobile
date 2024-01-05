@@ -13,6 +13,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -24,7 +25,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HelperCallingAPI {
-    final static String API_ENDPOINT = "https://elitevetcare-be.up.railway.app/";
+    final private static String API_ENDPOINT = "https://elitevetcare-be.up.railway.app/";
     final public static String CREATE_PET_PROFILE_PATH = "pet/create/";
     final public static String LOGIN_PATH = "auth/login/";
     final public static String REFRESH_TOKEN_PATH = "auth/refresh-token/";
@@ -54,7 +55,10 @@ public class HelperCallingAPI {
     final public static String GET_ALL_MESSAGE_OF_CONVERSATION = "message/";
     final public static String SEND_MESSAGE_CONVERSATION = "message/";
     final public static String FORGET_PASSWORD = "auth/forgot-password/";
-
+    final public static String SEND_IMAGE_MESSAGE_CONVERSATION = "message/upload-image/";
+    final public static String VET_RECOMMEND_API_PATH = "user/vets/recommend/";
+    final public static String FIND_VET_API_PATH = "user/vets/";
+    final public static String CREATE_CONVERSATION_API_PATH = "conversation/";
     static boolean refresh_status = false;
 
     public static void CallingAPI_Province(String API_PATH, String params , MyCallback callback){
@@ -67,7 +71,10 @@ public class HelperCallingAPI {
                 .get()
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
@@ -98,7 +105,10 @@ public class HelperCallingAPI {
                 .patch(body)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
@@ -129,7 +139,10 @@ public class HelperCallingAPI {
                 .get()
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
@@ -160,18 +173,25 @@ public class HelperCallingAPI {
                 .get()
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d("Runalbe", "Đã Đến bước 4: " + e.toString() );
                 callback.onFailure(e);
+
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d("Runalbe", "Đã Đến bước 4: " + response.code() );
                 callback.onResponse(response);
+
             }
         });
     }
@@ -189,7 +209,10 @@ public class HelperCallingAPI {
                 .addHeader("Authorization", "Bearer " + HeaderToken)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
@@ -224,7 +247,10 @@ public class HelperCallingAPI {
                 .addHeader("Authorization", "Bearer " + HeaderToken)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
@@ -247,7 +273,10 @@ public class HelperCallingAPI {
                 .post(body)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
@@ -271,7 +300,10 @@ public class HelperCallingAPI {
                 .post(body)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
@@ -301,7 +333,10 @@ public class HelperCallingAPI {
                 .get()
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
@@ -328,7 +363,10 @@ public class HelperCallingAPI {
                 .post(body)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS) // Thiết lập thời gian chờ kết nối
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
         Call call = client.newCall(request);
 
         Response response = null;

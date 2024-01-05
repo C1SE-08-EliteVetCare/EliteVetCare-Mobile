@@ -1,5 +1,5 @@
 package com.example.elitevetcare.Interface;
 
 public interface SocketOnMessageListener {
-    void onMessageListener(String message);
+    void onMessageListener(String message, int Code);
 }

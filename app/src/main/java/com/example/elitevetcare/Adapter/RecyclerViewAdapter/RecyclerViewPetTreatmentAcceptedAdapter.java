@@ -1,6 +1,8 @@
 package com.example.elitevetcare.Adapter.RecyclerViewAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Model.CurrentData.CurrentPetTreatment;
 import com.example.elitevetcare.Model.ObjectModel.PetTreatment;
@@ -39,10 +42,18 @@ public class RecyclerViewPetTreatmentAcceptedAdapter extends RecyclerView.Adapte
         String Breed = "Giống: " + petTreatment.getPet().getBreed();
         String URL_img = petTreatment.getPet().getAvatar();
         holder.txt_Name_of_Pet.setText(Name);
-
         holder.txt_Species_And_Breed.setText(Species + " | " + Breed);
         Libs.SetImageFromURL(URL_img,holder.image_avatar);
 
+        holder.ll_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Activity.getApplicationContext(), ContentView.class);
+                intent.putExtra("FragmentCalling", R.layout.fragment_pet_treatment_detail);
+                intent.putExtra("PetTreatment", petTreatment);
+                Activity.startActivity(intent);
+            }
+        });
 
     }
 

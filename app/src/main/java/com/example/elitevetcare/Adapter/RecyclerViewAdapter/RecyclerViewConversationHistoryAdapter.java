@@ -23,14 +23,27 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class RecyclerViewConversationHistoryAdapter extends RecyclerView.Adapter<RecyclerViewConversationHistoryAdapter.ConversationHistoryViewHolder>{
 
     Activity activity;
+    ArrayList<Conversation> ListConversations = new ArrayList<>();
     public RecyclerViewConversationHistoryAdapter(Activity activity) {
         this.activity = activity;
+        if(CurrentConversationHistory.getConversationHistory() != null){
+            for(Conversation conversation : CurrentConversationHistory.getConversationHistory()){
+                    if(conversation.getLastMessageSent().getContent() != null){
+                        if(!conversation.getLastMessageSent().getContent().contains("/start")){
+                            ListConversations.add(conversation);
+                        }
+                    }else if (conversation.getLastMessageSent().getImgUrl() != null) {
+                        ListConversations.add(conversation);
+                    }
+            }
+        }
     }
 
     @NonNull
@@ -42,19 +55,24 @@ public class RecyclerViewConversationHistoryAdapter extends RecyclerView.Adapter
 
     @Override
     public void onBindViewHolder(@NonNull ConversationHistoryViewHolder holder, int position) {
-        Conversation conversation = CurrentConversationHistory.getConversationHistory().get(position);
+        Conversation conversation = ListConversations.get(position);
         User Recipient = null;
         String messageContent = "";
-        if(conversation.getRecipient().getId() != CurrentUser.getCurrentUser().getId()){
-            Recipient = conversation.getRecipient();
-            messageContent += conversation.getLastMessageSent().getAuthor().getFullName() + ": " + conversation.getLastMessageSent().getContent();
-        }
+        if(conversation.getLastMessageSent().getAuthor().getId() != CurrentUser.getCurrentUser().getId()){
+            if(conversation.getLastMessageSent().getContent() == null || conversation.getLastMessageSent().getContent() == ""){
+                messageContent += conversation.getLastMessageSent().getAuthor().getFullName() + ": Đã gửi 1 Ảnh";
+            }else{
+                messageContent += conversation.getLastMessageSent().getAuthor().getFullName() + ": " + conversation.getLastMessageSent().getContent();
+            }
+        } else{
+            if(conversation.getLastMessageSent().getContent() == null || conversation.getLastMessageSent().getContent() == ""){
+                messageContent += "Bạn: Đã gửi 1 Ảnh";
+            }else{
+                messageContent += "Bạn: " + conversation.getLastMessageSent().getContent();
 
-        else{
-            Recipient = conversation.getCreator();
-            messageContent += "Bạn: " + conversation.getLastMessageSent().getContent();
+            }
         }
-
+        Recipient = conversation.getCreator().getId() == CurrentUser.getCurrentUser().getId() ? conversation.getRecipient() : conversation.getCreator();
         if(messageContent.length() > 30)
             messageContent = messageContent.substring(0,27) +"...";
         Libs.SetImageFromURL(Recipient.getAvatar(),holder.img_avatar_recipient);
@@ -66,7 +84,7 @@ public class RecyclerViewConversationHistoryAdapter extends RecyclerView.Adapter
             public void onClick(View v) {
                 Intent intent = new Intent(activity.getApplicationContext(),ContentView.class);
                 intent.putExtra("FragmentCalling",R.layout.fragment_conversation);
-                intent.putExtra("conversation", CurrentConversationHistory.getConversationHistory().get(holder.getAdapterPosition()));
+                intent.putExtra("conversation", conversation);
                 activity.startActivity(intent);
             }
         });
@@ -74,7 +92,23 @@ public class RecyclerViewConversationHistoryAdapter extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return CurrentConversationHistory.getConversationHistory().size();
+        return ListConversations.size();
+    }
+
+    public void resetData() {
+        if(CurrentConversationHistory.getConversationHistory() != null){
+            ListConversations = new ArrayList<>();
+            for(Conversation conversation : CurrentConversationHistory.getConversationHistory()){
+                if(conversation.getLastMessageSent().getContent() != null){
+                    if(!conversation.getLastMessageSent().getContent().contains("/start")){
+                        ListConversations.add(conversation);
+                    }
+                }else if (conversation.getLastMessageSent().getImgUrl() != null) {
+                    ListConversations.add(conversation);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public class ConversationHistoryViewHolder extends RecyclerView.ViewHolder {

@@ -18,6 +18,17 @@ import okhttp3.Response;
 public class CurrentConversationHistory {
     private static CurrentConversationHistory instance = null;
     private static ArrayList<Conversation> ConversationHistory = null;
+
+    public static void setIsLoad(boolean isLoad) {
+        CurrentConversationHistory.isLoad = isLoad;
+    }
+
+    private static boolean isLoad = false;
+
+    public static boolean isIsLoad() {
+        return isLoad;
+    }
+
     public static void init(ArrayList<Conversation> AllOfConversation){
         instance = new CurrentConversationHistory();
         ConversationHistory = AllOfConversation;
@@ -30,13 +41,24 @@ public class CurrentConversationHistory {
     public static ArrayList<Conversation> getConversationHistory() {
         return CurrentConversationHistory.getInstance().ConversationHistory;
     }
-    public void setConversationHistory(ArrayList<Conversation> AllOfConversation) {
+    public static void setConversationHistory(ArrayList<Conversation> AllOfConversation) {
         ConversationHistory = AllOfConversation;
+    }
+    public static void AddConversationHistory(Conversation conversation) {
+        if (CurrentConversationHistory.getConversationHistory() != null)
+            CurrentConversationHistory.getConversationHistory().add(conversation);
+        else{
+            ArrayList<Conversation> list = new ArrayList<Conversation>();
+            list.add(conversation);
+            CurrentConversationHistory.setConversationHistory(list);
+        }
     }
     public static CurrentConversationHistory CreateInstanceByAPI(CurrentConversationHistory.UserCallback callback){
         if(instance == null){
             instance = new CurrentConversationHistory();
         }
+        if(isLoad == true)
+            return instance;
         HelperCallingAPI.CallingAPI_Get(HelperCallingAPI.GET_ALL_CONVERSATION, new HelperCallingAPI.MyCallback() {
             @Override
             public void onResponse(Response response) {
@@ -49,6 +71,7 @@ public class CurrentConversationHistory {
                         Type listType = new TypeToken<ArrayList<Conversation>>(){}.getType();
                         ArrayList<Conversation> ConversationArray = gson.fromJson(data.toString(), listType);
                         instance.setConversationHistory(ConversationArray);
+
                         callback.onGetSuccess();
                     } catch (IOException | JSONException e) {
                         throw new RuntimeException(e);

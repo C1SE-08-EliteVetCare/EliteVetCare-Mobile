@@ -49,7 +49,21 @@
         app:layout_constraintStart_toEndOf="@id/ViewSpace"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/img_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginEnd="4dp"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="15dp"
+        android:src="@drawable/image_nonavatar_clinic"
+        app:layout_constraintWidth_max="300dp"
+        app:layout_constraintHeight_max="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ViewSpace"
+        app:layout_constraintTop_toTopOf="parent"/>
     <TextView
         android:visibility="gone"
         android:id="@+id/txt_time_received"

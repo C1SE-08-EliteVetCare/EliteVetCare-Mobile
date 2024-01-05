@@ -19,7 +19,9 @@ import com.example.elitevetcare.Activity.ContentView;
 import com.example.elitevetcare.Adapter.ViewPageAdapter.AppointmentViewPager2Adapter;
 import com.example.elitevetcare.Helper.DataChangeObserver;
 import com.example.elitevetcare.Helper.ProgressHelper;
+import com.example.elitevetcare.Helper.SocketGate;
 import com.example.elitevetcare.Interface.DataChangeListener;
+import com.example.elitevetcare.Interface.SocketOnMessageListener;
 import com.example.elitevetcare.Model.CurrentData.CurrentAppointment;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.ViewModel.AppointmentViewModel;
@@ -41,7 +43,7 @@ import java.util.concurrent.Executors;
  * Use the {@link fragment_appointment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_appointment extends Fragment implements DataChangeListener {
+public class fragment_appointment extends Fragment implements DataChangeListener, SocketOnMessageListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,6 +86,7 @@ public class fragment_appointment extends Fragment implements DataChangeListener
         Log.d("ProcessData",requireActivity().toString());
         appointmentViewModel = new ViewModelProvider(requireActivity()).get(AppointmentViewModel.class);
         DataChangeObserver.getInstance().setListener(this);
+        SocketGate.addSocketEventListener(this::onMessageListener);
     }
 
     private TabLayout appointment_tabLayout;
@@ -213,5 +216,18 @@ public class fragment_appointment extends Fragment implements DataChangeListener
     @Override
     public void onDataChanged(int status) {
         GetDataByAPI(status);
+    }
+
+    @Override
+    public void onMessageListener(String message, int Code) {
+        if(Code != SocketGate.APPOINTMENT_CREATE_EVENT_CODE && Code != SocketGate.APPOINTMENT_STATUS_EVENT_CODE)
+            return;
+        if(Code == SocketGate.APPOINTMENT_CREATE_EVENT_CODE)
+            GetDataByAPI(1);
+        else if (Code == SocketGate.APPOINTMENT_STATUS_EVENT_CODE) {
+            GetDataByAPI(1);
+            GetDataByAPI(2);
+            GetDataByAPI(3);
+        }
     }
 }

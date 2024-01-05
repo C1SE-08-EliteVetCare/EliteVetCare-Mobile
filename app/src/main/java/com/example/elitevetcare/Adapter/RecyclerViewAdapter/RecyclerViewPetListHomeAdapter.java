@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class RecyclerViewPetListHomeAdapter extends RecyclerView.Adapter<Recycle
     public RecyclerViewPetListHomeAdapter(ArrayList<Pet> petList, Activity activity) {
         this.petList = petList;
         this.activity = activity;
+        this.mContext = activity.getApplicationContext();
     }
     public RecyclerViewPetListHomeAdapter(ArrayList<Pet> petList, Context applicationContext) {
         this.petList = petList;
@@ -55,7 +57,7 @@ public class RecyclerViewPetListHomeAdapter extends RecyclerView.Adapter<Recycle
         currentHolder.txt_Species_And_Breed.setText("Loài: " + currentPetPosition.getSpecies() + " | Giống: " + currentPetPosition.getBreed());
         currentHolder.txt_Name_of_Pet.setText(currentPetPosition.getName());
         Libs.SetImageFromURL(currentPetPosition,currentHolder.image_avatar);
-        currentHolder.image_avatar.setOnClickListener(new View.OnClickListener() {
+        currentHolder.ll_pet_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
@@ -76,11 +78,13 @@ public class RecyclerViewPetListHomeAdapter extends RecyclerView.Adapter<Recycle
     public class PetListViewHolder extends RecyclerView.ViewHolder{
         public ImageFilterView image_avatar;
         public TextView txt_Name_of_Pet, txt_Species_And_Breed;
+        LinearLayout ll_pet_profile;
         public PetListViewHolder(@NonNull View itemView) {
             super(itemView);
             image_avatar = itemView.findViewById(R.id.avatar_pet_pet_list);
             txt_Name_of_Pet = itemView.findViewById(R.id.txt_name_of_pet);
             txt_Species_And_Breed = itemView.findViewById(R.id.txt_Species_and_Breed_pet);
+            ll_pet_profile = itemView.findViewById(R.id.ll_pet_profile);
         }
     }
 }

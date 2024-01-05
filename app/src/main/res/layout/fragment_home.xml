@@ -207,18 +207,30 @@
             android:textSize="16dp"
             android:layout_marginLeft="30dp"
             android:textStyle="bold" />
+        <ProgressBar
+            android:id="@+id/progress_bar_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/near"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            tools:listitem="@layout/item_view_clinic_around" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_clinic_around"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="3"
             android:layout_below="@+id/near"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="0dp"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
             tools:listitem="@layout/item_view_clinic_around" />
 
     </RelativeLayout>
