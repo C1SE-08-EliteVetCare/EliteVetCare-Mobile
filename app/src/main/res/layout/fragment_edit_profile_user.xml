@@ -79,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp">
-
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner_city_editprofile"
                 android:layout_width="wrap_content"

@@ -18,11 +18,21 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
-            android:text="Hi Radit"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:text="Chào mừng "
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/txt_userName_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/txt_hello"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:text="Radit"
             android:textSize="20dp"
-            android:textStyle="bold" />
-
+            android:textStyle="bold"/>
         <TextView
 
             android:id="@+id/txt_rabbit"
@@ -32,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="20dp"
-            android:text="Good Morning!" />
+            android:text="Ngày mới tốt lành!" />
 
         <ImageView
             android:id="@+id/home_theme"
@@ -96,6 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/home_theme"
+            android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"
             android:layout_alignParentStart="true"
@@ -104,10 +115,10 @@
             android:text="Phân Loại" />
 
         <ImageView
-            android:id="@+id/vector_vet"
+            android:id="@+id/vector_clinic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/vector_vet"
+            android:src="@drawable/vector_vet_selected"
             android:layout_below="@+id/txt_phanloai"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="80dp"
@@ -116,14 +127,15 @@
 
 
         <ImageView
+            android:id="@+id/ic_clinic_around"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/vector_vet"
-            android:layout_alignTop="@+id/vector_vet"
+            android:layout_alignStart="@+id/vector_clinic"
+            android:layout_alignTop="@+id/vector_clinic"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/vet_icon" />
+            android:src="@drawable/vet_icon_selected" />
 
 
         <ImageView
@@ -137,27 +149,28 @@
             android:src="@drawable/vector_pet" />
 
         <ImageView
+            android:id="@+id/ic_pet_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/vector_pet"
             android:layout_alignTop="@+id/vector_pet"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/pet_icon" />
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
+            android:src="@drawable/ic_pet_home" />
 
 
         <TextView
             android:id="@+id/vet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/vector_vet"
-            android:layout_marginLeft="110dp"
+            android:layout_below="@+id/vector_clinic"
+            android:layout_marginLeft="75dp"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:textSize="16dp"
-            android:text="Vet" />
+            android:text="Phòng Khám" />
 
         <TextView
             android:id="@+id/pet"
@@ -168,8 +181,8 @@
             android:textStyle="bold"
             android:textSize="16dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="105dp"
-            android:text="Pet" />
+            android:layout_marginRight="85dp"
+            android:text="Thú Cưng" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -189,22 +202,35 @@
             android:layout_below="@+id/vet"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:text="Các phòng khám gần đây"
             android:textSize="16dp"
             android:layout_marginLeft="30dp"
             android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/clinic_around"
+        <ProgressBar
+            android:id="@+id/progress_bar_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="3"
             android:layout_below="@+id/near"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="20dp"
+            tools:listitem="@layout/item_view_clinic_around" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_clinic_around"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/near"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="0dp"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
             tools:listitem="@layout/item_view_clinic_around" />
 
     </RelativeLayout>

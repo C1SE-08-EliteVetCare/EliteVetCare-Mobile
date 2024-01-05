@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="5dp">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="25dp"
         android:layout_marginVertical= "5dp"
@@ -12,16 +13,26 @@
         android:background="@drawable/custom_input_box_white"
         android:elevation="5dp">
         <LinearLayout
+            android:id="@+id/ll_item_process"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <androidx.constraintlayout.utils.widget.ImageFilterButton
-                android:id="@+id/Pet_avatar"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/avt_cat"/>
+                android:layout_marginVertical="10dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="4dp">
+                <androidx.constraintlayout.utils.widget.ImageFilterButton
+                    android:id="@+id/process_appointment_avatar"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:scaleType="centerCrop"
+                    android:background="@color/white"
+                    android:src="@drawable/image_nonavatar_clinic"/>
+            </com.google.android.material.card.MaterialCardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,6 +40,7 @@
                 android:layout_marginLeft="15dp"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/txt_name_process_appointment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
@@ -75,12 +87,13 @@
             android:background="@color/low_gray"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_marginVertical="5dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="5dp"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_Reject_appointment"
+                android:layout_width="145dp"
                 android:layout_height="35dp"
                 android:background="@drawable/custom_button_blue_border"
                 android:text="@string/Reject"
@@ -89,12 +102,12 @@
                 android:textColor="@color/blue"
                 android:textAppearance="@style/text_regular_font"/>
             <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"/>
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_accept_appointment"
+                android:layout_width="145dp"
                 android:layout_height="35dp"
                 android:background="@drawable/custom_button_accept"
                 android:text="@string/Accept"
@@ -103,9 +116,6 @@
                 android:textSize="15dp"
                 android:textStyle="normal" />
         </LinearLayout>
-
     </LinearLayout>
-
-
 
 </FrameLayout>

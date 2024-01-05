@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -44,6 +44,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_hours_appointment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_input_box_hour"
@@ -58,11 +59,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=":"
+                android:layout_gravity="center"
+                android:text=" : "
                 android:textAppearance="@style/edit_text_font"
                 android:textSize="20dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_minute_appointment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_input_box_minute"
@@ -73,27 +76,7 @@
                 android:textAppearance="@style/edit_text_font"
                 android:textColor="@color/black"
                 android:textSize="16dp" />
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="32dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/custom_button_time_designation_selected"
-                android:text="AM"
-                android:textAlignment="center"
-                android:textAppearance="@style/edit_text_font"
-                android:textColor="@color/white"
-                android:textSize="12dp"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="32dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center"
-                android:background="@drawable/custom_button_time_designation"
-                android:text="PM"
-                android:textAlignment="center"
-                android:textAppearance="@style/edit_text_font"
-                android:textColor="@color/black"
-                android:textSize="12dp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -103,6 +86,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_9h"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -111,9 +95,12 @@
                 android:textAlignment="center"
                 android:textSize="16dp"
                 android:textAppearance="@style/edit_text_font"
+                android:onClick= "asd"
                 android:text="09:00 Sáng"
                 android:textColor="@color/blue"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_9h30"
+                android:onClick="onSelectTimeButtonClick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -125,6 +112,8 @@
                 android:text="09:30 Sáng"
                 android:textColor="@color/blue"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_10h"
+                android:onClick="onSelectTimeButtonClick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -142,6 +131,8 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_10h30"
+                android:onClick="onSelectTimeButtonClick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -153,6 +144,8 @@
                 android:text="10:30 Sáng"
                 android:textColor="@color/blue"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_11h"
+                android:onClick="onSelectTimeButtonClick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -171,6 +164,8 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_15h"
+                android:onClick="onSelectTimeButtonClick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -182,6 +177,8 @@
                 android:text="15:00 Chiều"
                 android:textColor="@color/blue"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_15h30"
+                android:onClick="onSelectTimeButtonClick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -193,6 +190,8 @@
                 android:text="15:30 Chiều"
                 android:textColor="@color/blue"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_16h"
+                android:onClick="onSelectTimeButtonClick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -204,6 +203,7 @@
                 android:textColor="@color/blue"/>
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_done_select_datetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
@@ -215,4 +215,4 @@
             android:textAppearance="@style/edit_text_font"/>
     </LinearLayout>
 
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>

@@ -5,12 +5,28 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.elitevetcare.Helper.HelperCallingAPI;
+import com.example.elitevetcare.Model.ObjectModel.Clinic;
 import com.example.elitevetcare.R;
-import com.example.elitevetcare.RecyclerView.RecyclerViewClinicAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewClinicAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,9 +81,56 @@ public class fragment_select_clinic extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_select_clinic, container, false);
         recycler_clinicView = root.findViewById(R.id.Recycler_list_item_clinic);
-        clinicAdapter = new RecyclerViewClinicAdapter();
-        recycler_clinicView.setAdapter(clinicAdapter);
+        HelperCallingAPI.CallingAPI_Get(HelperCallingAPI.GET_CLINIC_API_PATH, new HelperCallingAPI.MyCallback() {
+            @Override
+            public void onResponse(Response response) {
+                int statusCode = response.code();
+                JSONArray data = null;
+                if(statusCode == 200) {
+                    try {
+                        data = new JSONArray(response.body().string());
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<ArrayList<Clinic>>(){}.getType();
+                        ArrayList<Clinic> List = gson.fromJson(data.toString(), listType);
+                        //Log.d("ClinicRespone", List.toString());
+                        SetData(List);
+                    } catch (IOException | JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else{
+                    Log.d("ClinicRespone", String.valueOf(statusCode));
+                    try {
+                        Log.d("ClinicRespone", new JSONObject(response.body().string()).toString());
+                    } catch (IOException | JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), "Có lỗi hãy kiểm tra kết nối mạng và thử lại sau !", Toast.LENGTH_SHORT);
+                        requireActivity().finish();
+                    }
+                });
+
+            }
+        });
         // Inflate the layout for this fragment
         return root;
+    }
+
+    private void SetData(ArrayList<Clinic> List) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                clinicAdapter = new RecyclerViewClinicAdapter(requireActivity(),List);
+                recycler_clinicView.setAdapter(clinicAdapter);
+            }
+        });
+
     }
 }

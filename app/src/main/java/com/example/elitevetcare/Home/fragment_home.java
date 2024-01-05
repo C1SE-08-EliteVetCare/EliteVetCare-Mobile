@@ -1,14 +1,51 @@
 package com.example.elitevetcare.Home;
 
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewPetListAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewPetListHomeAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewPetTreatmentAcceptedAdapter;
+import com.example.elitevetcare.Adapter.RecyclerViewAdapter.RecyclerViewClinicHomeAdapter;
+import com.example.elitevetcare.Helper.HelperCallingAPI;
+import com.example.elitevetcare.Helper.Libs;
+import com.example.elitevetcare.Helper.ProgressHelper;
+import com.example.elitevetcare.Helper.SocketGate;
+import com.example.elitevetcare.Model.CurrentData.CurrentPetList;
+import com.example.elitevetcare.Model.CurrentData.CurrentPetTreatment;
+import com.example.elitevetcare.Model.CurrentData.CurrentUser;
+import com.example.elitevetcare.Model.ObjectModel.Clinic;
+import com.example.elitevetcare.Model.ViewModel.PetTreatmentViewModel;
 import com.example.elitevetcare.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +94,211 @@ public class fragment_home extends Fragment {
         }
     }
 
+    RecyclerView recyclerView;
+    RecyclerViewClinicHomeAdapter clinicAdapter;
+    RecyclerViewPetListHomeAdapter PetListAdapter;
+    RecyclerViewPetTreatmentAcceptedAdapter PetTreatmentAcceptedListAdapter;
+    ImageView background_clinic, background_pet, ic_clinic, ic_pet;
+
+    TextView txt_userName_home, txt_near;
+    ProgressBar progressBar;
+    boolean is_pet_select = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        recyclerView = root.findViewById(R.id.recycler_clinic_around);
+        background_clinic = root.findViewById(R.id.vector_clinic);
+        ic_clinic = root.findViewById(R.id.ic_clinic_around);
+        background_pet = root.findViewById(R.id.vector_pet);
+        ic_pet = root.findViewById(R.id.ic_pet_home);
+        txt_userName_home = root.findViewById(R.id.txt_userName_home);
+        progressBar = root.findViewById(R.id.progress_bar_home);
+        txt_near = root.findViewById(R.id.near);
+        txt_userName_home.setText(CurrentUser.getCurrentUser().getFullName() + ",");
+
+        ic_clinic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(is_pet_select){
+                    is_pet_select = false;
+                    SetDataClinic();
+                    background_clinic.setImageResource(R.drawable.vector_vet_selected);
+                    ic_clinic.setImageResource(R.drawable.vet_icon_selected);
+                    background_pet.setImageResource(R.drawable.vector_pet);
+                    ic_pet.setImageResource(R.drawable.ic_pet_home);
+                    txt_near.setText("Các Phòng Khám Gần Đây");
+                }
+            }
+        });
+        ic_pet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(is_pet_select == false){
+                    is_pet_select = true;
+                    SetDataPet();
+                    background_pet.setImageResource(R.drawable.vector_pet_selected);
+                    ic_pet.setImageResource(R.drawable.ic_pet_home_selected);
+                    background_clinic.setImageResource(R.drawable.vector_vet);
+                    ic_clinic.setImageResource(R.drawable.vet_icon);
+                    txt_near.setText("Danh Sách Thú Cưng");
+                }
+            }
+        });
+        if(CurrentUser.getCurrentUser().getRole().getId() == 2){
+            is_pet_select = true;
+            ic_clinic.callOnClick();
+        } else{
+            ic_pet.callOnClick();
+            ic_clinic.setClickable(false);
+        }
+
+
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return root;
     }
+
+    private void SetDataPet() {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+        if(CurrentUser.getCurrentUser().getRole().getId() == 2){
+            GetPetList();
+            return;
+        }
+        if(CurrentUser.getCurrentUser().getRole().getId() == 3)
+            GetPetTreatment();
+    }
+
+    private void GetPetList() {
+        if (CurrentPetList.getPetList() == null){
+            ProgressHelper.showDialog(getActivity(),"Đang lấy dữ liệu");
+            CurrentPetList.CreateInstanceByAPI(new CurrentPetList.PetListCallback() {
+                @Override
+                public void OnSuccess(CurrentPetList currentPetList) {
+                    if(ProgressHelper.isDialogVisible())
+                        ProgressHelper.dismissDialog();
+                    UpdatePetUI();
+                }
+            });
+        } else {
+            UpdatePetUI();
+        }
+    }
+
+    private void UpdatePetUI() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PetListAdapter = new RecyclerViewPetListHomeAdapter(CurrentPetList.getPetList(), getActivity());
+                recyclerView.setAdapter(PetListAdapter);
+                progressBar.setVisibility(View.INVISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    private void UpdatePetTreatmentUI() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PetTreatmentAcceptedListAdapter = new RecyclerViewPetTreatmentAcceptedAdapter(getActivity());
+                recyclerView.setAdapter(PetTreatmentAcceptedListAdapter);
+                progressBar.setVisibility(View.INVISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    private void GetPetTreatment() {
+        if(CurrentPetTreatment.getPetTreatmentAcceptedList() == null){
+            Map<String,String> QuerryParams = new HashMap<>();
+            QuerryParams.put("status", String.valueOf(2));
+            QuerryParams.put("page", String.valueOf(1));
+            QuerryParams.put("limit", String.valueOf(10));
+            CurrentPetTreatment.CreateInstanceByAPI(QuerryParams, new CurrentPetTreatment.PetTreatmentListCallback() {
+                        @Override
+                        public void OnSuccess(CurrentPetTreatment currentPetTreatmentList) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    PetTreatmentViewModel petTreatmentViewModel = new ViewModelProvider(getActivity()).get(PetTreatmentViewModel.class);
+                                    petTreatmentViewModel.setAcceptedTotalItem(CurrentPetTreatment.getPetTreatmentAcceptedList().size());
+                                }
+                            });
+                            UpdatePetTreatmentUI();
+
+                        }
+                    });
+        }else {
+            UpdatePetTreatmentUI();
+        }
+    }
+
+    private void SetDataClinic() {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+        HelperCallingAPI.CallingAPI_Get(HelperCallingAPI.GET_CLINIC_API_PATH, new HelperCallingAPI.MyCallback() {
+            @Override
+            public void onResponse(Response response) {
+                int statusCode = response.code();
+                JSONArray data = null;
+                if(statusCode == 200) {
+                    try {
+                        data = new JSONArray(response.body().string());
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<ArrayList<Clinic>>(){}.getType();
+                        ArrayList<Clinic> List = gson.fromJson(data.toString(), listType);
+                        //Log.d("ClinicRespone", List.toString());
+                        SetData(List);
+
+                    } catch (IOException | JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else{
+                    progressBar.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    try {
+                        Log.d("ClinicRespone", new JSONArray(response.body().string()).toString());
+                    } catch (IOException | JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        Toast.makeText(getContext(), "Có lỗi hãy kiểm tra kết nối mạng và thử lại sau !", Toast.LENGTH_SHORT);
+                        requireActivity().finish();
+                    }
+                });
+
+            }
+        });
+    }
+    private void SetData(ArrayList<Clinic> List) {
+        Future<ArrayList<Clinic>> future = Libs.GetHomeClinic(List, new Geocoder(getActivity().getApplicationContext()));
+        try {
+            ArrayList<Clinic> finalList = future.get();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    clinicAdapter = new RecyclerViewClinicHomeAdapter(requireActivity(), finalList);
+                    recyclerView.setAdapter(clinicAdapter);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            });
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
 }

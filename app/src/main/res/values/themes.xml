@@ -16,7 +16,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-    <style name="Theme.EliteVetCare" parent="Base.Theme.EliteVetCare" />
+    <style name="Theme.EliteVetCare1" parent="Base.Theme.EliteVetCare" />
     <style name="Widget.CalendarView.Custom" parent="android:Widget.CalendarView">
         <item name="android:focusedMonthDateColor">@color/white</item>
         <item name="android:weekNumberColor">@color/red</item>
