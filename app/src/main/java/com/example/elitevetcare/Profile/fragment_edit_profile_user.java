@@ -2,13 +2,6 @@ package com.example.elitevetcare.Profile;
 
 import android.app.Dialog;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +12,17 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
-import com.example.elitevetcare.Activity.Login;
-import com.example.elitevetcare.Activity.UpdateProfile;
-import com.example.elitevetcare.Authentication.fragment_success;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.fragment.app.Fragment;
+
 import com.example.elitevetcare.Helper.HelperCallingAPI;
 import com.example.elitevetcare.Helper.Libs;
 import com.example.elitevetcare.Model.CurrentData.CurrentUser;
 import com.example.elitevetcare.Model.ObjectModel.Province;
+import com.example.elitevetcare.Model.ObjectModel.User;
 import com.example.elitevetcare.R;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -100,9 +95,25 @@ public class fragment_edit_profile_user extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+<<<<<<< HEAD
         GetDataProvince();
     }
 
+=======
+
+    }
+
+    public void setData(){
+        User user = CurrentUser.getCurrentUser();
+        edt_username.setText(user.getFullName());
+        edt_birthyear.setText(user.getBirthYear());
+        edt_emal.setText(user.getEmail());
+        ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) spinner_gender.getAdapter();
+        spinner_gender.setSelection(spinnerAdapter.getPosition(user.getGender()));
+        GetDataProvince(2);
+        edt_address.setText(user.getStreetAddress());
+    }
+>>>>>>> a25147a4e45b1e51c5b870d3a2dec78c4d188046
 
     private void showYearPickerDialog() {
         // Create a custom dialog
@@ -120,9 +131,8 @@ public class fragment_edit_profile_user extends Fragment {
             int selectedYear = datePicker.getYear();
             Toast.makeText(getActivity(), "Selected Year: " + selectedYear, Toast.LENGTH_SHORT).show();
 
-            // Set the selected year to the AppCompatEditTextr
-            TextInputEditText editText = dialog.findViewById(R.id.date_edit_birthday_user);
-            editText.setText(String.valueOf(selectedYear));
+
+            edt_birthyear.setText(String.valueOf(selectedYear));
 
             // Dismiss the dialog
             dialog.dismiss();
@@ -154,12 +164,22 @@ public class fragment_edit_profile_user extends Fragment {
         edt_username.setText(CurrentUser.getCurrentUser().getFullName());
         edt_birthyear.setText(CurrentUser.getCurrentUser().getBirthYear());
 
+        setData();
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 updateUserProfile();
             }
 
+        });
+
+        edt_birthyear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_birthyear.clearFocus();
+                showYearPickerDialog();
+            }
         });
 
         // Inflate the layout for this fragment
@@ -181,9 +201,11 @@ public class fragment_edit_profile_user extends Fragment {
 
         // Bắt lỗi
         // Libs.capitalizeFirstLetter()
-//        String name = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
-//        String sex = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
-//        String birthyear = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
+        // String name = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
+        // String sex = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
+        // String birthyear = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
+
+
         String city = Libs.capitalizeFirstLetter(ListProvince.get(spinner_city.getSelectedItemPosition()).getName());
         String district = Libs.capitalizeFirstLetter(SelectedProvince.getDistricts().get(spinner_district.getSelectedItemPosition()).getName());
         String ward = Libs.capitalizeFirstLetter(SelectedProvince.getDistricts().get(spinner_district.getSelectedItemPosition())
@@ -193,9 +215,9 @@ public class fragment_edit_profile_user extends Fragment {
             Toast.makeText(getContext(), "Hãy Nhập Địa Chỉ Vào", Toast.LENGTH_SHORT).show();
         }
 
-//        CurrentUser.getCurrentUser().setGender(sex);
-//        CurrentUser.getCurrentUser().setFullName(name);
-//        CurrentUser.getCurrentUser().setBirthYear(birthyear);
+        // CurrentUser.getCurrentUser().setGender(sex);
+        // CurrentUser.getCurrentUser().setFullName(name);
+        // CurrentUser.getCurrentUser().setBirthYear(birthyear);
         CurrentUser.getCurrentUser().setCity(city);
         CurrentUser.getCurrentUser().setDistrict(district);
         CurrentUser.getCurrentUser().setWard(ward);
@@ -242,7 +264,7 @@ public class fragment_edit_profile_user extends Fragment {
         });
     }
 
-    private void GetDataProvince() {
+    private void GetDataProvince(int status ) {
         HelperCallingAPI.CallingAPI_Province(HelperCallingAPI.PROVINCE_API_PATH, "", new HelperCallingAPI.MyCallback() {
             @Override
             public void onResponse(Response response) {
@@ -259,7 +281,18 @@ public class fragment_edit_profile_user extends Fragment {
                             ProvinceArray.add(city.getName());
                         }
                         SetUpSpinner(spinner_city,ProvinceArray);
-                        SetDataDistrict();
+                        if(status == 1)
+                            SetDataDistrict(1);
+                        else{
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) spinner_city.getAdapter();
+                                    spinner_city.setSelection(spinnerAdapter.getPosition(CurrentUser.getCurrentUser().getCity()));
+                                    SetDataDistrict(2);
+                                }
+                            });
+                        }
                         Log.d("ProvinceTest", ListProvince.get(0).getCodename());
 
                     } catch (JSONException | IOException e) {
@@ -274,7 +307,7 @@ public class fragment_edit_profile_user extends Fragment {
             }
         });
     }
-    private void SetDataDistrict() {
+    private void SetDataDistrict(int status) {
         spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -295,7 +328,19 @@ public class fragment_edit_profile_user extends Fragment {
                                     DistrictArray.add(district.getName());
                                 }
                                 SetUpSpinner(spinner_district,DistrictArray);
-                                SetDataWard();
+                                if(status == 1)
+                                    SetDataWard(1);
+                                else {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) spinner_district.getAdapter();
+                                            spinner_district.setSelection(spinnerAdapter.getPosition(CurrentUser.getCurrentUser().getDistrict()));
+                                            SetDataWard(2);
+                                        }
+                                    });
+                                }
                             } catch (JSONException | IOException e) {
                                 Log.d("ProvinceError", e.getMessage() );
                             }
@@ -317,7 +362,7 @@ public class fragment_edit_profile_user extends Fragment {
         });
     }
 
-    private void SetDataWard() {
+    private void SetDataWard(int status) {
         spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -339,6 +384,16 @@ public class fragment_edit_profile_user extends Fragment {
                                     WardArray.add(Ward.getName());
                                 }
                                 SetUpSpinner(spinner_ward,WardArray);
+                                if(status == 2)
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) spinner_ward.getAdapter();
+                                            spinner_ward.setSelection(spinnerAdapter.getPosition(CurrentUser.getCurrentUser().getWard()));
+                                        }
+                                    });
+
+//                                setData();
                             } catch (JSONException | IOException e) {
                                 Log.d("ProvinceError", e.getMessage() );
                             }

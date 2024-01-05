@@ -138,7 +138,7 @@ public int getId() {
         this.petOwner = petOwner;
     }
 
-    private class VetAppointment {
+    public class VetAppointment {
         @SerializedName("vetId")
         private int vetId;
 

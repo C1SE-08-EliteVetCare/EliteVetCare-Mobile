@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.elitevetcare.Appointment.fragment_calendar_view;
 import com.example.elitevetcare.Appointment.fragment_process;
 import com.example.elitevetcare.Appointment.fragment_reject;
 
@@ -18,7 +19,7 @@ public class AppointmentViewPager2Adapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 1:
-//                FragmentCall = new fragment_schedule();
+                FragmentCall = new fragment_calendar_view();
                 break;
             case 2:
                 FragmentCall = new fragment_reject();
